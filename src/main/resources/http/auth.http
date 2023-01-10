@@ -1,0 +1,9 @@
+### login
+POST localhost:8080/auth/login
+Content-Type: application/json
+Accept-Language: RU
+
+{
+  "username": "adminjon",
+  "password": "1234"
+}

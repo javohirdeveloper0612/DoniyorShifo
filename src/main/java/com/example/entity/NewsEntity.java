@@ -19,10 +19,15 @@ public class NewsEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private String title;
+    private String title_uz;
+    @Column(nullable = false)
+    private String title_ru;
 
     @Column(columnDefinition = "text",nullable = false)
-    private String description;
+    private String description_uz;
+
+    @Column(columnDefinition = "text",nullable = false)
+    private String description_ru;
 
     @OneToOne
     private AttachEntity photoId;

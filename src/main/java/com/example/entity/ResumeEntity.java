@@ -27,7 +27,9 @@ public class ResumeEntity {
     private String email;
 
     @Column
-    private String description;
+    private String description_uz;
+    @Column
+    private String description_ru;
 
     @OneToOne
     private AttachEntity attach;

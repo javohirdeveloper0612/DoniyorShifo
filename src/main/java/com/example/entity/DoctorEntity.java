@@ -25,7 +25,10 @@ public class DoctorEntity {
     private String lastName;
 
     @Column(nullable = false)
-    private String speciality;
+    private String speciality_uz;
+
+    @Column(nullable = false)
+    private String speciality_ru;
 
     @Column(unique = true)
     private String phone;
@@ -34,7 +37,10 @@ public class DoctorEntity {
     private Integer experience;
 
     @Column(columnDefinition = "text",nullable = false)
-    private String description;
+    private String description_uz;
+
+    @Column(columnDefinition = "text",nullable = false)
+    private String description_ru;
 
     @OneToOne
     private AttachEntity photoId;

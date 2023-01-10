@@ -14,6 +14,8 @@ public class ServicesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private String name;
+    private String name_uz;
+    @Column(nullable = false)
+    private String name_ru;
 
 }

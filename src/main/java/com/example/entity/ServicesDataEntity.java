@@ -19,10 +19,15 @@ public class ServicesDataEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private String title;
+    private String title_uz;
+    @Column(nullable = false)
+    private String title_ru;
 
     @Column(nullable = false)
-    private String description;
+    private String description_uz;
+
+    @Column(nullable = false)
+    private String description_ru;
 
     @OneToOne(optional = false)
     private AttachEntity attach;

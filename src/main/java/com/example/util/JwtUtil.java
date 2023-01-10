@@ -13,7 +13,7 @@ public class JwtUtil {
     public static String encode(String username, AdminRole role){
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setIssuedAt(new Date());
-        jwtBuilder.signWith(SignatureAlgorithm.ES512,secretKey);
+        jwtBuilder.signWith(SignatureAlgorithm.HS512,secretKey);
 
         jwtBuilder.claim("username", username);
 

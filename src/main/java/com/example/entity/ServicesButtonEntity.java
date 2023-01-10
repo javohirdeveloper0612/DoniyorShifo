@@ -17,8 +17,11 @@ public class ServicesButtonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "button_name",nullable = false)
-    private String buttonName;
+    @Column(name = "button_name_ru",nullable = false)
+    private String buttonName_ru;
+
+    @Column(name = "button_name_uz",nullable = false)
+    private String buttonName_uz;
 
     @Column(nullable = false)
     private String buttonDescription;
