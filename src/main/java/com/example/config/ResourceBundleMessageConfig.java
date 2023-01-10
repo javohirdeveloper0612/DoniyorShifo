@@ -12,7 +12,7 @@ public class ResourceBundleMessageConfig {
         messageSource.setBasenames("messages/message");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setDefaultLocale(new Locale("uz"));
-        // if local not found use this
+        // if local not found use this.
         return messageSource;
     }
 }
