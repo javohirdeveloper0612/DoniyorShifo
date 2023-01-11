@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.example.enums.DoctorRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,13 +37,15 @@ public class DoctorEntity {
     @Column(nullable = false)
     private Integer experience;
 
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String description_uz;
 
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String description_ru;
-
-    @OneToOne
+    @Enumerated(EnumType.STRING)
+    @Column
+    private DoctorRole role;
+    @OneToOne(cascade = CascadeType.PERSIST)
     private AttachEntity photoId;
 
     @CreationTimestamp

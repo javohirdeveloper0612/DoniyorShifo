@@ -31,7 +31,7 @@ public class ResumeEntity {
     @Column
     private String description_ru;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private AttachEntity attach;
 
     @CreationTimestamp

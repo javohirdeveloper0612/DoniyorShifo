@@ -1,7 +1,6 @@
 package com.example.config;
 
 import com.example.entity.AdminEntity;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

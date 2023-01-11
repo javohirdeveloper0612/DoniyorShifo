@@ -29,7 +29,7 @@ public class ServicesDataEntity {
     @Column(nullable = false)
     private String description_ru;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.PERSIST)
     private AttachEntity attach;
 
     @OneToOne(optional = false)
