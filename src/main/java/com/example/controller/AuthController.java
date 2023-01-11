@@ -22,6 +22,14 @@ public class AuthController {
         this.service = service;
     }
 
+
+    /**
+     *
+     * @param dto
+     * @param language
+     * @return
+     */
+
     @Operation(summary = "Login Method", description = "this method for registration")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO dto, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
@@ -29,7 +37,7 @@ public class AuthController {
 
         log.info(" Login :  username {} ", dto.getUsername());
         LoginResponseDTO response = service.login(dto, language);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().body(response);
     }
 }
 

@@ -29,14 +29,14 @@ public class NewsEntity {
     @Column(columnDefinition = "text",nullable = false)
     private String description_ru;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private AttachEntity photoId;
 
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp createdDate;
 
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private Timestamp updatedDate;
 
 
 }
