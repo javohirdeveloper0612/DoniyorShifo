@@ -1,5 +1,4 @@
 package com.example.config;
-
 import com.example.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
     private final CustomUserDetailsService customUserDetailsService;
 
     private final AuthEntryPointJwt authEntryPointJwt;
