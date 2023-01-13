@@ -38,5 +38,4 @@ public class ResumeEntity {
     @Column(updatable = false)
     private Timestamp createdAt;
 
-
 }
