@@ -20,18 +20,16 @@ public class ResumeEntity {
     @Column(nullable = false)
     String fullName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phone;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column
-    private String description_uz;
-    @Column
-    private String description_ru;
+    private String description;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(optional = false)
     private AttachEntity attach;
 
     @CreationTimestamp

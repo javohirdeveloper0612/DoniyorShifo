@@ -25,6 +25,18 @@ public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/",
+            "/v3/api-docs//**",
+            "/swagger-ui/**",
+            "/swagger-resources",
+            "/swagger-resources/"
+    };
+
     public SecurityConfig(CustomUserDetailsService customUserDetailsService, AuthEntryPointJwt authEntryPointJwt, JwtFilter jwtFilter, PasswordEncoder passwordEncoder) {
         this.customUserDetailsService = customUserDetailsService;
         this.authEntryPointJwt = authEntryPointJwt;
@@ -53,8 +65,10 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs//**").permitAll()
+                .requestMatchers("/auth/**", "/api/attach/**").permitAll()
+                .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers("/api/services/public/**").permitAll()
+                .requestMatchers("/api/services_data/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

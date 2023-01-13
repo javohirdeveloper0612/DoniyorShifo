@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,21 +18,26 @@ public class ServicesButtonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "button_name_ru",nullable = false)
-    private String buttonName_ru;
+    @Column(name = "button_name_ru", nullable = false)
+    private String buttonNameRu;
 
-    @Column(name = "button_name_uz",nullable = false)
-    private String buttonName_uz;
+    @Column(name = "button_name_uz", nullable = false)
+    private String buttonNameUz;
 
     @Column(nullable = false)
-    private String buttonDescription;
+    private String buttonDescriptionUz;
+    @Column(nullable = false)
+    private String buttonDescriptionRu;
 
+    @Column(name = "services_id")
+    private Integer servicesId;
     @OneToOne(optional = false)
+    @JoinColumn(name = "services_id", insertable = false, updatable = false)
     private ServicesEntity services;
 
-    @CreationTimestamp
+
     @Column(updatable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdDate;
 
 
 }

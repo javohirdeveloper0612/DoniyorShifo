@@ -1,6 +1,13 @@
 package com.example.controller;
 
 import com.example.exp.AdminNotFoundException;
+import com.example.exp.attach.AttachNotFoundException;
+import com.example.exp.services.AlreadyExistsServicesException;
+import com.example.exp.services.ServicesNotFoundException;
+import com.example.exp.servicesButton.AllReadyExistsButtonException;
+import com.example.exp.servicesButton.ButtonNotFoundException;
+import com.example.exp.servicesButton.DataInCompleException;
+import com.example.exp.services_data.ServicesDataNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -13,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.*;
+
 @ControllerAdvice
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @Override
@@ -34,6 +42,40 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AdminNotFoundException.class})
     private ResponseEntity<?> handler(AdminNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({AlreadyExistsServicesException.class})
+    private ResponseEntity<?> handler(AlreadyExistsServicesException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({ServicesNotFoundException.class})
+    private ResponseEntity<?> handler(ServicesNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+
+    @ExceptionHandler({AllReadyExistsButtonException.class})
+    private ResponseEntity<?> handler(AllReadyExistsButtonException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({DataInCompleException.class})
+    private ResponseEntity<?> handler(DataInCompleException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({AttachNotFoundException.class})
+    private ResponseEntity<?> handler(AttachNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler({ButtonNotFoundException.class})
+    private ResponseEntity<?> handler(ButtonNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler({ServicesDataNotFoundException.class})
+    private ResponseEntity<?> handler(ServicesDataNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.service.annotation.GetExchange;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,23 +20,28 @@ public class ServicesDataEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private String title_uz;
+    private String titleUz;
     @Column(nullable = false)
-    private String title_ru;
+    private String titleRu;
 
     @Column(nullable = false)
-    private String description_uz;
+    private String descriptionUz;
 
     @Column(nullable = false)
-    private String description_ru;
-
+    private String descriptionRu;
+    @Column(name = "attach_id")
+    private Integer attachId;
     @OneToOne(optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
 
+    @Column(name = "button_id")
+    private Integer buttonId;
     @OneToOne(optional = false)
+    @JoinColumn(name = "button_id", insertable = false, updatable = false)
     private ServicesButtonEntity button;
 
-    @CreationTimestamp
+
     @Column(updatable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdDate;
 }
