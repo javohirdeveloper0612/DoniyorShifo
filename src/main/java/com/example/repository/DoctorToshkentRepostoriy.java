@@ -1,9 +1,10 @@
 package com.example.repository;
-import com.example.entity.DoctorsTashkentEntity;
+
+import com.example.entity.DoctorEntity;
+
 import org.springframework.data.repository.CrudRepository;
 
-public interface DoctorToshkentRepostoriy extends CrudRepository<DoctorsTashkentEntity,Integer> {
-
+public interface DoctorToshkentRepostoriy extends CrudRepository<DoctorEntity, Integer> {
 
 
 }

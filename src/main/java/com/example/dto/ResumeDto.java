@@ -1,6 +1,5 @@
 package com.example.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,9 +14,9 @@ import org.hibernate.validator.constraints.Length;
 public class ResumeDto {
 
     private Integer id;
+
     @NotBlank(message = "fullName cannot be empty")
     String fullName;
-
 
     @NotBlank(message = "phone cannot be null")
     @Length(max = 13, min = 13)
@@ -28,6 +27,9 @@ public class ResumeDto {
     @Email
     private String email;
 
-
     private String description;
+
+    @NotNull(message = "fileId cannot be null")
+    private Integer fileId;
+
 }

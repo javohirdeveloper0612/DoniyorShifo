@@ -4,12 +4,13 @@ import com.example.dto.AttachDTO;
 import com.example.entity.AttachContentEntity;
 import com.example.entity.AttachEntity;
 import com.example.enums.Language;
-import com.example.exp.FileNameNotFoundException;
-import com.example.exp.FileNotFoundException;
+import com.example.exp.attach.FileNameNotFoundException;
+import com.example.exp.attach.FileNotFoundException;
 import com.example.repository.AttachmentContentRepository;
 import com.example.repository.AttachmentRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -25,6 +26,7 @@ public class AttachService {
     private final ResourceBundleService resourceBundleService;
     private final AttachmentRepository attachmentRepository;
     private final AttachmentContentRepository contentRepository;
+
 
     @Autowired
     public AttachService(ResourceBundleService resourceBundleService,
@@ -66,6 +68,7 @@ public class AttachService {
         attachment.setOriginalName(originalFilename);
         attachment.setSize(size);
         attachment.setType(contentType);
+
         AttachEntity savedAttach = attachmentRepository.save(attachment);
         AttachDTO attachDTO = new AttachDTO(savedAttach.getId(), originalFilename, size, contentType);
 
@@ -80,7 +83,6 @@ public class AttachService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         return ResponseEntity.ok(attachDTO);
     }
 
@@ -94,7 +96,6 @@ public class AttachService {
      * @return Message
      */
     public ResponseEntity<?> downloadFile(Integer id, HttpServletResponse response, Language language) {
-
 
         //we get the AttachEntity object from DB
         Optional<AttachEntity> optionalAttachment = attachmentRepository.findById(id);
@@ -126,4 +127,5 @@ public class AttachService {
         }
         return ResponseEntity.ok("Downloaded");
     }
+
 }

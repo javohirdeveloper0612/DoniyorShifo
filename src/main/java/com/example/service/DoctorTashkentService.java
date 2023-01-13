@@ -4,7 +4,8 @@ import com.example.entity.AttachEntity;
 import com.example.entity.DoctorEntity;
 import com.example.enums.DoctorRole;
 import com.example.enums.Language;
-import com.example.exp.FileNotFoundException;
+
+import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.DoctorRepostoriy;
@@ -62,7 +63,7 @@ public class DoctorTashkentService {
         doctorEntity.setRole(DoctorRole.ROLE_DOCTOR_TASHKENT);
         doctorRepostoriy.save(doctorEntity);
         dto.setId(doctorEntity.getId());
-        return ResponseEntity.ok(toDTO.toDTO(doctorEntity));
+        return ResponseEntity.ok(toDTO.toDoctorDto(doctorEntity));
     }
 
     /**
@@ -83,6 +84,6 @@ public class DoctorTashkentService {
         }
 
         DoctorEntity doctorEntity = optional.get();
-        return ResponseEntity.ok(toDTO.toDTO(doctorEntity));
+        return ResponseEntity.ok(toDTO.toDoctorDto(doctorEntity));
     }
 }

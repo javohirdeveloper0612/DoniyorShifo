@@ -65,7 +65,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/api/attach/**").permitAll()
+                .requestMatchers("/auth/**", "/api/attach/**",
+                        "/api/resume/**").permitAll()
                 .requestMatchers("/api/doctorSirdarya/**").permitAll()
                 .requestMatchers("/api/doctorTashkent/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()

@@ -1,23 +1,15 @@
 package com.example.controller;
 
 import com.example.dto.ResumeDto;
+import com.example.entity.AttachEntity;
 import com.example.enums.Language;
 import com.example.service.ResumeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resume")
@@ -36,14 +28,14 @@ public class ResumeController {
     /**
      * This method is used for Resume Data .If saves this data return ResumeDto
      *
-     * @param id        Integer
      * @param resumeDto ResumeDto
      * @return ResumeDto
      */
-    @PostMapping("/saveResume/{id}")
+    @PostMapping("/saveResume")
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
-    public ResponseEntity<?> saveResume(@PathVariable Integer id, @Valid @RequestBody ResumeDto resumeDto, Language language) {
-        return resumeService.saveResume(id, resumeDto, language);
+    public ResponseEntity<?> saveResume(@Valid @RequestBody ResumeDto resumeDto,
+                                        @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+        return resumeService.saveResume(resumeDto, language);
     }
 
 
@@ -55,9 +47,20 @@ public class ResumeController {
      */
     @GetMapping("/getResume/{id}")
     @Operation(summary = "getting resume data method", description = "This method is used for getting resume data by id")
-    public ResponseEntity<?> getResumeById(@PathVariable Integer id) {
-        return resumeService.getResumeById(id);
+    public ResponseEntity<?> getResumeById(@PathVariable Integer id,
+                                           @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+        return resumeService.getResumeById(id, language);
     }
 
 
+    /**
+     * This method is used for getting all the resume data from DB
+     *
+     * @return List<ResumeEntity> </>
+     */
+    @GetMapping("/getAll")
+    @Operation(summary = "Getting all the resume data", description = "This method is used for getting all the resume data")
+    public ResponseEntity<?> getAllResume() {
+        return resumeService.getAllResume();
+    }
 }

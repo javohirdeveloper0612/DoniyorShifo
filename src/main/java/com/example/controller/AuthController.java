@@ -23,12 +23,6 @@ public class AuthController {
     }
 
 
-    /**
-     *
-     * @param dto
-     * @param language
-     * @return
-     */
 
     @Operation(summary = "Login Method", description = "this method for registration")
     @PostMapping("/login")
