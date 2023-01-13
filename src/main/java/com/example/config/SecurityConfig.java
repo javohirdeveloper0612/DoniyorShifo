@@ -66,6 +66,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**", "/api/attach/**").permitAll()
+                .requestMatchers("/api/doctorSirdarya/**").permitAll()
+                .requestMatchers("/api/doctorTashkent/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()

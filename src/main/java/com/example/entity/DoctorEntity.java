@@ -1,4 +1,5 @@
 package com.example.entity;
+import com.example.enums.DoctorRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,16 @@ public class DoctorEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private String firsName;
+    private String firstName_uz;
 
     @Column(nullable = false)
-    private String lastName;
+    private String firstName_ru;
+
+    @Column(nullable = false)
+    private String lastName_uz;
+
+    @Column(nullable = false)
+    private String lastName_ru;
 
     @Column(nullable = false)
     private String speciality_uz;
@@ -50,5 +57,10 @@ public class DoctorEntity {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "doctor_role")
+    private DoctorRole role;
+
 
 }
