@@ -1,6 +1,6 @@
 package com.example.util;
 
-import com.example.dto.JwtDTO;
+import com.example.dto.auth.JwtDTO;
 import com.example.enums.AdminRole;
 import io.jsonwebtoken.*;
 

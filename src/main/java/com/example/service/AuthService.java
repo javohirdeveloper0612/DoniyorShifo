@@ -1,10 +1,8 @@
 package com.example.service;
 
-import com.example.config.ResourceBundleMessageConfig;
-import com.example.dto.LoginDTO;
-import com.example.dto.LoginResponseDTO;
+import com.example.dto.auth.LoginDTO;
+import com.example.dto.auth.LoginResponseDTO;
 import com.example.entity.AdminEntity;
-import com.example.enums.AdminStatus;
 import com.example.enums.Language;
 import com.example.exp.AdminNotFoundException;
 import com.example.repository.AdminRepository;

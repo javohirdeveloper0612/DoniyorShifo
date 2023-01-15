@@ -23,4 +23,7 @@ public class AttachEntity {
     @Column
     private String type;
 
+    @OneToOne(mappedBy = "attach",cascade = CascadeType.REMOVE)
+    private AttachContentEntity attachContent;
+
 }

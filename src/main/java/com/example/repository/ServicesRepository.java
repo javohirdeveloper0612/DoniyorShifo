@@ -9,4 +9,6 @@ public interface ServicesRepository extends JpaRepository<ServicesEntity,Integer
 
     Optional<ServicesEntity> findByNameUz(String name);
 
+
+
 }

@@ -31,10 +31,12 @@ public class ServicesButtonEntity {
 
     @Column(name = "services_id")
     private Integer servicesId;
-    @OneToOne(optional = false)
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "services_id", insertable = false, updatable = false)
     private ServicesEntity services;
 
+    @OneToOne(mappedBy = "button",cascade = CascadeType.REMOVE)
+    private ServicesDataEntity dataEntity;
 
     @Column(updatable = false)
     private LocalDateTime createdDate;

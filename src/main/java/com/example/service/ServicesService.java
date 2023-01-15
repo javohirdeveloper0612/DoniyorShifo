@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dto.ServicesDTO;
+import com.example.dto.services.ServicesResponseDTO;
+import com.example.dto.services.ServicesCreateDTO;
 import com.example.entity.ServicesEntity;
 import com.example.enums.Language;
 import com.example.exp.services.AlreadyExistsServicesException;
@@ -24,10 +25,10 @@ public class ServicesService {
         this.resourceBundleService = resourceBundleService;
     }
 
-    public ServicesDTO create(ServicesDTO dto, Language language) {
-        Optional<ServicesEntity> optional =repository.findByNameUz(dto.getNameUz());
-        if (optional.isPresent()){
-            throw new AlreadyExistsServicesException(resourceBundleService.getMessage("already.exists.services",language));
+    public ServicesResponseDTO create(ServicesCreateDTO dto, Language language) {
+        Optional<ServicesEntity> optional = repository.findByNameUz(dto.getNameUz());
+        if (optional.isPresent()) {
+            throw new AlreadyExistsServicesException(resourceBundleService.getMessage("already.exists.services", language));
         }
         System.out.println(dto.getNameRu());
         ServicesEntity entity = new ServicesEntity();
@@ -38,60 +39,81 @@ public class ServicesService {
         return getDTO(entity);
     }
 
-    public ServicesDTO getDTO (ServicesEntity entity){
-        ServicesDTO dto= new ServicesDTO();
+    public ServicesResponseDTO getDTO(ServicesEntity entity) {
+        ServicesResponseDTO dto = new ServicesResponseDTO();
         dto.setId(entity.getId());
         dto.setNameUz(entity.getNameUz());
         dto.setNameRu(entity.getNameRu());
         return dto;
     }
 
-    public ServicesDTO getById(Integer id, Language language) {
+    public ServicesResponseDTO getById(Integer id, Language language) {
         Optional<ServicesEntity> optional = repository.findById(id);
 
-        if (optional.isEmpty()){
-            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found",language));
+        if (optional.isEmpty()) {
+            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
 
         ServicesEntity entity = optional.get();
-        ServicesDTO dto = new ServicesDTO();
-        if (language.equals(Language.UZ)){
+        ServicesResponseDTO dto = new ServicesResponseDTO();
+        if (language.equals(Language.UZ)) {
             dto.setNameUz(entity.getNameUz());
-        }else if (language.equals(Language.RU)){
+        } else if (language.equals(Language.RU)) {
             dto.setNameRu(entity.getNameRu());
         }
         dto.setId(entity.getId());
         return dto;
     }
 
-    public List<ServicesDTO> getList(Language language) {
+    public List<ServicesResponseDTO> getList(Language language) {
         List<ServicesEntity> servicesList = repository.findAll();
-        if (servicesList.isEmpty()){
-            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found",language));
+        if (servicesList.isEmpty()) {
+            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
-        List<ServicesDTO> dtoList = new LinkedList<>();
-        ServicesDTO dto = new ServicesDTO();
-        if (language.equals(Language.UZ)){
-            for (ServicesEntity entity : servicesList) {
-                dto.setNameUz(entity.getNameUz());
-                dtoList.add(dto);
-            }
-        } else if (language.equals(Language.RU)) {
-            for (ServicesEntity entity : servicesList) {
-                dto.setNameRu(entity.getNameRu());
-                dtoList.add(dto);
-            }
+        List<ServicesResponseDTO> dtoList = new LinkedList<>();
+        for (ServicesEntity entity : servicesList) {
+            dtoList.add(getDtoByLang(entity,language));
         }
         return dtoList;
     }
 
     public String deleteById(Integer id, Language language) {
         Optional<ServicesEntity> optional = repository.findById(id);
-        if (optional.isEmpty()){
-            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found",language));
+        if (optional.isEmpty()) {
+            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
-        repository.delete(optional.get());
+
+        repository.deleteById(optional.get().getId());
 
         return "Deleted successfully";
     }
+
+    public ServicesResponseDTO updateById(Integer id, ServicesCreateDTO dto, Language language) {
+        Optional<ServicesEntity> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
+        }
+
+        ServicesEntity entity = optional.get();
+        entity.setNameUz(dto.getNameUz());
+        entity.setNameRu(dto.getNameRu());
+
+        repository.save(entity);
+
+        return getDTO(entity);
+    }
+
+    public ServicesResponseDTO getDtoByLang(ServicesEntity entity, Language language) {
+        ServicesResponseDTO dto = new ServicesResponseDTO();
+        if (language.equals(Language.UZ)) {
+            dto.setId(entity.getId());
+            dto.setNameUz(entity.getNameUz());
+        } else if (language.equals(Language.RU)) {
+            dto.setId(entity.getId());
+            dto.setNameRu(entity.getNameRu());
+        }
+        return dto;
+    }
+
+
 }

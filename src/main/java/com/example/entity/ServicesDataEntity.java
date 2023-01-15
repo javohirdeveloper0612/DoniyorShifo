@@ -31,15 +31,16 @@ public class ServicesDataEntity {
     private String descriptionRu;
     @Column(name = "attach_id")
     private Integer attachId;
-    @OneToOne(optional = false, cascade = CascadeType.PERSIST)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
 
     @Column(name = "button_id")
     private Integer buttonId;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "button_id", insertable = false, updatable = false)
     private ServicesButtonEntity button;
+
 
 
     @Column(updatable = false)
