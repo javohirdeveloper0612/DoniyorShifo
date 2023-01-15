@@ -11,6 +11,7 @@ import com.example.repository.AttachmentRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -83,7 +84,7 @@ public class AttachService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(attachDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(attachDTO);
     }
 
 
@@ -119,13 +120,18 @@ public class AttachService {
                 attachment.getOriginalName());
 
         response.setContentType(attachment.getType());
+        AttachDTO attachDTO = new AttachDTO();
+        attachDTO.setFileOriginalname(attachment.getOriginalName());
+        attachDTO.setType(attachment.getType());
+        attachDTO.setSize(attachment.getSize());
+        attachDTO.setId(attachment.getId());
 
         try {
             FileCopyUtils.copy(content, response.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok("Downloaded");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(attachDTO);
     }
 
 }

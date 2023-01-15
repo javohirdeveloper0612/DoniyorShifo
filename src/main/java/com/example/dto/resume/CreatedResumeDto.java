@@ -1,4 +1,4 @@
-package com.example.dto;
+package com.example.dto.resume;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResumeDto {
+public class CreatedResumeDto {
 
     private Integer id;
 
@@ -21,7 +21,6 @@ public class ResumeDto {
     @NotBlank(message = "phone cannot be null")
     @Length(max = 13, min = 13)
     private String phone;
-
 
     @NotBlank(message = "email cannot be null")
     @Email

@@ -34,7 +34,7 @@ public class DoctorSirdaryaController {
      * @return DoctorDTO
      */
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+ //   @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create/{photoId}")
     @Operation(summary = "Create Doctor Sirdarya ADMIN", description = "this method is used by ADMIN to create doctor Sirdarya")
     public ResponseEntity<DoctorDTO> create(

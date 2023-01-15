@@ -1,7 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.ResumeDto;
-import com.example.entity.AttachEntity;
+import com.example.dto.resume.CreatedResumeDto;
 import com.example.enums.Language;
 import com.example.service.ResumeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,14 +25,14 @@ public class ResumeController {
 
 
     /**
-     * This method is used for Resume Data .If saves this data return ResumeDto
+     * This method is used for Resume Data .If saves this data return CreatedResumeDto
      *
-     * @param resumeDto ResumeDto
-     * @return ResumeDto
+     * @param resumeDto CreatedResumeDto
+     * @return CreatedResumeDto
      */
-    @PostMapping("/saveResume")
+    @PostMapping("/save_resume")
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
-    public ResponseEntity<?> saveResume(@Valid @RequestBody ResumeDto resumeDto,
+    public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto,
                                         @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
         return resumeService.saveResume(resumeDto, language);
     }
@@ -43,9 +42,9 @@ public class ResumeController {
      * This method is used for getting resume data by id
      *
      * @param id Integer
-     * @return ResumeDto
+     * @return CreatedResumeDto
      */
-    @GetMapping("/getResume/{id}")
+    @GetMapping("/view_resume/{id}")
     @Operation(summary = "getting resume data method", description = "This method is used for getting resume data by id")
     public ResponseEntity<?> getResumeById(@PathVariable Integer id,
                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
@@ -58,7 +57,7 @@ public class ResumeController {
      *
      * @return List<ResumeEntity> </>
      */
-    @GetMapping("/getAll")
+    @GetMapping("/view_all")
     @Operation(summary = "Getting all the resume data", description = "This method is used for getting all the resume data")
     public ResponseEntity<?> getAllResume() {
         return resumeService.getAllResume();

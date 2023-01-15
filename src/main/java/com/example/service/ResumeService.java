@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.ResumeDto;
+import com.example.dto.resume.CreatedResumeDto;
 import com.example.entity.AttachEntity;
 import com.example.entity.ResumeEntity;
 import com.example.enums.Language;
@@ -9,11 +9,10 @@ import com.example.repository.AttachmentRepository;
 import com.example.repository.ResumeRepository;
 import com.example.util.ToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -40,17 +39,16 @@ public class ResumeService {
     /**
      * This method  is used for saving resume file and data
      *
-     * @param resumeDto ResumeDto
+     * @param resumeDto CreatedResumeDto
      * @param language  Language
-     * @return ResumeDto
+     * @return CreatedResumeDto
      */
-    public ResponseEntity<?> saveResume(ResumeDto resumeDto, Language language) {
+    public ResponseEntity<?> saveResume(CreatedResumeDto resumeDto, Language language) {
 
         Optional<AttachEntity> optional = attachmentRepository.findById(resumeDto.getFileId());
         if (optional.isEmpty()) {
             throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
         }
-
         AttachEntity attach = optional.get();
         ResumeEntity resume = new ResumeEntity();
         resume.setFullName(resumeDto.getFullName());
@@ -59,7 +57,7 @@ public class ResumeService {
         resume.setDescription(resumeDto.getDescription());
         resume.setAttach(attach);
         ResumeEntity savedResume = resumeRepository.save(resume);
-        return ResponseEntity.ok(toDTO.toResumeDto(savedResume));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO.toResponseResumeDto(savedResume));
     }
 
 
@@ -67,7 +65,7 @@ public class ResumeService {
      * This method is used for getting resume data by id
      *
      * @param id Integer
-     * @return ResumeDto
+     * @return CreatedResumeDto
      */
     public ResponseEntity<?> getResumeById(Integer id, Language language) {
 
@@ -77,7 +75,7 @@ public class ResumeService {
         }
 
         ResumeEntity resumeEntity = optional.get();
-        return ResponseEntity.ok(toDTO.toResumeDto(resumeEntity));
+        return ResponseEntity.ok(toDTO.toResponseResumeDto(resumeEntity));
     }
 
     /**

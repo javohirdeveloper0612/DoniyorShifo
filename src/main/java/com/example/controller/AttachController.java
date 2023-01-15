@@ -36,8 +36,6 @@ public class AttachController {
     @PostMapping("/upload")
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
     public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request, Language language) {
-
-       log.error("");
        return attachService.uploadFile(request, language);
     }
 

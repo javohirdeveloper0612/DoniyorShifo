@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.PatientDto;
+import com.example.dto.patient.CreatePatientDto;
 import com.example.enums.Language;
 import com.example.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,11 +28,39 @@ public class PatientController {
      * @param patientDto PatientDto
      * @return PatientDto
      */
-    @PostMapping("/createPatient")
-    @Operation(summary = "Create Patient method", description = "This method is used for save Patient data IN DataBase")
-    public ResponseEntity<?> creationPatient(@Valid @RequestBody PatientDto patientDto
+    @PostMapping("/create_patient")
+    @Operation(summary = "Creating Patient method", description = "This method is used for save Patient data IN DataBase")
+    public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto
             , @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
-        return patientService.createPatient(patientDto,language);
+        return patientService.createPatient(patientDto, language);
+    }
+
+
+    /**
+     * This method is used for getting patient data by id If it is not exist throw PatientNotFoundException
+     *
+     * @param id       Integer
+     * @param language Language
+     * @return ResponsePatientDTO
+     */
+    @GetMapping("view_patient/{id}")
+    @Operation(summary = "Getting patient By id method", description = "This method is used for getting patient data by id")
+    public ResponseEntity<?> getPatientById(@PathVariable Integer id,
+                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+        return patientService.getPatientById(id, language);
+
+    }
+
+
+    /**
+     * This method is used for getting all the patient data order by createdDate
+     *
+     * @return List<PatientEntity></PatientEntity>
+     */
+    @GetMapping("/view_patient")
+    @Operation(summary = "Viewing All the Patient data method", description = "This method is used for getting all the Patient data order by createdDate")
+    public ResponseEntity<?> getAllPatientData() {
+        return patientService.getAll();
     }
 
 }
