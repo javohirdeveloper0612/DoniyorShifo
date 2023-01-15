@@ -64,15 +64,18 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().httpBasic().disable();
 
         http
                 .authorizeHttpRequests()
 
-                .requestMatchers("/auth/**", "/api/attach/**", "/api/resume/**","/api/patient/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/attach/upload").permitAll()
+                .requestMatchers("/api/resume/save_resume").permitAll()
+                .requestMatchers("/api/patient/create_patient").permitAll()
 
-                .requestMatchers("/api/doctorSirdarya/**").permitAll()
-                .requestMatchers("/api/doctorTashkent/**").permitAll()
+
                 .requestMatchers("/auth/**", "/api/attach/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class NewsController {
         this.newsService = newsService;
     }
 
+
     /**
      * This method is used for creating news Data  If News Photo
      *
@@ -29,6 +31,8 @@ public class NewsController {
      * @param language Language
      * @return ResponseNewsDto
      */
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     @Operation(summary = "Create News data method", description = "This method is used for creating news data")
     public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto,
@@ -45,7 +49,7 @@ public class NewsController {
      * @return ResponseNewsDto
      */
 
-    @GetMapping("/view_news/{id}")
+    @GetMapping("/public/view_news/{id}")
     @Operation(summary = "Getting News data By id method", description = "This method is used for getting News Data By Id")
     public ResponseEntity<?> getNewsById(@PathVariable Integer id, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
         return newsService.getNewsById(id, language);
@@ -59,7 +63,7 @@ public class NewsController {
      * @param language Language
      * @return Page
      */
-    @GetMapping("/view_all_news")
+    @GetMapping("/public/view_all_news")
     @Operation(summary = "Getting All the news data method", description = "This method is used for viewing all the news data by paging ")
     public ResponseEntity<?> getAllNews(@RequestParam int page, @RequestParam int size, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
         return newsService.getAllNews(page, size, language);
@@ -73,6 +77,7 @@ public class NewsController {
      * @return ResponseNewsDto
      */
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/edite/{id}")
     @Operation(summary = "Edite News data", description = "This method is used for editing news Data If News Data not found throw NewsDataNotFoundException")
     public ResponseEntity<?> editeNews(@PathVariable Integer id, @Valid @RequestBody CreatedNewsDto dto, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
@@ -88,6 +93,7 @@ public class NewsController {
      */
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete news data method", description = "This method is used for deleting news data")
     public ResponseEntity<?> deleteNews(@PathVariable Integer id, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {

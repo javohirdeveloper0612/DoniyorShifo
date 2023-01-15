@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -23,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Optional<AdminEntity> optional = repository.findByUsername(username);
 
-        if (optional.isEmpty()){
+        if (optional.isEmpty()) {
             throw new UsernameNotFoundException("Bad Credentials");
         }
 

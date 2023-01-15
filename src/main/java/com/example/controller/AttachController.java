@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -36,7 +37,7 @@ public class AttachController {
     @PostMapping("/upload")
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
     public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request, Language language) {
-       return attachService.uploadFile(request, language);
+        return attachService.uploadFile(request, language);
     }
 
 
@@ -48,6 +49,9 @@ public class AttachController {
      * @param response HttpServletResponse
      * @return Message
      */
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/download/{id}")
     @Operation(summary = "Download method", description = "This method used for downloading file")
     public ResponseEntity<?> downloadFile(@PathVariable Integer id, HttpServletResponse response, Language language) {
