@@ -1,0 +1,33 @@
+### create new doctor Tashkent
+
+POST localhost:8080/api/doctortashkent/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+Content-Type: application/json
+
+{
+  "firstName_uz": "`Diyor`",
+  "firstName_ru": "Диёр ",
+  "lastName_uz": "Mamatqulov",
+  "lastName_ru": "Маматкулов  ",
+  "speciality_uz": "Lor",
+  "speciality_ru": "Лор  ",
+  "phone": "+998993459408",
+  "experience": 2,
+  "description_uz": "Quloq davolash ishlarini amalga oshiradi",
+  "description_ru": "Выполняет лечение ушей ",
+  "photoId": 1
+}
+
+### Get By id Doctor Tashkent
+GET localhost:8080/api/doctortashkent/public/get/4
+Accept-Language: RU
+
+### Delete By id Doctor tashkent ADMIN
+DELETE localhost:8080/api/doctortashkent/delete/
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+
+### Doctor Sirdarya List Pagination
+GET localhost:8080/api/doctortashkent/public/getpage
+Accept-Language: RU

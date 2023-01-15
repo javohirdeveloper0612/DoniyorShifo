@@ -1,8 +1,8 @@
 package com.example.config;
-
 import com.example.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,10 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.lang.reflect.Method;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
     private final CustomUserDetailsService customUserDetailsService;
 
     private final AuthEntryPointJwt authEntryPointJwt;
@@ -65,11 +68,18 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
+
+                .requestMatchers("/auth/**", "/api/attach/**", "/api/resume/**","/api/patient/**").permitAll()
+
+                .requestMatchers("/api/doctorSirdarya/**").permitAll()
+                .requestMatchers("/api/doctorTashkent/**").permitAll()
                 .requestMatchers("/auth/**", "/api/attach/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()
                 .requestMatchers("/api/services_button/public/**").permitAll()
+                .requestMatchers("api/doctorsirdarya/public/**").permitAll()
+                .requestMatchers("api/doctortashkent/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

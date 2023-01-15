@@ -12,4 +12,5 @@ public class AttachDTO {
     private String fileOriginalname;
     private long size;
     private String type;
+
 }

@@ -1,0 +1,53 @@
+### create new doctor Sirdarya
+POST localhost:8080/api/doctorsirdarya/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+Content-Type: application/json
+
+{
+  "firstName_uz": "Abdulla",
+  "firstName_ru": "Абдулла",
+  "lastName_uz": "Aliyev",
+  "lastName_ru": "Алиев ",
+  "speciality_uz": "Hirurg",
+  "speciality_ru": "Хирург ",
+  "phone": "+998901023434",
+  "experience": 6,
+  "description_uz": "Aperatsiyalar amalga oshiradi",
+  "description_ru": "Аперациялар амальга оширади ",
+  "photoId": 1
+
+}
+
+### create new doctor Sirdarya
+POST localhost:8080/api/doctorsirdarya/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+Content-Type: application/json
+
+{
+  "firstName_uz": "Toshmat",
+  "firstName_ru": "Тошмат",
+  "lastName_uz": "Xurshidov",
+  "lastName_ru": "Хуршидов  ",
+  "speciality_uz": "Stomotolog",
+  "speciality_ru": "Стомотолог ",
+  "phone": "+998901022323",
+  "experience": 4,
+  "description_uz": "Tish davolash ishlarni amalga oshiradi",
+  "description_ru": "Проводит лечение зубов ",
+  "photoId": 1
+}
+
+### Get By id Doctor Sirdarya
+GET localhost:8080/api/doctorsirdarya/public/get/3
+Accept-Language: UZ
+
+### Delete By id Doctor Sirdarya
+DELETE localhost:8080/api/doctorsirdarya/delete/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+
+
+### Doctor Sirdarya List Pagination
+GET localhost:8080/api/doctorsirdarya/public/getdoctorpages

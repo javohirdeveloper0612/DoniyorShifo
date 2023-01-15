@@ -1,7 +1,13 @@
 package com.example.controller;
 
 import com.example.exp.AdminNotFoundException;
+import com.example.exp.NewsDataNotFoundException;
 import com.example.exp.attach.AttachNotFoundException;
+import com.example.exp.attach.FileNameNotFoundException;
+import com.example.exp.attach.FileNotFoundException;
+import com.example.exp.doctor.DoctorNotFoundException;
+import com.example.exp.patient.PatientNotFoundException;
+import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.exp.services.AlreadyExistsServicesException;
 import com.example.exp.services.ServicesNotFoundException;
 import com.example.exp.servicesButton.AllReadyExistsButtonException;
@@ -70,12 +76,44 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     private ResponseEntity<?> handler(AttachNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+
     @ExceptionHandler({ButtonNotFoundException.class})
     private ResponseEntity<?> handler(ButtonNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+
     @ExceptionHandler({ServicesDataNotFoundException.class})
     private ResponseEntity<?> handler(ServicesDataNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({DoctorNotFoundException.class})
+    private ResponseEntity<?> handler(DoctorNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({DoctorNotFoundListException.class})
+    private ResponseEntity<?> handler(DoctorNotFoundListException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({PatientNotFoundException.class})
+    private ResponseEntity<?> handler(PatientNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({FileNotFoundException.class})
+    private ResponseEntity<?> handler(FileNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({FileNameNotFoundException.class})
+    private ResponseEntity<?> handler(FileNameNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({NewsDataNotFoundException.class})
+    private ResponseEntity<?> handler(NewsDataNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

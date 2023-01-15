@@ -1,12 +1,10 @@
 package com.example.entity;
-
 import com.example.enums.DoctorRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.sql.Timestamp;
 
 @Getter
@@ -15,15 +13,22 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "doctor")
 public class DoctorEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String firsName;
+    private String firstName_uz;
 
     @Column(nullable = false)
-    private String lastName;
+    private String firstName_ru;
+
+    @Column(nullable = false)
+    private String lastName_uz;
+
+    @Column(nullable = false)
+    private String lastName_ru;
 
     @Column(nullable = false)
     private String speciality_uz;
@@ -37,22 +42,24 @@ public class DoctorEntity {
     @Column(nullable = false)
     private Integer experience;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(columnDefinition = "text",nullable = false)
     private String description_uz;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(columnDefinition = "text",nullable = false)
     private String description_ru;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private DoctorRole role;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private AttachEntity photoId;
 
+    @OneToOne
+    private AttachEntity photoId;
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdDate;
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "doctor_role")
+    private DoctorRole role;
+
 
 }
