@@ -1,5 +1,5 @@
 package com.example.util;
-import com.example.dto.DoctorDTO;
+import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.entity.DoctorEntity;
 import org.springframework.stereotype.Component;
 
@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 public class ToDTO {
 
 
-    public DoctorDTO toDTO(DoctorEntity doctorEntity){
-
-        DoctorDTO doctorDTO = new DoctorDTO(); ;
+    public DoctorResponseDTO toDoctorDTO(DoctorEntity doctorEntity){
+        DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
         doctorDTO.setId(doctorEntity.getId());
         doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
@@ -24,5 +23,9 @@ public class ToDTO {
         doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
         return doctorDTO;
     }
+
+
+
+
 
 }

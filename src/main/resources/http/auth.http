@@ -1,9 +1,9 @@
 ### login
 POST localhost:8080/auth/login
 Content-Type: application/json
-Accept-Language: RU
+Accept-Language: UZ
 
 {
-  "username": "adminjon",
-  "password": "1234"
+  "username": "Basel",
+  "password": "15092000"
 }

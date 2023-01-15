@@ -1,17 +1,24 @@
 package com.example.service;
-import com.example.dto.DoctorDTO;
+import com.example.dto.doctor.DoctorCreationDTO;
+import com.example.dto.doctor.DoctorResponseDTO;
+import com.example.dto.doctor.DoctorUpdateDTO;
 import com.example.entity.AttachEntity;
 import com.example.entity.DoctorEntity;
 import com.example.enums.DoctorRole;
 import com.example.enums.Language;
 import com.example.exp.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
+import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.DoctorRepostoriy;
-import com.example.util.ToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,32 +27,29 @@ public class DoctorSirdaryaService {
     private final DoctorRepostoriy doctorRepostoriy;
     private final ResourceBundleService resourceBundleService;
     private final AttachmentRepository attachmentRepository;
-    private final ToDTO toDTO;
 
     @Autowired
-    public DoctorSirdaryaService(DoctorRepostoriy doctorRepostoriy, ResourceBundleService resourceBundleService, AttachmentRepository attachmentRepository, ToDTO toDTO) {
+    public DoctorSirdaryaService(DoctorRepostoriy doctorRepostoriy, ResourceBundleService resourceBundleService, AttachmentRepository attachmentRepository) {
         this.doctorRepostoriy = doctorRepostoriy;
         this.resourceBundleService = resourceBundleService;
         this.attachmentRepository = attachmentRepository;
-        this.toDTO = toDTO;
     }
 
     /**
-     * this method is used to store Syrdaryo doctors created by ADMIN this method also
+     * this method is used to store Sirdarya doctors created by ADMIN this method also
      * checks the doctor's image id if the image is not found it throws FileNotFoundException
      * if doctor saves it returns DoctorDTO
      *
-     * @param photoId  Integer
      * @param dto      DoctorDTO
      * @param language Language
-     * @return DoctorDTO
+     * @return dto
      */
 
+    public DoctorResponseDTO create(DoctorCreationDTO dto, Language language) {
 
-    public ResponseEntity<DoctorDTO> create(Integer photoId, DoctorDTO dto, Language language) {
+        Optional<AttachEntity> optional = attachmentRepository.findById(dto.getPhotoId());
 
-        Optional<AttachEntity> optional = attachmentRepository.findById(photoId);
-        if (optional.isEmpty()){
+        if (optional.isEmpty()) {
             throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
         }
 
@@ -63,9 +67,10 @@ public class DoctorSirdaryaService {
         doctorEntity.setDescription_ru(dto.getDescription_ru());
         doctorEntity.setPhotoId(attach);
         doctorEntity.setRole(DoctorRole.ROLE_DOCTOR_SIRDARYE);
+
         doctorRepostoriy.save(doctorEntity);
-        dto.setId(doctorEntity.getId());
-        return ResponseEntity.ok(toDTO.toDTO(doctorEntity));
+
+        return toResponseDTO(doctorEntity);
 
     }
 
@@ -76,25 +81,191 @@ public class DoctorSirdaryaService {
      *
      * @param id       Integer
      * @param language Language
-     * @return DoctorDTO
+     * @return doctorDTO
      */
 
-
-    public ResponseEntity<DoctorDTO> getDoctorById(Integer id, Language language) {
+    public DoctorResponseDTO getDoctorById(Integer id, Language language) {
 
         Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
-        if (optional.isEmpty()){
+
+        if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
         }
 
         DoctorEntity doctorEntity = optional.get();
-        return ResponseEntity.ok(toDTO.toDTO(doctorEntity));
+        DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+
+        if(language.equals(Language.UZ)){
+
+            doctorDTO.setId(doctorEntity.getId());
+            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+            doctorDTO.setPhone(doctorEntity.getPhone());
+            doctorDTO.setExperience(doctorEntity.getExperience());
+            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
+        }else if(language.equals(Language.RU)){
+
+            doctorDTO.setId(doctorEntity.getId());
+            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+            doctorDTO.setPhone(doctorEntity.getPhone());
+            doctorDTO.setExperience(doctorEntity.getExperience());
+            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
+        }
+
+        doctorDTO.setId(doctorEntity.getId());
+        return doctorDTO;
     }
 
+    /**
+     * this method is used by ADMIN to update the doctor data of Sirdarya doctor
+     * by id number if there is no such id number doctor throws DoctorNotFoundException
+     * if the data is updated it returns true
+     *
+     * @param id        Integer
+     * @param doctorDTO DoctorDTO
+     * @param language  Language
+     * @return true
+     */
 
+    public DoctorResponseDTO update(Integer id, DoctorUpdateDTO doctorDTO, Language language) {
 
+        Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
 
+        if (optional.isEmpty()) {
+            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+        }
 
+        DoctorEntity doctorEntity = optional.get();
+        doctorEntity.setFirstName_uz(doctorDTO.getFirstName_uz());
+        doctorEntity.setFirstName_ru(doctorDTO.getFirstName_ru());
+        doctorEntity.setLastName_uz(doctorDTO.getLastName_uz());
+        doctorEntity.setLastName_ru(doctorDTO.getLastName_ru());
+        doctorEntity.setSpeciality_uz(doctorDTO.getSpeciality_uz());
+        doctorEntity.setSpeciality_ru(doctorDTO.getSpeciality_ru());
+        doctorEntity.setPhone(doctorDTO.getPhone());
+        doctorEntity.setExperience(doctorDTO.getExperience());
+        doctorEntity.setDescription_uz(doctorDTO.getDescription_uz());
+        doctorEntity.setDescription_ru(doctorDTO.getDescription_ru());
 
+        doctorRepostoriy.save(doctorEntity);
 
+        return toResponseDTO(doctorEntity);
+    }
+
+    /**
+     * this method is used by ADMIN to delete Sirdarya doctor by id
+     * number if doctor id number is not found DoctorNotFoundException
+     * is thrown if doctor is deleted return true
+     *
+     * @param id       Integer
+     * @param language Language
+     * @return true
+     */
+
+    public String delete(Integer id, Language language) {
+
+        Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
+
+        if (optional.isEmpty()) {
+            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+        }
+
+        doctorRepostoriy.deleteById(optional.get().getId());
+
+        return "The doctor is deleted";
+    }
+
+    /**
+     * this method is used to get the list of Sirdarya Doctors in
+     * Pageable method if there is no list of doctors DoctorNotFoundListException
+     * is thrown if there is the list goes
+     *
+     * @param page     int
+     * @param size     int
+     * @param language Language
+     * @return PageImpl<>(dtoList, pageable, entityPage.getTotalElements());
+     */
+
+    public Page<DoctorResponseDTO> getDoctorPage(int page, int size, Language language) {
+
+        List<DoctorResponseDTO> dtoList = new LinkedList<>();
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<DoctorEntity> entityPage = doctorRepostoriy.findAllByRole(pageable, DoctorRole.ROLE_DOCTOR_SIRDARYE);
+
+        if (entityPage.isEmpty()) {
+            throw new DoctorNotFoundListException(resourceBundleService.getMessage("doctor.not.found.list", language));
+        }
+
+        if(language.equals(Language.UZ)){
+
+            for(DoctorEntity doctorEntity : entityPage.getContent()){
+
+                DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+                doctorDTO.setId(doctorEntity.getId());
+                doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+                doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+                doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+                doctorDTO.setPhone(doctorEntity.getPhone());
+                doctorDTO.setExperience(doctorEntity.getExperience());
+                doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+                doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+                dtoList.add(doctorDTO);
+
+            }
+
+        } else if (language.equals(Language.RU)) {
+
+            for(DoctorEntity doctorEntity : entityPage.getContent()){
+
+                DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+                doctorDTO.setId(doctorEntity.getId());
+                doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+                doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+                doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+                doctorDTO.setPhone(doctorEntity.getPhone());
+                doctorDTO.setExperience(doctorEntity.getExperience());
+                doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+                doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+                dtoList.add(doctorDTO);
+            }
+        }
+
+        return new PageImpl<>(dtoList, pageable, entityPage.getTotalElements());
+    }
+
+    /**
+     * this method is used to wrap the dr data in the DataBase back into a DTO
+     *
+     * @param doctorEntity DoctorEntity
+     * @return doctorResponseDTO
+     */
+
+    public DoctorResponseDTO toResponseDTO(DoctorEntity doctorEntity){
+
+        DoctorResponseDTO doctorResponseDTO = new DoctorResponseDTO();
+
+        doctorResponseDTO.setId(doctorEntity.getId());
+        doctorResponseDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+        doctorResponseDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+        doctorResponseDTO.setLastName_uz(doctorEntity.getLastName_uz());
+        doctorResponseDTO.setLastName_ru(doctorEntity.getLastName_ru());
+        doctorResponseDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+        doctorResponseDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+        doctorResponseDTO.setPhone(doctorEntity.getPhone());
+        doctorResponseDTO.setExperience(doctorEntity.getExperience());
+        doctorResponseDTO.setDescription_uz(doctorEntity.getDescription_uz());
+        doctorResponseDTO.setDescription_ru(doctorEntity.getDescription_ru());
+        doctorResponseDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
+        return doctorResponseDTO;
+    }
 }

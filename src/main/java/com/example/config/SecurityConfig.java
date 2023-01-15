@@ -66,11 +66,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**", "/api/attach/**").permitAll()
-                .requestMatchers("/api/doctorSirdarya/**").permitAll()
-                .requestMatchers("/api/doctorTashkent/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()
+                .requestMatchers("api/doctorsirdarya/public/**").permitAll()
+                .requestMatchers("api/doctortashkent/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

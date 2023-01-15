@@ -1,14 +1,14 @@
-package com.example.dto;
+package com.example.dto.doctor;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 
-public class DoctorDTO {
+@Getter
+@Setter
 
-    private Integer id;
+public class DoctorCreationDTO {
+
 
     @NotBlank(message = "firstName_uz cannot be null")
     private String firstName_uz;
@@ -41,8 +41,4 @@ public class DoctorDTO {
     private String description_ru;
 
     private Integer photoId;
-
-    private String role;
-
-
 }
