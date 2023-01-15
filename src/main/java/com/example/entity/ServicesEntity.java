@@ -18,4 +18,7 @@ public class ServicesEntity {
     @Column(nullable = false,unique = true)
     private String nameRu;
 
+    @OneToOne(mappedBy = "services",cascade = CascadeType.REMOVE)
+    private ServicesButtonEntity button;
+
 }

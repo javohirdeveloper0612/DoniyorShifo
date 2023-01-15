@@ -1,5 +1,4 @@
 package com.example.controller;
-import com.example.dto.ResumeDto;
 
 import com.example.dto.resume.CreatedResumeDto;
 import com.example.enums.Language;

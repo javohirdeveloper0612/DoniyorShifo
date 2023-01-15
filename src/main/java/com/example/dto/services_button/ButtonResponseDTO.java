@@ -1,17 +1,17 @@
-package com.example.dto;
+package com.example.dto.services_button;
 
-import com.example.entity.ServicesEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ButtonDTO {
+
+public class ButtonResponseDTO {
+
 
     private Integer id;
     private String buttonNameUz;
@@ -19,7 +19,7 @@ public class ButtonDTO {
     private String buttonDescriptionUz;
 
     private String buttonDescriptionRu;
-    private Integer services;
+    private Integer servicesId;
 
     private LocalDateTime createdDate;
 }

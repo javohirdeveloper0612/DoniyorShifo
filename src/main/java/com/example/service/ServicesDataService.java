@@ -1,14 +1,13 @@
 package com.example.service;
 
-import com.example.dto.ServicesDTO;
-import com.example.dto.services_data.ServicesCreateDTO;
+import com.example.dto.services_data.DataUpdateDTO;
+import com.example.dto.services_data.ServicesCreateDataDTO;
 import com.example.dto.services_data.ServicesDataResponseDTO;
 import com.example.entity.AttachEntity;
 import com.example.entity.ServicesButtonEntity;
 import com.example.entity.ServicesDataEntity;
 import com.example.enums.Language;
 import com.example.exp.attach.AttachNotFoundException;
-import com.example.exp.services.ServicesNotFoundException;
 import com.example.exp.servicesButton.ButtonNotFoundException;
 import com.example.exp.services_data.ServicesDataNotFoundException;
 import com.example.repository.AttachmentRepository;
@@ -39,7 +38,7 @@ public class ServicesDataService {
     }
 
 
-    public ServicesDataResponseDTO create(ServicesCreateDTO dto, Language language) {
+    public ServicesDataResponseDTO create(ServicesCreateDataDTO dto, Language language) {
         Optional<AttachEntity> attach = attachRepository.findById(dto.getAttachId());
         if (attach.isEmpty()) {
             throw new AttachNotFoundException(resourceBundleService.getMessage("attach.not.found", language));
@@ -83,20 +82,8 @@ public class ServicesDataService {
         if (optional.isEmpty()) {
             throw new ServicesDataNotFoundException(resourceBundleService.getMessage("services.data.not.found", language));
         }
-        ServicesDataEntity entity = optional.get();
-        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
 
-        if (language.equals(Language.RU)) {
-            dto.setTitleRu(entity.getTitleRu());
-            dto.setDescriptionRu(entity.getDescriptionRu());
-        } else if (language.equals(Language.UZ)) {
-            dto.setTitleUz(entity.getTitleUz());
-            dto.setDescriptionUz(entity.getDescriptionUz());
-        }
-        dto.setButtonId(entity.getButtonId());
-        dto.setAttachId(entity.getAttachId());
-
-        return dto;
+        return getDtoByLang(optional.get(),language);
     }
 
     public String deleteById(Integer id, Language language) {
@@ -108,5 +95,40 @@ public class ServicesDataService {
         repository.deleteById(optional.get().getId());
 
         return "Deleted successfully";
+    }
+
+    public ServicesDataResponseDTO getDtoByLang(ServicesDataEntity entity,Language language){
+        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
+
+        if (language.equals(Language.RU)) {
+            dto.setTitleRu(entity.getTitleRu());
+            dto.setDescriptionRu(entity.getDescriptionRu());
+        } else if (language.equals(Language.UZ)) {
+            dto.setTitleUz(entity.getTitleUz());
+            dto.setDescriptionUz(entity.getDescriptionUz());
+        }
+        dto.setId(entity.getId());
+        dto.setButtonId(entity.getButtonId());
+        dto.setAttachId(entity.getAttachId());
+        dto.setCreatedDate(entity.getCreatedDate());
+        return dto;
+    }
+
+    public ServicesDataResponseDTO updateById(Integer id, DataUpdateDTO dto, Language language) {
+
+        Optional<ServicesDataEntity> optional = repository.findById(id);
+        if (optional.isEmpty()){
+            throw new ServicesDataNotFoundException(resourceBundleService.getMessage("services.data.not.found", language));
+        }
+
+        ServicesDataEntity entity = optional.get();
+        entity.setTitleUz(dto.getTitleUz());
+        entity.setTitleRu(dto.getTitleRu());
+        entity.setDescriptionUz(dto.getDescriptionUz());
+        entity.setDescriptionRu(dto.getDescriptionRu());
+
+        repository.save(entity);
+
+        return getDTO(entity);
     }
 }

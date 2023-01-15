@@ -8,5 +8,35 @@ Content-Type: application/json
   "buttonNameRu": "Терапи",
   "buttonDescriptionUz": "bizda yangi muola mavjud",
   "buttonDescriptionRu": "у нас новое угощение",
-  "services": "4"
+  "servicesId": "2"
 }
+
+
+### update by id
+PUT localhost:8080/api/services_button/update/5
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Content-Type: application/json
+
+{
+  "buttonNameUz": "Dentist",
+  "buttonNameRu": "Дантист",
+  "buttonDescriptionUz": "Bizda malakali tish doctorlar mavjud",
+  "buttonDescriptionRu": "У нас есть квалифицированные стоматологи"
+}
+
+
+### get list
+GET localhost:8080/api/services_button/public/get_list
+Accept-Language: UZ
+
+### delete button
+DELETE localhost:8080/api/services_button/delete/4
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+
+
+
+
+
+
+
+

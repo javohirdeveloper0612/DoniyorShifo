@@ -4,12 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 
-public class ServicesCreateDTO {
+public class ServicesCreateDataDTO {
 
     @NotBlank(message = "title_uz cannot be empty")
     private String titleUz;
@@ -19,8 +17,9 @@ public class ServicesCreateDTO {
     private String descriptionUz;
     @NotBlank(message = "description_ru cannot be empty")
     private String descriptionRu;
-
+    @NotBlank(message = "AttachId cannot be empty")
     private Integer attachId;
+    @NotBlank(message = "ButtonId cannot be empty")
 
     private Integer buttonId;
 

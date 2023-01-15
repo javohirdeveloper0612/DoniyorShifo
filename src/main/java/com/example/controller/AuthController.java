@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.dto.LoginDTO;
-import com.example.dto.LoginResponseDTO;
+import com.example.dto.auth.LoginDTO;
+import com.example.dto.auth.LoginResponseDTO;
 import com.example.enums.Language;
 import com.example.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,4 +1,5 @@
 package com.example.entity;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,7 @@ public class AttachEntity {
     @Column
     private String type;
 
+    @OneToOne(mappedBy = "attach",cascade = CascadeType.REMOVE)
+    private AttachContentEntity attachContent;
 
 }

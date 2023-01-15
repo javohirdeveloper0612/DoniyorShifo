@@ -1,4 +1,5 @@
 package com.example.service;
+
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -6,7 +7,7 @@ import com.example.entity.AttachEntity;
 import com.example.entity.DoctorEntity;
 import com.example.enums.DoctorRole;
 import com.example.enums.Language;
-import com.example.exp.FileNotFoundException;
+import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.repository.AttachmentRepository;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

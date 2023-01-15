@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.dto.JwtDTO;
+import com.example.dto.auth.JwtDTO;
 import com.example.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;

@@ -80,6 +80,7 @@ public class SecurityConfig {
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()
+                .requestMatchers("/api/services_button/public/**").permitAll()
                 .requestMatchers("api/doctorsirdarya/public/**").permitAll()
                 .requestMatchers("api/doctortashkent/public/**").permitAll()
                 .anyRequest()

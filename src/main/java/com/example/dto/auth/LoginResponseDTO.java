@@ -1,4 +1,4 @@
-package com.example.dto;
+package com.example.dto.auth;
 
 import com.example.enums.AdminRole;
 import lombok.Getter;

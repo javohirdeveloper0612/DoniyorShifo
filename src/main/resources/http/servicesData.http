@@ -8,12 +8,12 @@ Content-Type: application/json
   "titleRu": "Terapevt",
   "descriptionUz": "malakali muolaja",
   "descriptionRu": "malakali muolaja",
-  "attachId": 3,
-  "buttonId": 8
+  "attachId": 1,
+  "buttonId": 4
 }
 
 ### delete services data by id
-DELETE localhost:8080/api/services_data/delete/1
+DELETE localhost:8080/api/services_data/delete/2
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
 
 
