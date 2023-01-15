@@ -1,4 +1,5 @@
 package com.example.service;
+
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -6,7 +7,8 @@ import com.example.entity.AttachEntity;
 import com.example.entity.DoctorEntity;
 import com.example.enums.DoctorRole;
 import com.example.enums.Language;
-import com.example.exp.FileNotFoundException;
+
+import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.repository.AttachmentRepository;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -95,7 +98,7 @@ public class DoctorSirdaryaService {
         DoctorEntity doctorEntity = optional.get();
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
-        if(language.equals(Language.UZ)){
+        if (language.equals(Language.UZ)) {
 
             doctorDTO.setId(doctorEntity.getId());
             doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
@@ -106,7 +109,7 @@ public class DoctorSirdaryaService {
             doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
             doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
 
-        }else if(language.equals(Language.RU)){
+        } else if (language.equals(Language.RU)) {
 
             doctorDTO.setId(doctorEntity.getId());
             doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
@@ -205,9 +208,9 @@ public class DoctorSirdaryaService {
             throw new DoctorNotFoundListException(resourceBundleService.getMessage("doctor.not.found.list", language));
         }
 
-        if(language.equals(Language.UZ)){
+        if (language.equals(Language.UZ)) {
 
-            for(DoctorEntity doctorEntity : entityPage.getContent()){
+            for (DoctorEntity doctorEntity : entityPage.getContent()) {
 
                 DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
                 doctorDTO.setId(doctorEntity.getId());
@@ -224,7 +227,7 @@ public class DoctorSirdaryaService {
 
         } else if (language.equals(Language.RU)) {
 
-            for(DoctorEntity doctorEntity : entityPage.getContent()){
+            for (DoctorEntity doctorEntity : entityPage.getContent()) {
 
                 DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
                 doctorDTO.setId(doctorEntity.getId());
@@ -249,7 +252,7 @@ public class DoctorSirdaryaService {
      * @return doctorResponseDTO
      */
 
-    public DoctorResponseDTO toResponseDTO(DoctorEntity doctorEntity){
+    public DoctorResponseDTO toResponseDTO(DoctorEntity doctorEntity) {
 
         DoctorResponseDTO doctorResponseDTO = new DoctorResponseDTO();
 
