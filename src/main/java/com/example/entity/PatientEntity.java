@@ -3,7 +3,9 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
@@ -22,13 +24,16 @@ public class PatientEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false,unique = true)
+    @Column
     private String phone;
 
     @Column(nullable = false)
     private LocalDate date;
 
-    @OneToOne(optional = false)
+    @ManyToOne
     private DoctorEntity doctorId;
+
+    @CreationTimestamp
+    private Timestamp createdDate;
 
 }

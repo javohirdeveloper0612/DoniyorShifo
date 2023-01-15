@@ -1,13 +1,15 @@
 package com.example.repository;
 
-import com.example.entity.AttachEntity;
 import com.example.entity.ResumeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface ResumeRepository extends JpaRepository<ResumeEntity, Integer> {
-    Optional<AttachEntity> findByAttachId(Integer attach_id);
+
+    @Query("from ResumeEntity order by createdAt desc ")
+    List<ResumeEntity> findAllResume();
 }

@@ -50,7 +50,6 @@ public class DoctorEntity {
 
     @OneToOne
     private AttachEntity photoId;
-
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdDate;
