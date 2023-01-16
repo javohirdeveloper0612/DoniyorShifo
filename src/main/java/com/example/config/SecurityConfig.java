@@ -78,6 +78,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/services_data/public/**").permitAll()
                 .requestMatchers("/api/services_button/public/**").permitAll()
                 .requestMatchers("/api/doctorsirdarya/public/**").permitAll()
+                .requestMatchers("/api/news/public/**").permitAll()
                 .requestMatchers("/api/doctortashkent/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
