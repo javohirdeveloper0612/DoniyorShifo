@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,6 +44,9 @@ public class PatientController {
      * @param language Language
      * @return ResponsePatientDTO
      */
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("view_patient/{id}")
     @Operation(summary = "Getting patient By id method", description = "This method is used for getting patient data by id")
     public ResponseEntity<?> getPatientById(@PathVariable Integer id,
@@ -57,6 +61,8 @@ public class PatientController {
      *
      * @return List<PatientEntity></PatientEntity>
      */
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/view_patient")
     @Operation(summary = "Viewing All the Patient data method", description = "This method is used for getting all the Patient data order by createdDate")
     public ResponseEntity<?> getAllPatientData() {

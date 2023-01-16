@@ -23,11 +23,18 @@ public class AuthService {
     }
 
 
+    /**
+     * This method is used for login to system if it is not exist throw AdminNotFoundException
+     *
+     * @param dto      LoginDto
+     * @param language Language
+     * @return LoginResponseDTO
+     */
     public LoginResponseDTO login(LoginDTO dto, Language language) {
 
         Optional<AdminEntity> optional = repository.findByUsernameAndPassword(dto.getUsername(), MD5.md5(dto.getPassword()));
-        if (optional.isEmpty()){
-            throw new AdminNotFoundException(resourceBundleService.getMessage("admin.not.found",language.name()));
+        if (optional.isEmpty()) {
+            throw new AdminNotFoundException(resourceBundleService.getMessage("admin.not.found", language.name()));
         }
 
         AdminEntity entity = optional.get();
@@ -36,7 +43,7 @@ public class AuthService {
         responseDTO.setName(entity.getName());
         responseDTO.setUsername(entity.getUsername());
         responseDTO.setRole(entity.getRole());
-        responseDTO.setToken(JwtUtil.encode(entity.getUsername(),entity.getRole()));
+        responseDTO.setToken(JwtUtil.encode(entity.getUsername(), entity.getRole()));
 
         return responseDTO;
     }

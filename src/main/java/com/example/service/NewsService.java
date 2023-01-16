@@ -92,8 +92,8 @@ public class NewsService {
             response.setDescription_ru(newsEntity.getDescription_ru());
         }
         if (language.equals(Language.UZ)) {
-            response.setTitle_ru(newsEntity.getTitle_uz());
-            response.setDescription_ru(newsEntity.getDescription_uz());
+            response.setTitle_uz(newsEntity.getTitle_uz());
+            response.setDescription_uz(newsEntity.getDescription_uz());
         }
         response.setPhotoId(newsEntity.getPhotoId().getId());
         return ResponseEntity.ok(response);
@@ -176,8 +176,17 @@ public class NewsService {
 
     public ResponseEntity<?> deleteNewsById(Integer id, Language language) {
 
+        Optional<NewsEntity> optional = newsRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
+        }
+
+        NewsEntity newsEntity = optional.get();
+        AttachEntity attach = newsEntity.getPhotoId();
+
         try {
             newsRepository.deleteById(id);
+            attachmentRepository.delete(attach);
         } catch (Exception e) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
