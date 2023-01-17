@@ -30,6 +30,7 @@ public class PatientController {
      * @param patientDto PatientDto
      * @return PatientDto
      */
+
     @PostMapping("/public/create_patient")
     @Operation(summary = "Creating Patient method", description = "This method is used for save Patient data IN DataBase")
     public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto

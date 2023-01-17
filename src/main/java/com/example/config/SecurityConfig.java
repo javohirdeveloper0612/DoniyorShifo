@@ -1,18 +1,19 @@
 package com.example.config;
-
 import com.example.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.lang.reflect.Method;
 
 @Configuration
 @EnableWebSecurity
@@ -24,8 +25,8 @@ public class SecurityConfig {
     private final AuthEntryPointJwt authEntryPointJwt;
 
     private final JwtFilter jwtFilter;
-    private final PasswordEncoder passwordEncoder;
 
+    private final PasswordEncoder passwordEncoder;
 
     private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
@@ -63,13 +64,19 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().httpBasic().disable();
 
         http
                 .authorizeHttpRequests()
 
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/attach/**").permitAll()
+                .requestMatchers("/api/resume/public/save_resume").permitAll()
+                .requestMatchers("/api/patient/public/create_patient").permitAll()
 
-                .requestMatchers("/auth/**", "/api/attach/**").permitAll()
+
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()
@@ -86,7 +93,6 @@ public class SecurityConfig {
         http.exceptionHandling().authenticationEntryPoint(authEntryPointJwt);
         return http.build();
     }
-
 
 
 }
