@@ -64,8 +64,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().httpBasic().disable();
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
                 .authorizeHttpRequests()
