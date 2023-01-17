@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ### get by id
 GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get/1
-Accept-Language: UZ
+Accept-Language: RU
 
 ### update services
 PUT localhost:8080/api/services/update/1
