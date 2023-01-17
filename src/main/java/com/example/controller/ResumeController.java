@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -45,6 +46,8 @@ public class ResumeController {
      * @param id Integer
      * @return CreatedResumeDto
      */
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/view_resume/{id}")
     @Operation(summary = "getting resume data method", description = "This method is used for getting resume data by id")
     public ResponseEntity<?> getResumeById(@PathVariable Integer id,
@@ -58,6 +61,7 @@ public class ResumeController {
      *
      * @return List<ResumeEntity> </>
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/view_all")
     @Operation(summary = "Getting all the resume data", description = "This method is used for getting all the resume data")
     public ResponseEntity<?> getAllResume() {

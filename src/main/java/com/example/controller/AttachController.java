@@ -50,8 +50,6 @@ public class AttachController {
      * @return Message
      */
 
-
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/download/{id}")
     @Operation(summary = "Download method", description = "This method used for downloading file")
     public ResponseEntity<?> downloadFile(@PathVariable Integer id, HttpServletResponse response, Language language) {
