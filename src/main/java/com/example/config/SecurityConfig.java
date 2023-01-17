@@ -60,13 +60,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                .csrf().disable()
+                .cors().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
                 .authorizeHttpRequests()
-
-                .requestMatchers("/auth/**", "/api/attach/**", "/api/resume/**", "/api/patient/**").permitAll()
 
 
                 .requestMatchers("/auth/**", "/api/attach/**").permitAll()
@@ -77,6 +77,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/doctorsirdarya/public/**").permitAll()
                 .requestMatchers("/api/news/public/**").permitAll()
                 .requestMatchers("/api/doctortashkent/public/**").permitAll()
+                .requestMatchers("/api/patient/public/**").permitAll()
+                .requestMatchers("/api/resume/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
