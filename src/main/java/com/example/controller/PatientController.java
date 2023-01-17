@@ -29,8 +29,8 @@ public class PatientController {
      * @param patientDto PatientDto
      * @return PatientDto
      */
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create_patient")
+
+    @PostMapping("/public/create_patient")
     @Operation(summary = "Creating Patient method", description = "This method is used for save Patient data IN DataBase")
     public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto
             , @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {

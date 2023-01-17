@@ -32,7 +32,7 @@ public class ResumeController {
      * @param resumeDto CreatedResumeDto
      * @return CreatedResumeDto
      */
-    @PostMapping("/save_resume")
+    @PostMapping("/public/save_resume")
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
     public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto,
                                         @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {

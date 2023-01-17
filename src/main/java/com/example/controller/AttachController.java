@@ -34,7 +34,7 @@ public class AttachController {
      * @param language Language
      * @return AttachDTO
      */
-    @PostMapping("/upload")
+    @PostMapping("/public/upload")
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
     public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request, Language language) {
         return attachService.uploadFile(request, language);
@@ -50,7 +50,7 @@ public class AttachController {
      * @return Message
      */
 
-    @GetMapping("/download/{id}")
+    @GetMapping("/public/download/{id}")
     @Operation(summary = "Download method", description = "This method used for downloading file")
     public ResponseEntity<?> downloadFile(@PathVariable Integer id, HttpServletResponse response, Language language) {
         return attachService.downloadFile(id, response, language);
