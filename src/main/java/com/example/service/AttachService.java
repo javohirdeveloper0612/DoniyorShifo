@@ -63,7 +63,7 @@ public class AttachService {
         long size = file.getSize();
         String contentType = request.getContentType();
 
-        //we set originalFilename, size, contentType to AttachDto to response Frontent
+        //we set originalFilename, size, contentType to AttachDto to response Frontend
 
 
         //we saved AttachEntity object in DB

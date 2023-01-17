@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.example.DoniyorShifoApplication
+web: java -jar target/DoniyorShifo-0.0.1-SNAPSHOT.jar

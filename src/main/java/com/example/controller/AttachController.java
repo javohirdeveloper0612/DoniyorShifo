@@ -36,7 +36,8 @@ public class AttachController {
      */
     @PostMapping("/upload")
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
-    public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request, Language language) {
+    public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request,
+                                        @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
         return attachService.uploadFile(request, language);
     }
 
@@ -51,7 +52,6 @@ public class AttachController {
      */
 
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/download/{id}")
     @Operation(summary = "Download method", description = "This method used for downloading file")
     public ResponseEntity<?> downloadFile(@PathVariable Integer id, HttpServletResponse response, Language language) {

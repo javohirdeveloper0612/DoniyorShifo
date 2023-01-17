@@ -11,6 +11,7 @@ import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.exp.services.AlreadyExistsServicesException;
 import com.example.exp.services.ServicesNotFoundException;
 import com.example.exp.servicesButton.AllReadyExistsButtonException;
+import com.example.exp.servicesButton.ButtonNotExistsException;
 import com.example.exp.servicesButton.ButtonNotFoundException;
 import com.example.exp.servicesButton.DataInCompleException;
 import com.example.exp.services_data.ServicesDataNotFoundException;
@@ -32,9 +33,9 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object>
     handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatusCode status,
-                                                                  WebRequest request) {
+                                 HttpHeaders headers,
+                                 HttpStatusCode status,
+                                 WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", status.value());
@@ -115,6 +116,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NewsDataNotFoundException.class})
     private ResponseEntity<?> handler(NewsDataNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler({ButtonNotExistsException.class})
+    private ResponseEntity<?> handler(ButtonNotExistsException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

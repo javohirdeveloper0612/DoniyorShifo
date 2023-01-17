@@ -5,6 +5,7 @@ import com.example.dto.doctor.DoctorUpdateDTO;
 import com.example.enums.Language;
 import com.example.service.DoctorSirdaryaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class DoctorSirdaryaController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     @Operation(summary = "Create Doctor Sirdarya ADMIN", description = "this method is used by ADMIN to create doctor Sirdarya")
     public ResponseEntity<?> create(
@@ -78,6 +80,7 @@ public class DoctorSirdaryaController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("update/{id}")
     @Operation(summary = "Update Doctor Sirdarya By id", description = "this method is used by ADMIN to update Sirdaryo doctor by id number")
     public ResponseEntity<?> update(
@@ -100,6 +103,7 @@ public class DoctorSirdaryaController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete Doctor Sirdarya By id", description = "this method is used by ADMIN to delete Sirdarya doctor by id number")
     public ResponseEntity<?> delete(
