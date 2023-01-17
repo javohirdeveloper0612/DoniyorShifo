@@ -48,7 +48,7 @@ public class DoctorEntity {
     @Column(columnDefinition = "text",nullable = false)
     private String description_ru;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private AttachEntity photoId;
     @CreationTimestamp
     @Column(updatable = false)

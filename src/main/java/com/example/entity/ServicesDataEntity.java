@@ -3,10 +3,7 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.service.annotation.GetExchange;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
@@ -40,8 +37,6 @@ public class ServicesDataEntity {
     @OneToOne(optional = false,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "button_id", insertable = false, updatable = false)
     private ServicesButtonEntity button;
-
-
 
     @Column(updatable = false)
     private LocalDateTime createdDate;
