@@ -28,3 +28,7 @@ DELETE localhost:8080/api/services/delete/2
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM5MjY3OTMsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDUzMTU5MywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.y7oMKFFzF9lR1McLEOTRDDAl4IuDv8XM54v5AeAU2KB1QG5_yLyDOtzGw15rabxO6U96dVoHztqUigy6ECIVLg
 
 
+###
+GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get_list
+
+
