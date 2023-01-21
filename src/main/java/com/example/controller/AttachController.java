@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class AttachController {
      * @param language Language
      * @return AttachDTO
      */
-    @PostMapping("/public/upload")
+    @PostMapping(value = "/public/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
     public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request,
                                         @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {

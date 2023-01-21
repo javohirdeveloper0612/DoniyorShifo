@@ -83,6 +83,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/doctortashkent/public/**").permitAll()
                 .requestMatchers("/api/resume/public/save_resume").permitAll()
                 .requestMatchers("/api/patient/public/create_patient").permitAll()
+                .requestMatchers("/test/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -92,7 +93,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsConnfiguration()
+    public WebMvcConfigurer corsConfiguration()
     {
         return new WebMvcConfigurer() {
             @Override
