@@ -1,12 +1,12 @@
 ### create new doctor Tashkent
 
 POST localhost:8080/api/doctortashkent/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzQzNzMxODcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDk3Nzk4NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.fgCgoyLbTIw6PtNN9lSmOKLhw6nGIoJpGcBy5go-i02fr2tooxpbs6Ibl9LWaEEMxAcC6FPQdfIm7p1MmdMpdg
 Accept-Language: UZ
 Content-Type: application/json
 
 {
-  "firstName_uz": "`Diyor`",
+  "firstName_uz": "Diyor",
   "firstName_ru": "Диёр ",
   "lastName_uz": "Mamatqulov",
   "lastName_ru": "Маматкулов  ",
@@ -16,7 +16,7 @@ Content-Type: application/json
   "experience": 2,
   "description_uz": "Quloq davolash ishlarini amalga oshiradi",
   "description_ru": "Выполняет лечение ушей ",
-  "photoId": 1
+  "photoId": 6
 }
 
 ### Get By id Doctor Tashkent
