@@ -1,21 +1,21 @@
 ### create new doctor Sirdarya
 POST localhost:8080/api/doctorsirdarya/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzQzODQzMjIsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDk4OTEyMiwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.MtTyuCJXbnA6XgIjB1VvVF4ub0CG5sJB7ew7GInvxUvYPnzqZkmKnZYlgjsGSjXUngeF0QQiyI5lxwJtK-DSbQ
 Accept-Language: UZ
 Content-Type: application/json
 
 {
-  "firstName_uz": "Abdulla",
-  "firstName_ru": "Абдулла",
-  "lastName_uz": "Aliyev",
-  "lastName_ru": "Алиев ",
-  "speciality_uz": "Hirurg",
-  "speciality_ru": "Хирург ",
-  "phone": "+998901023434",
+  "firstName_uz": "dawfa",
+  "firstName_ru": "gafwaf",
+  "lastName_uz": "asfasf",
+  "lastName_ru": "fwafaw ",
+  "speciality_uz": "safasgf",
+  "speciality_ru": "gwagaw ",
+  "phone": "+998901023424",
   "experience": 6,
   "description_uz": "Aperatsiyalar amalga oshiradi",
   "description_ru": "Аперациялар амальга оширади ",
-  "photoId": 1
+  "photoId": 6
 
 }
 
@@ -51,3 +51,7 @@ Accept-Language: UZ
 
 ### Doctor Sirdarya List Pagination
 GET localhost:8080/api/doctorsirdarya/public/getdoctorpages
+
+### doctor list
+GET localhost:8080/api/doctorsirdarya/get_list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzQzODQzMjIsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDk4OTEyMiwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.MtTyuCJXbnA6XgIjB1VvVF4ub0CG5sJB7ew7GInvxUvYPnzqZkmKnZYlgjsGSjXUngeF0QQiyI5lxwJtK-DSbQ

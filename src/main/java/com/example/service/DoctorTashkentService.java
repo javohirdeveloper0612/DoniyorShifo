@@ -11,7 +11,7 @@ import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.repository.AttachmentRepository;
-import com.example.repository.DoctorRepostoriy;
+import com.example.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,13 +26,13 @@ import java.util.Optional;
 @Service
 public class DoctorTashkentService {
 
-    private final DoctorRepostoriy doctorRepostoriy;
+    private final DoctorRepository doctorRepository;
     private final AttachmentRepository attachmentRepository;
     private final ResourceBundleService resourceBundleService;
 
     @Autowired
-    public DoctorTashkentService(DoctorRepostoriy doctorRepostoriy, AttachmentRepository attachmentRepository, ResourceBundleService resourceBundleService) {
-        this.doctorRepostoriy = doctorRepostoriy;
+    public DoctorTashkentService(DoctorRepository doctorRepository, AttachmentRepository attachmentRepository, ResourceBundleService resourceBundleService) {
+        this.doctorRepository = doctorRepository;
         this.attachmentRepository = attachmentRepository;
         this.resourceBundleService = resourceBundleService;
     }
@@ -70,7 +70,7 @@ public class DoctorTashkentService {
         doctorEntity.setPhotoId(attach);
         doctorEntity.setRole(DoctorRole.ROLE_DOCTOR_TASHKENT);
 
-        doctorRepostoriy.save(doctorEntity);
+        doctorRepository.save(doctorEntity);
 
         return toResponseDTO(doctorEntity);
 
@@ -88,7 +88,7 @@ public class DoctorTashkentService {
 
     public DoctorResponseDTO getDoctorById(Integer id, Language language) {
 
-        Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
+        Optional<DoctorEntity> optional = doctorRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
@@ -138,7 +138,7 @@ public class DoctorTashkentService {
 
     public DoctorResponseDTO update(Integer id, DoctorUpdateDTO doctorDTO, Language language) {
 
-        Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
+        Optional<DoctorEntity> optional = doctorRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
@@ -156,7 +156,7 @@ public class DoctorTashkentService {
         doctorEntity.setDescription_uz(doctorDTO.getDescription_uz());
         doctorEntity.setDescription_ru(doctorDTO.getDescription_ru());
 
-        doctorRepostoriy.save(doctorEntity);
+        doctorRepository.save(doctorEntity);
 
         return toResponseDTO(doctorEntity);
     }
@@ -173,13 +173,13 @@ public class DoctorTashkentService {
 
     public String delete(Integer id, Language language) {
 
-        Optional<DoctorEntity> optional = doctorRepostoriy.findById(id);
+        Optional<DoctorEntity> optional = doctorRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
         }
 
-        doctorRepostoriy.deleteById(optional.get().getId());
+        doctorRepository.deleteById(optional.get().getId());
 
         return "The doctor is deleted";
     }
@@ -201,7 +201,7 @@ public class DoctorTashkentService {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<DoctorEntity> entityPage = doctorRepostoriy.findAllByRole(pageable, DoctorRole.ROLE_DOCTOR_TASHKENT);
+        Page<DoctorEntity> entityPage = doctorRepository.findAllByRole(pageable, DoctorRole.ROLE_DOCTOR_TASHKENT);
 
         if (entityPage.isEmpty()) {
             throw new DoctorNotFoundListException(resourceBundleService.getMessage("doctor.not.found.list", language));
@@ -270,5 +270,50 @@ public class DoctorTashkentService {
 
         return doctorResponseDTO;
     }
+
+    public List<DoctorResponseDTO> getAllList(Language language) {
+        List<DoctorEntity> list = doctorRepository.findAllByRole(DoctorRole.ROLE_DOCTOR_TASHKENT);
+
+        if (list.isEmpty()) {
+            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+        }
+
+        List<DoctorResponseDTO> dtoList = new LinkedList<>();
+        list.forEach(doctorEntity -> dtoList.add(getDtoByLang(doctorEntity, language)));
+
+        return dtoList;
+    }
+
+    public DoctorResponseDTO getDtoByLang(DoctorEntity doctorEntity, Language language) {
+        DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+
+        if (language.equals(Language.UZ)) {
+
+            doctorDTO.setId(doctorEntity.getId());
+            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+            doctorDTO.setPhone(doctorEntity.getPhone());
+            doctorDTO.setExperience(doctorEntity.getExperience());
+            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
+        } else if (language.equals(Language.RU)) {
+
+            doctorDTO.setId(doctorEntity.getId());
+            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+            doctorDTO.setPhone(doctorEntity.getPhone());
+            doctorDTO.setExperience(doctorEntity.getExperience());
+            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
+        }
+
+        return doctorDTO;
+    }
+
+
 
 }

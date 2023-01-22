@@ -6,7 +6,7 @@ import com.example.entity.PatientEntity;
 import com.example.enums.Language;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.patient.PatientNotFoundException;
-import com.example.repository.DoctorRepostoriy;
+import com.example.repository.DoctorRepository;
 import com.example.repository.PatientRepository;
 import com.example.util.ToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,16 @@ import java.util.Optional;
 public class PatientService {
 
     private final PatientRepository patientRepository;
-    private final DoctorRepostoriy doctorRepostoriy;
+    private final DoctorRepository doctorRepository;
     private final ResourceBundleService resourceBundleService;
 
     private final ToDTO toDTO;
 
 
     @Autowired
-    public PatientService(PatientRepository patientRepository, DoctorRepostoriy doctorRepostoriy, ResourceBundleService resourceBundleService, ToDTO toDTO) {
+    public PatientService(PatientRepository patientRepository, DoctorRepository doctorRepository, ResourceBundleService resourceBundleService, ToDTO toDTO) {
         this.patientRepository = patientRepository;
-        this.doctorRepostoriy = doctorRepostoriy;
+        this.doctorRepository = doctorRepository;
         this.resourceBundleService = resourceBundleService;
         this.toDTO = toDTO;
     }
@@ -43,7 +43,7 @@ public class PatientService {
      */
     public ResponseEntity<?> createPatient(CreatePatientDto patientDto, Language language) {
 
-        Optional<DoctorEntity> optional = doctorRepostoriy.findById(patientDto.getDoctorId());
+        Optional<DoctorEntity> optional = doctorRepository.findById(patientDto.getDoctorId());
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language.name()));
         }

@@ -133,10 +133,9 @@ public class ServicesButtonService {
     public List<ButtonResponseDTO> getListButton(Language language) {
 
 
-
         List<ServicesButtonEntity> list = repository.findAll();
 
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             throw new ButtonNotExistsException(resourceBundleService.getMessage("button.not.exists.found", language));
         }
 
@@ -144,7 +143,7 @@ public class ServicesButtonService {
         List<ButtonResponseDTO> dtoList = new ArrayList<>();
 
         for (ServicesButtonEntity buttonEntity : list) {
-            dtoList.add(getDtoByLang(buttonEntity,language));
+            dtoList.add(getDtoByLang(buttonEntity, language));
         }
 
         return dtoList;

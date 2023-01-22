@@ -1,4 +1,5 @@
 package com.example.controller;
+
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -44,7 +47,7 @@ public class DoctorSirdaryaController {
             @RequestBody DoctorCreationDTO dto,
             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
 
-        DoctorResponseDTO result = doctorSirdaryaService.create( dto, language);
+        DoctorResponseDTO result = doctorSirdaryaService.create(dto, language);
         return ResponseEntity.ok().body(result);
 
     }
@@ -133,9 +136,19 @@ public class DoctorSirdaryaController {
             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
 
 
-        Page<DoctorResponseDTO> allNews = doctorSirdaryaService.getDoctorPage(page, size , language);
+        Page<DoctorResponseDTO> allNews = doctorSirdaryaService.getDoctorPage(page, size, language);
         return ResponseEntity.ok().body(allNews);
 
+    }
+
+    @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/get_list")
+    public ResponseEntity<?> getAllList(@RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
+
+        List<DoctorResponseDTO> result = doctorSirdaryaService.getAllList(language);
+
+        return ResponseEntity.ok().body(result);
     }
 
 

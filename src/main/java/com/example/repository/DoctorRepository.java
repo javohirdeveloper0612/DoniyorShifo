@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
 
 
-public interface DoctorRepostoriy extends PagingAndSortingRepository<DoctorEntity,Integer>, JpaRepository<DoctorEntity,Integer> {
+public interface DoctorRepository extends PagingAndSortingRepository<DoctorEntity,Integer>, JpaRepository<DoctorEntity,Integer> {
 
     Page<DoctorEntity> findAllByRole(Pageable pageable,DoctorRole role);
+    List<DoctorEntity> findAllByRole(DoctorRole role);
 
 }

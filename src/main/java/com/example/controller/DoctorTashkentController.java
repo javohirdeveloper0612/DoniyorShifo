@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/doctortashkent")
 @Tag(name = "Doctor Tashkent Controller API", description = "Api list for Doctor Tashkent")
@@ -135,6 +137,16 @@ public class DoctorTashkentController {
         Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, language);
         return ResponseEntity.ok(allNews);
 
+    }
+
+    @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/get_list")
+    public ResponseEntity<?> getAllList(@RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
+
+        List<DoctorResponseDTO> result = doctorTashkentService.getAllList(language);
+
+        return ResponseEntity.ok().body(result);
     }
 
 

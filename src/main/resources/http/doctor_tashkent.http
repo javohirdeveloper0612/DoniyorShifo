@@ -1,18 +1,18 @@
 ### create new doctor Tashkent
 
 POST localhost:8080/api/doctortashkent/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzQzNzMxODcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDk3Nzk4NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.fgCgoyLbTIw6PtNN9lSmOKLhw6nGIoJpGcBy5go-i02fr2tooxpbs6Ibl9LWaEEMxAcC6FPQdfIm7p1MmdMpdg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzQzODQzMjIsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDk4OTEyMiwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.MtTyuCJXbnA6XgIjB1VvVF4ub0CG5sJB7ew7GInvxUvYPnzqZkmKnZYlgjsGSjXUngeF0QQiyI5lxwJtK-DSbQ
 Accept-Language: UZ
 Content-Type: application/json
 
 {
-  "firstName_uz": "Diyor",
-  "firstName_ru": "Диёр ",
-  "lastName_uz": "Mamatqulov",
-  "lastName_ru": "Маматкулов  ",
-  "speciality_uz": "Lor",
-  "speciality_ru": "Лор  ",
-  "phone": "+998993459408",
+  "firstName_uz": "faw",
+  "firstName_ru": "safas ",
+  "lastName_uz": "Mamatqdwaulov",
+  "lastName_ru": "fawfwa  ",
+  "speciality_uz": "fwa",
+  "speciality_ru": "asfas  ",
+  "phone": "+998993459406",
   "experience": 2,
   "description_uz": "Quloq davolash ishlarini amalga oshiradi",
   "description_ru": "Выполняет лечение ушей ",
