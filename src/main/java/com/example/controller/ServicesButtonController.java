@@ -29,16 +29,14 @@ public class ServicesButtonController {
      * This method for create new ServicesButton (only ADMIN)
      *
      * @param dto      ButtonCreateDTO
-     * @param language UZ,RU
      * @return ButtonResponseDTO
      */
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new button (only ADMIN)")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody ButtonCreateDTO dto,
-                                    @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        ButtonResponseDTO result = service.create(dto, language);
+    public ResponseEntity<?> create(@RequestBody ButtonCreateDTO dto) {
+        ButtonResponseDTO result = service.create(dto, Language.UZ);
         return ResponseEntity.ok().body(result);
     }
 
@@ -46,16 +44,14 @@ public class ServicesButtonController {
      * This method for delete ServicesButton (only ADMIN)
      *
      * @param id       the id of the button you want to launch is entered
-     * @param language UZ,RU
      * @return String, Returns ButtonNotFoundException if not found
      */
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete button", description = "This method for delete Services Button by Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id,
-                                    @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        String result = service.deleteById(id, language);
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        String result = service.deleteById(id,Language.UZ);
 
         return ResponseEntity.ok(result);
     }
@@ -64,15 +60,13 @@ public class ServicesButtonController {
      * This Method get Button by id
      *
      * @param id       enter the id of the button you want to search for
-     * @param language UZ,RU
      * @return ButtonResponseDto ,returns a ButtonNotFoundException if the button is not found
      */
     @Operation(summary = "Get Button", description = "This method for get Button by Id ")
     @GetMapping("/public/get/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id,
-                                     @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
 
-        ButtonResponseDTO result = service.geById(id, language);
+        ButtonResponseDTO result = service.geById(id, Language.UZ);
 
         return ResponseEntity.ok().body(result);
     }
@@ -82,7 +76,6 @@ public class ServicesButtonController {
      *
      * @param id       enter the button id you want to change
      * @param dto      ButtonUpdateDTO
-     * @param language UZ,RU
      * @return ButtonResponseDto, Throws a ButtonNotFoundException if the id is not found
      */
 
@@ -91,9 +84,8 @@ public class ServicesButtonController {
     @Operation(summary = "Update Services Button", description = "This method for services button by Id (only ADMIN) ")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @RequestBody ButtonUpdateDTO dto,
-                                    @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        ButtonResponseDTO result = service.updateById(id, dto, language);
+                                    @RequestBody ButtonUpdateDTO dto) {
+        ButtonResponseDTO result = service.updateById(id, dto, Language.UZ);
 
         return ResponseEntity.ok(result);
     }
@@ -101,13 +93,12 @@ public class ServicesButtonController {
     /**
      * This method for get Button List
      *
-     * @param language UZ,RU default language UZ
      * @return buttonList ,Returns ButtonNotFoundException if the button does not exist
      */
     @Operation(summary = "Get Button List", description = "This method for get list Button")
     @GetMapping("/public/get_list")
-    public ResponseEntity<?> getList(@RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        List<ButtonResponseDTO> result = service.getListButton(language);
+    public ResponseEntity<?> getList() {
+        List<ButtonResponseDTO> result = service.getListButton(Language.UZ);
 
         return ResponseEntity.ok(result);
     }

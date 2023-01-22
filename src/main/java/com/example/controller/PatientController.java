@@ -33,17 +33,15 @@ public class PatientController {
 
     @PostMapping("/public/create_patient")
     @Operation(summary = "Creating Patient method", description = "This method is used for save Patient data IN DataBase")
-    public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto
-            , @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
-        return patientService.createPatient(patientDto, language);
+    public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto) {
+        return patientService.createPatient(patientDto, Language.UZ);
     }
 
 
     /**
      * This method is used for getting patient data by id If it is not exist throw PatientNotFoundException
      *
-     * @param id       Integer
-     * @param language Language
+     * @param id Integer
      * @return ResponsePatientDTO
      */
 
@@ -52,9 +50,8 @@ public class PatientController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("view_patient/{id}")
     @Operation(summary = "Getting patient By id method", description = "This method is used for getting patient data by id")
-    public ResponseEntity<?> getPatientById(@PathVariable Integer id,
-                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
-        return patientService.getPatientById(id, language);
+    public ResponseEntity<?> getPatientById(@PathVariable Integer id) {
+        return patientService.getPatientById(id, Language.UZ);
 
     }
 

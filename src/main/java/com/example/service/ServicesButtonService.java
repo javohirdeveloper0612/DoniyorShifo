@@ -93,25 +93,10 @@ public class ServicesButtonService {
             throw new ButtonNotFoundException(resourceBundleService.getMessage("button.not.found", language));
         }
 
-        return getDtoByLang(optional.get(), language);
+        return getDTO(optional.get());
     }
 
-    public ButtonResponseDTO getDtoByLang(ServicesButtonEntity entity, Language language) {
-        ButtonResponseDTO dto = new ButtonResponseDTO();
-        if (language.equals(Language.UZ)) {
 
-            dto.setButtonNameUz(entity.getButtonNameUz());
-            dto.setButtonDescriptionUz(entity.getButtonDescriptionUz());
-        } else if (language.equals(Language.RU)) {
-            dto.setButtonNameRu(entity.getButtonNameRu());
-            dto.setButtonDescriptionRu(entity.getButtonDescriptionRu());
-        }
-        dto.setId(entity.getId());
-        dto.setServicesId(entity.getServicesId());
-        dto.setCreatedDate(entity.getCreatedDate());
-
-        return dto;
-    }
 
     public ButtonResponseDTO updateById(Integer id, ButtonUpdateDTO dto, Language language) {
         Optional<ServicesButtonEntity> optional = repository.findById(id);
@@ -143,7 +128,7 @@ public class ServicesButtonService {
         List<ButtonResponseDTO> dtoList = new ArrayList<>();
 
         for (ServicesButtonEntity buttonEntity : list) {
-            dtoList.add(getDtoByLang(buttonEntity, language));
+            dtoList.add(getDTO(buttonEntity));
         }
 
         return dtoList;

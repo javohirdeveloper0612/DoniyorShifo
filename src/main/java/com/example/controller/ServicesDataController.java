@@ -25,17 +25,15 @@ public class ServicesDataController {
     /**
      * This method for create new ServicesData only ADMIN
      *
-     * @param dto      CreateDto
-     * @param language UZ ,RU
+     * @param dto CreateDto
      * @return ServicesDataResponseDTO
      */
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new services data")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody ServicesCreateDataDTO dto,
-                                    @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        ServicesDataResponseDTO result = service.create(dto, language);
+    public ResponseEntity<?> create(@RequestBody ServicesCreateDataDTO dto) {
+        ServicesDataResponseDTO result = service.create(dto, Language.UZ);
 
         return ResponseEntity.ok(result);
     }
@@ -43,15 +41,13 @@ public class ServicesDataController {
     /**
      * This method for getById ServicesData
      *
-     * @param id       id for ServicesData id
-     * @param language UZ,RU
+     * @param id id for ServicesData id
      * @return ServicesDataResponseDTO
      */
     @Operation(summary = "Get Service Data", description = "this method for get Services Data By Id")
     @GetMapping("/public/get/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id,
-                                     @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
-        ServicesDataResponseDTO result = service.getById(id, language);
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
+        ServicesDataResponseDTO result = service.getById(id, Language.UZ);
 
         return ResponseEntity.ok(result);
     }
@@ -59,26 +55,23 @@ public class ServicesDataController {
     /**
      * This method for delete ServicesData by ID only Delete ADMIN
      *
-     * @param id       ServicesData id
-     * @param language UZ,RU
+     * @param id ServicesData id
      * @return String Deleted successfully
      */
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete Services Data", description = "This method for delete Services Data by Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id,
-                                    @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        String result = service.deleteById(id, language);
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        String result = service.deleteById(id, Language.UZ);
         return ResponseEntity.ok(result);
     }
 
     /**
      * This method for update ServicesData By id only ADMIN
      *
-     * @param id       id old servicesData
-     * @param dto      DataUpdateDTO
-     * @param language UZ,RU
+     * @param id  id old servicesData
+     * @param dto DataUpdateDTO
      * @return ServicesDataResponseDTO
      */
     @PreAuthorize("hasRole('ADMIN')")
@@ -86,9 +79,8 @@ public class ServicesDataController {
     @Operation(summary = "Update Services Data", description = "This method for services Data by Id (only ADMIN) ")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @RequestBody DataUpdateDTO dto,
-                                    @RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        ServicesDataResponseDTO result = service.updateById(id, dto, language);
+                                    @RequestBody DataUpdateDTO dto) {
+        ServicesDataResponseDTO result = service.updateById(id, dto, Language.UZ);
 
         return ResponseEntity.ok(result);
     }

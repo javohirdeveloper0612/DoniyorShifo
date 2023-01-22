@@ -55,20 +55,13 @@ public class ServicesService {
         }
 
         ServicesEntity entity = optional.get();
-        ServicesResponseDTO dto = new ServicesResponseDTO();
-        if (language.equals(Language.UZ)) {
-            dto.setNameUz(entity.getNameUz());
-        } else if (language.equals(Language.RU)) {
-            dto.setNameRu(entity.getNameRu());
-        }
-        dto.setId(entity.getId());
-        return dto;
+        return getDTO(entity);
     }
 
     public List<ServicesResponseDTO> getList() {
         List<ServicesEntity> servicesList = repository.findAll();
         if (servicesList.isEmpty()) {
-//            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
+            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", Language.UZ));
         }
         List<ServicesResponseDTO> dtoList = new LinkedList<>();
         for (ServicesEntity entity : servicesList) {
@@ -103,17 +96,7 @@ public class ServicesService {
         return getDTO(entity);
     }
 
-    public ServicesResponseDTO getDtoByLang(ServicesEntity entity, Language language) {
-        ServicesResponseDTO dto = new ServicesResponseDTO();
-        if (language.equals(Language.UZ)) {
-            dto.setId(entity.getId());
-            dto.setNameUz(entity.getNameUz());
-        } else if (language.equals(Language.RU)) {
-            dto.setId(entity.getId());
-            dto.setNameRu(entity.getNameRu());
-        }
-        return dto;
-    }
+
 
 
 }

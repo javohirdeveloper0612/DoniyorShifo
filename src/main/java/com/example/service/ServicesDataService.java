@@ -83,7 +83,7 @@ public class ServicesDataService {
             throw new ServicesDataNotFoundException(resourceBundleService.getMessage("services.data.not.found", language));
         }
 
-        return getDtoByLang(optional.get(),language);
+        return getDTO(optional.get());
     }
 
     public String deleteById(Integer id, Language language) {
@@ -97,22 +97,7 @@ public class ServicesDataService {
         return "Deleted successfully";
     }
 
-    public ServicesDataResponseDTO getDtoByLang(ServicesDataEntity entity,Language language){
-        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
 
-        if (language.equals(Language.RU)) {
-            dto.setTitleRu(entity.getTitleRu());
-            dto.setDescriptionRu(entity.getDescriptionRu());
-        } else if (language.equals(Language.UZ)) {
-            dto.setTitleUz(entity.getTitleUz());
-            dto.setDescriptionUz(entity.getDescriptionUz());
-        }
-        dto.setId(entity.getId());
-        dto.setButtonId(entity.getButtonId());
-        dto.setAttachId(entity.getAttachId());
-        dto.setCreatedDate(entity.getCreatedDate());
-        return dto;
-    }
 
     public ServicesDataResponseDTO updateById(Integer id, DataUpdateDTO dto, Language language) {
 

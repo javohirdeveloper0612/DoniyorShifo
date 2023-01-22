@@ -65,7 +65,6 @@ public class PatientService {
      * This method is used for getting patient data by id If it is not exist throw PatientNotFoundException
      *
      * @param id       Integer
-     * @param language Language
      * @return ResponsePatientDto
      */
     public ResponseEntity<?> getPatientById(Integer id, Language language) {
