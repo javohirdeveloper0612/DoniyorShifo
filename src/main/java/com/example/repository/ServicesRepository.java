@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ServicesRepository extends JpaRepository<ServicesEntity,Integer> {
 
-    Optional<ServicesEntity> findByNameUz(String name);
+    Optional<ServicesEntity> findByNameUzAndNameRu(String nameUz,String nameRu);
 
 
 

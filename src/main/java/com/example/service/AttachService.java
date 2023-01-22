@@ -43,27 +43,27 @@ public class AttachService {
      * This method is used for file uploading in DataBase
      * If File Name is Empty  ,throw FileNameNotFoundException()
      *
-     * @param request  MultipartHttpServletRequest
+     * @param file  MultipartHttpServletRequest
      * @param language Language
      * @return AttachDTO
      */
 
 
-    public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request, Language language) {
+    public ResponseEntity<?> uploadFile(MultipartFile file, Language language) {
 
-        Iterator<String> fileNames = request.getFileNames();
+        /*Iterator<String> fileNames = request.getFi();
         MultipartFile file = request.getFile(fileNames.next());
 
         if (file == null) {
             throw new FileNameNotFoundException(
                     resourceBundleService.getMessage("fileName.not.found", language.name()));
-        }
+        }*/
 
         String originalFilename = file.getOriginalFilename();
         long size = file.getSize();
-        String contentType = request.getContentType();
+        String contentType = file.getContentType();
 
-        //we set originalFilename, size, contentType to AttachDto to response Frontent
+        //we set originalFilename, size, contentType to AttachDto to response Frontend
 
 
         //we saved AttachEntity object in DB
@@ -125,7 +125,7 @@ public class AttachService {
 
         response.setContentType(attachment.getType());
         AttachDTO attachDTO = new AttachDTO();
-        attachDTO.setFileOriginalname(attachment.getOriginalName());
+        attachDTO.setFileOriginalName(attachment.getOriginalName());
         attachDTO.setType(attachment.getType());
         attachDTO.setSize(attachment.getSize());
         attachDTO.setId(attachment.getId());

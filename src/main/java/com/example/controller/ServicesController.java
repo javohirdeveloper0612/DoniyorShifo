@@ -5,6 +5,7 @@ import com.example.dto.services.ServicesCreateDTO;
 import com.example.enums.Language;
 import com.example.service.ServicesService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +23,6 @@ public class ServicesController {
 
     private final ServicesService service;
 
-    public ServicesController(ServicesService service) {
-        this.service = service;
-    }
-
     /**
      * This method for Create new Services
      *
@@ -34,6 +31,7 @@ public class ServicesController {
      * @return ServicesResponseDTO
      */
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create services method", description = "Method for create services (ONLY ADMIN) ")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicesCreateDTO dto,
@@ -41,6 +39,10 @@ public class ServicesController {
         ServicesResponseDTO result = service.create(dto, language);
 
         return ResponseEntity.ok().body(result);
+    }
+
+    public ServicesController(ServicesService service) {
+        this.service = service;
     }
 
     /**
@@ -80,6 +82,7 @@ public class ServicesController {
      * @return String
      */
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete Services", description = "this method for delete services By Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id,
@@ -97,6 +100,7 @@ public class ServicesController {
      * @return ButtonResponseDto, Throws a ServicesNotFoundException if the id is not found
      */
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Update Services", description = "This method for update Services by Id (only ADMIN)")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateById(@PathVariable("id") Integer id,

@@ -6,6 +6,7 @@ import com.example.dto.services_button.ButtonUpdateDTO;
 import com.example.enums.Language;
 import com.example.service.ServicesButtonService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +33,7 @@ public class ServicesButtonController {
      * @return ButtonResponseDTO
      */
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new button (only ADMIN)")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody ButtonCreateDTO dto,
@@ -48,6 +50,7 @@ public class ServicesButtonController {
      * @return String, Returns ButtonNotFoundException if not found
      */
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete button", description = "This method for delete Services Button by Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id,
@@ -84,6 +87,7 @@ public class ServicesButtonController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Update Services Button", description = "This method for services button by Id (only ADMIN) ")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,

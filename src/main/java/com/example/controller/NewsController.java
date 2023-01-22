@@ -4,6 +4,7 @@ import com.example.dto.news.CreatedNewsDto;
 import com.example.enums.Language;
 import com.example.service.NewsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class NewsController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     @Operation(summary = "Create News data method", description = "This method is used for creating news data")
     public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto,
@@ -78,6 +80,7 @@ public class NewsController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/edite/{id}")
     @Operation(summary = "Edite News data", description = "This method is used for editing news Data If News Data not found throw NewsDataNotFoundException")
     public ResponseEntity<?> editeNews(@PathVariable Integer id, @Valid @RequestBody CreatedNewsDto dto, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
@@ -94,6 +97,7 @@ public class NewsController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete news data method", description = "This method is used for deleting news data")
     public ResponseEntity<?> deleteNews(@PathVariable Integer id, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {

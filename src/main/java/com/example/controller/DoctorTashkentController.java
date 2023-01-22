@@ -5,6 +5,7 @@ import com.example.dto.doctor.DoctorUpdateDTO;
 import com.example.enums.Language;
 import com.example.service.DoctorTashkentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public class DoctorTashkentController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     @Operation(summary = "Create Doctor Tashkent ADMIN", description = "this method is used by ADMIN to create doctor Tashkent")
     public ResponseEntity<?> create(
@@ -76,6 +78,7 @@ public class DoctorTashkentController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/update/{id}")
     @Operation(summary = "Update Doctor Tashkent By id", description = "this method is used by ADMIN to update Tashkent doctor by id number")
     public ResponseEntity<?> update(
@@ -98,6 +101,7 @@ public class DoctorTashkentController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete Doctor Tashkent By id", description = "this method is used by ADMIN to delete Tashkent doctor by id number")
     public ResponseEntity<?> delete(

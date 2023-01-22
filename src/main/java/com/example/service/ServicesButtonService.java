@@ -8,6 +8,7 @@ import com.example.entity.ServicesEntity;
 import com.example.enums.Language;
 import com.example.exp.services.ServicesNotFoundException;
 import com.example.exp.servicesButton.AllReadyExistsButtonException;
+import com.example.exp.servicesButton.ButtonNotExistsException;
 import com.example.exp.servicesButton.ButtonNotFoundException;
 import com.example.exp.servicesButton.DataInCompleException;
 import com.example.repository.ServicesButtonRepository;
@@ -136,7 +137,7 @@ public class ServicesButtonService {
         List<ServicesButtonEntity> list = repository.findAll();
 
         if (list.isEmpty()){
-            throw new ButtonNotFoundException(resourceBundleService.getMessage("button.not.found", language));
+            throw new ButtonNotExistsException(resourceBundleService.getMessage("button.not.exists.found", language));
         }
 
 

@@ -1,16 +1,16 @@
 ### Create services
 POST localhost:8080/api/services/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM5MjY3OTMsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDUzMTU5MywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.y7oMKFFzF9lR1McLEOTRDDAl4IuDv8XM54v5AeAU2KB1QG5_yLyDOtzGw15rabxO6U96dVoHztqUigy6ECIVLg
 Content-Type: application/json
 
 {
   "nameUz" : "Terapevt",
-  "nameRu" : "Терапевт"
+  "nameRu" : "Терапеbт"
 }
 
 ### get by id
-GET localhost:8080/api/services/public/get/2w
-Accept-Language: UZ
+GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get/1
+Accept-Language: RU
 
 ### update services
 PUT localhost:8080/api/services/update/1
@@ -24,7 +24,11 @@ Content-Type: application/json
 
 
 ### delete By Id
-DELETE localhost:8080/api/services/delete/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+DELETE localhost:8080/api/services/delete/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM5MjY3OTMsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDUzMTU5MywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.y7oMKFFzF9lR1McLEOTRDDAl4IuDv8XM54v5AeAU2KB1QG5_yLyDOtzGw15rabxO6U96dVoHztqUigy6ECIVLg
+
+
+###
+GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get_list
 
 

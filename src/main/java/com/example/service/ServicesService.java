@@ -26,7 +26,7 @@ public class ServicesService {
     }
 
     public ServicesResponseDTO create(ServicesCreateDTO dto, Language language) {
-        Optional<ServicesEntity> optional = repository.findByNameUz(dto.getNameUz());
+        Optional<ServicesEntity> optional = repository.findByNameUzAndNameRu(dto.getNameUz(),dto.getNameRu());
         if (optional.isPresent()) {
             throw new AlreadyExistsServicesException(resourceBundleService.getMessage("already.exists.services", language));
         }

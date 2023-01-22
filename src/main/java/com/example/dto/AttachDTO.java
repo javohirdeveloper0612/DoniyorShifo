@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttachDTO {
     private Integer id;
-    private String fileOriginalname;
+    private String fileOriginalName;
     private long size;
     private String type;
 

@@ -4,6 +4,7 @@ import com.example.dto.patient.CreatePatientDto;
 import com.example.enums.Language;
 import com.example.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class PatientController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("view_patient/{id}")
     @Operation(summary = "Getting patient By id method", description = "This method is used for getting patient data by id")
     public ResponseEntity<?> getPatientById(@PathVariable Integer id,
@@ -64,6 +66,7 @@ public class PatientController {
      */
 
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/view_patient")
     @Operation(summary = "Viewing All the Patient data method", description = "This method is used for getting all the Patient data order by createdDate")
     public ResponseEntity<?> getAllPatientData() {
