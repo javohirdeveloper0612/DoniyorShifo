@@ -90,12 +90,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfiguration()
-    {
+    public WebMvcConfigurer corsConfiguration() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+                registry.addMapping("/**")
+                        .allowedOrigins("")
+                        .allowedMethods("PUT","POST","GET","DELETE")
+                        .allowedHeaders("header1","header2","header3")
+                        .exposedHeaders("header1","header2")
+                        .allowCredentials(false).maxAge(3600);
+
             }
         };
     }
