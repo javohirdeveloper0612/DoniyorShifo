@@ -62,7 +62,6 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                .cors().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().httpBasic().disable();
@@ -99,7 +98,7 @@ public class SecurityConfig {
                         .allowedMethods("PUT","POST","GET","DELETE")
                         .allowedHeaders("header1","header2","header3")
                         .exposedHeaders("header1","header2")
-                        .allowCredentials(false).maxAge(3600);
+                        .allowCredentials(true).maxAge(3600);
 
             }
         };
