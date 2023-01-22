@@ -26,15 +26,13 @@ public class AuthController {
      * This method is used for login to system if it is not exist throw AdminNotFoundException
      *
      * @param dto      LoginDto
-     * @param language Language
      * @return LoginResponseDTO
      */
     @Operation(summary = "Login Method", description = "this method for registration")
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO dto, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO dto) {
 
-        log.info(" Login :  username {} ", dto.getUsername());
-        LoginResponseDTO response = service.login(dto, language);
+        LoginResponseDTO response = service.login(dto, Language.UZ);
         return ResponseEntity.ok().body(response);
     }
 }
