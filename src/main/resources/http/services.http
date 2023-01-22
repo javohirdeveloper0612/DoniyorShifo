@@ -32,3 +32,6 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM5MjY3OTMsInVzZXJuYW1lI
 GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get_list
 
 
+
+
+

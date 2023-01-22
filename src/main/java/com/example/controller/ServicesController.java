@@ -69,8 +69,8 @@ public class ServicesController {
      */
     @Operation(summary = "Services List", description = "this method get Services List")
     @GetMapping("/public/get_list")
-    public ResponseEntity<?> getList(@RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        List<ServicesResponseDTO> dtoList = service.getList(language);
+    public ResponseEntity<?> getList() {
+        List<ServicesResponseDTO> dtoList = service.getList();
 
         return ResponseEntity.ok().body(dtoList);
     }

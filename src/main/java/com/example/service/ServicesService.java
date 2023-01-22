@@ -65,14 +65,14 @@ public class ServicesService {
         return dto;
     }
 
-    public List<ServicesResponseDTO> getList(Language language) {
+    public List<ServicesResponseDTO> getList() {
         List<ServicesEntity> servicesList = repository.findAll();
         if (servicesList.isEmpty()) {
-            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
+//            throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
         List<ServicesResponseDTO> dtoList = new LinkedList<>();
         for (ServicesEntity entity : servicesList) {
-            dtoList.add(getDtoByLang(entity,language));
+            dtoList.add(getDTO(entity));
         }
         return dtoList;
     }
