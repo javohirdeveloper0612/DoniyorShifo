@@ -141,6 +141,7 @@ public class DoctorSirdaryaController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/get_list")
