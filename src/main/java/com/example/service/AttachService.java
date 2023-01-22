@@ -44,12 +44,11 @@ public class AttachService {
      * If File Name is Empty  ,throw FileNameNotFoundException()
      *
      * @param file  MultipartHttpServletRequest
-     * @param language Language
      * @return AttachDTO
      */
 
 
-    public ResponseEntity<?> uploadFile(MultipartFile file, Language language) {
+    public ResponseEntity<?> uploadFile(MultipartFile file) {
 
         /*Iterator<String> fileNames = request.getFi();
         MultipartFile file = request.getFile(fileNames.next());

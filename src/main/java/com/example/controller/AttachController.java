@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Slf4j
 @Tag(name = "Attach Controller", description = "This controller for file uploading and file downloading")
@@ -32,14 +31,12 @@ public class AttachController {
      * If File Name is Empty  ,throw FileNameNotFoundException()
      *
      * @param file  MultipartHttpServletRequest
-     * @param language Language
      * @return AttachDTO
      */
     @PostMapping(value = "/public/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
-                                        @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
-        return attachService.uploadFile(file, language);
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+        return attachService.uploadFile(file);
     }
 
 
