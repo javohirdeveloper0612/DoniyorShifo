@@ -1,0 +1,7 @@
+POST localhost:8080/api/attach/public/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="image.png"
+
+/home/javaDev/Downloads/image.png

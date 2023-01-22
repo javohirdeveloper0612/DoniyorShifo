@@ -73,7 +73,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
 
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/api/attach/**").permitAll()
+                .requestMatchers("/api/attach/public/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/api/services/public/**").permitAll()
                 .requestMatchers("/api/services_data/public/**").permitAll()
@@ -83,7 +83,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/doctortashkent/public/**").permitAll()
                 .requestMatchers("/api/resume/public/save_resume").permitAll()
                 .requestMatchers("/api/patient/public/create_patient").permitAll()
-                .requestMatchers("/test/public/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
