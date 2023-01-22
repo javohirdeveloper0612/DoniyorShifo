@@ -32,7 +32,6 @@ public class DoctorTashkentController {
      * if docto is created returns DoctorDTO
      *
      * @param dto      DoctorDTO
-     * @param language Language
      * @return doctorTashkentService.create(photoId, dto, language)
      */
 
@@ -41,10 +40,9 @@ public class DoctorTashkentController {
     @PostMapping("/create")
     @Operation(summary = "Create Doctor Tashkent ADMIN", description = "this method is used by ADMIN to create doctor Tashkent")
     public ResponseEntity<?> create(
-            @RequestBody DoctorCreationDTO dto,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestBody DoctorCreationDTO dto) {
 
-        DoctorResponseDTO result = doctorTashkentService.create(dto, language);
+        DoctorResponseDTO result = doctorTashkentService.create(dto, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -55,17 +53,15 @@ public class DoctorTashkentController {
      * with the given id number is found DoctorDTO is returned...
      *
      * @param id       Integer
-     * @param language Language
      * @return doctorTashkentService.getDoctorById(id, language)
      */
 
     @GetMapping("/public/get/{id}")
     @Operation(summary = "Get Doctor Tashkent By id", description = "this method is used by ADMIN get Doctor Tashkent By id")
     public ResponseEntity<?> getDoctorById(
-            @PathVariable Integer id,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @PathVariable Integer id) {
 
-        DoctorResponseDTO result = doctorTashkentService.getDoctorById(id, language);
+        DoctorResponseDTO result = doctorTashkentService.getDoctorById(id, Language.UZ);
         return ResponseEntity.ok(result);
 
     }
@@ -75,7 +71,6 @@ public class DoctorTashkentController {
      * by id number returns true if the data is updated
      *
      * @param id       Integer
-     * @param language Language
      * @return doctorTashkentService.update(id, doctorDTO, language)
      */
 
@@ -85,10 +80,9 @@ public class DoctorTashkentController {
     @Operation(summary = "Update Doctor Tashkent By id", description = "this method is used by ADMIN to update Tashkent doctor by id number")
     public ResponseEntity<?> update(
             @PathVariable Integer id,
-            @RequestBody DoctorUpdateDTO doctorDTO,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestBody DoctorUpdateDTO doctorDTO) {
 
-        DoctorResponseDTO result = doctorTashkentService.update(id, doctorDTO, language);
+        DoctorResponseDTO result = doctorTashkentService.update(id, doctorDTO, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -98,7 +92,6 @@ public class DoctorTashkentController {
      * by id number return true if doctor is deleted
      *
      * @param id       Integer
-     * @param language Language
      * @return result
      */
 
@@ -107,10 +100,9 @@ public class DoctorTashkentController {
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete Doctor Tashkent By id", description = "this method is used by ADMIN to delete Tashkent doctor by id number")
     public ResponseEntity<?> delete(
-            @PathVariable Integer id,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @PathVariable Integer id) {
 
-        String result = doctorTashkentService.delete(id, language);
+        String result = doctorTashkentService.delete(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -121,7 +113,6 @@ public class DoctorTashkentController {
      *
      * @param page     int
      * @param size     int
-     * @param language Language
      * @return ResponseEntity.ok(allNews)
      */
 
@@ -130,11 +121,10 @@ public class DoctorTashkentController {
     @GetMapping("/public/getdoctorlistpagination")
     public ResponseEntity<?> getNewsPages(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "1") int size,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestParam(name = "size", defaultValue = "1") int size) {
 
 
-        Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, language);
+        Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, Language.UZ);
         return ResponseEntity.ok(allNews);
 
     }

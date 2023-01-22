@@ -35,7 +35,6 @@ public class DoctorSirdaryaController {
      * returns doctorDTO if the doctor is created.
      *
      * @param dto      DoctorDTO
-     * @param language Language
      * @return result
      */
 
@@ -44,10 +43,9 @@ public class DoctorSirdaryaController {
     @PostMapping("/create")
     @Operation(summary = "Create Doctor Sirdarya ADMIN", description = "this method is used by ADMIN to create doctor Sirdarya")
     public ResponseEntity<?> create(
-            @RequestBody DoctorCreationDTO dto,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestBody DoctorCreationDTO dto) {
 
-        DoctorResponseDTO result = doctorSirdaryaService.create(dto, language);
+        DoctorResponseDTO result = doctorSirdaryaService.create(dto, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -58,17 +56,15 @@ public class DoctorSirdaryaController {
      * with the given id number is found DoctorDTO is returned...
      *
      * @param id       Integer
-     * @param language Language
      * @return result
      */
 
     @GetMapping("/public/get/{id}")
     @Operation(summary = "Get Doctor Sirdarya By id", description = "this method is used by ADMIN get Doctor Sirdarya By id number")
     public ResponseEntity<?> getDoctorById(
-            @PathVariable("id") Integer id,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @PathVariable("id") Integer id) {
 
-        DoctorResponseDTO result = doctorSirdaryaService.getDoctorById(id, language);
+        DoctorResponseDTO result = doctorSirdaryaService.getDoctorById(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -78,7 +74,6 @@ public class DoctorSirdaryaController {
      * by id number returns true if the data is updated
      *
      * @param id       Integer
-     * @param language Language
      * @return result
      */
 
@@ -88,10 +83,9 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Update Doctor Sirdarya By id", description = "this method is used by ADMIN to update Sirdaryo doctor by id number")
     public ResponseEntity<?> update(
             @PathVariable Integer id,
-            @RequestBody DoctorUpdateDTO doctorDTO,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestBody DoctorUpdateDTO doctorDTO) {
 
-        DoctorResponseDTO result = doctorSirdaryaService.update(id, doctorDTO, language);
+        DoctorResponseDTO result = doctorSirdaryaService.update(id, doctorDTO, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -101,7 +95,6 @@ public class DoctorSirdaryaController {
      * by id number return true if doctor is deleted
      *
      * @param id       Integer
-     * @param language Language
      * @return result
      */
 
@@ -110,10 +103,9 @@ public class DoctorSirdaryaController {
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete Doctor Sirdarya By id", description = "this method is used by ADMIN to delete Sirdarya doctor by id number")
     public ResponseEntity<?> delete(
-            @PathVariable Integer id,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @PathVariable Integer id) {
 
-        String result = doctorSirdaryaService.delete(id, language);
+        String result = doctorSirdaryaService.delete(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 
     }
@@ -124,7 +116,6 @@ public class DoctorSirdaryaController {
      *
      * @param page     int
      * @param size     int
-     * @param language Language
      * @return ResponseEntity.ok(allNews)
      */
 
@@ -132,11 +123,10 @@ public class DoctorSirdaryaController {
     @GetMapping("/public/getdoctorlistpagination")
     public ResponseEntity<?> getNewsPages(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "1") int size,
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+            @RequestParam(name = "size", defaultValue = "1") int size) {
 
 
-        Page<DoctorResponseDTO> allNews = doctorSirdaryaService.getDoctorPage(page, size, language);
+        Page<DoctorResponseDTO> allNews = doctorSirdaryaService.getDoctorPage(page, size, Language.UZ);
         return ResponseEntity.ok().body(allNews);
 
     }
@@ -145,9 +135,9 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/get_list")
-    public ResponseEntity<?> getAllList(@RequestParam(name = "Accept-Language", defaultValue = "UZ") Language language) {
+    public ResponseEntity<?> getAllList() {
 
-        List<DoctorResponseDTO> result = doctorSirdaryaService.getAllList(language);
+        List<DoctorResponseDTO> result = doctorSirdaryaService.getAllList(Language.UZ);
 
         return ResponseEntity.ok().body(result);
     }
