@@ -99,21 +99,20 @@ public class DoctorTashkentService {
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
 
-
-            doctorDTO.setId(doctorEntity.getId());
-            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+        doctorDTO.setId(doctorEntity.getId());
+        doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+        doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+        doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
 
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
 
-            doctorDTO.setPhone(doctorEntity.getPhone());
-            doctorDTO.setExperience(doctorEntity.getExperience());
-            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+        doctorDTO.setPhone(doctorEntity.getPhone());
+        doctorDTO.setExperience(doctorEntity.getExperience());
+        doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
         doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
-            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+        doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
 
         return doctorDTO;
     }
@@ -201,23 +200,22 @@ public class DoctorTashkentService {
         }
 
 
+        for (DoctorEntity doctorEntity : entityPage.getContent()) {
 
-            for (DoctorEntity doctorEntity : entityPage.getContent()) {
-
-                DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
-                doctorDTO.setId(doctorEntity.getId());
-                doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-                doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-                doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-                doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
-                doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
-                doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-                doctorDTO.setPhone(doctorEntity.getPhone());
-                doctorDTO.setExperience(doctorEntity.getExperience());
-                doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
-                doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
-                doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
-                dtoList.add(doctorDTO);
+            DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+            doctorDTO.setId(doctorEntity.getId());
+            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+            doctorDTO.setPhone(doctorEntity.getPhone());
+            doctorDTO.setExperience(doctorEntity.getExperience());
+            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+            dtoList.add(doctorDTO);
         }
 
         return new PageImpl<>(dtoList, pageable, entityPage.getTotalElements());
@@ -258,33 +256,31 @@ public class DoctorTashkentService {
         }
 
         List<DoctorResponseDTO> dtoList = new LinkedList<>();
-        list.forEach(doctorEntity -> dtoList.add(getDtoByLang(doctorEntity, language)));
+        list.forEach(doctorEntity -> dtoList.add(getDto(doctorEntity)));
 
         return dtoList;
     }
 
-    public DoctorResponseDTO getDtoByLang(DoctorEntity doctorEntity, Language language) {
+    public DoctorResponseDTO getDto(DoctorEntity doctorEntity ) {
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
 
-
-            doctorDTO.setId(doctorEntity.getId());
-            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+        doctorDTO.setId(doctorEntity.getId());
+        doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+        doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+        doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
 
         doctorDTO.setPhone(doctorEntity.getPhone());
-            doctorDTO.setExperience(doctorEntity.getExperience());
-            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
-            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
-            doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+        doctorDTO.setExperience(doctorEntity.getExperience());
+        doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+        doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+        doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
 
         return doctorDTO;
     }
-
 
 
 }
