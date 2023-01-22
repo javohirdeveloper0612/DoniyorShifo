@@ -62,6 +62,7 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
+                .cors().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().httpBasic().disable();
@@ -94,10 +95,6 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("")
-                        .allowedMethods("PUT","POST","GET","DELETE")
-                        .allowedHeaders("header1","header2","header3")
-                        .exposedHeaders("header1","header2")
                         .allowCredentials(true).maxAge(3600);
 
             }
