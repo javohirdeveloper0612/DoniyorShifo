@@ -60,16 +60,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf().disable()
-                .cors().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().httpBasic().disable();
-
-        http
+        http.csrf().disable().cors();
+        http.authorizeHttpRequests()
+                .and().httpBasic().disable()
                 .authorizeHttpRequests()
-
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/attach/public/**").permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
@@ -89,17 +83,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfiguration() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowCredentials(true).maxAge(3600);
-
-            }
-        };
-    }
 
 }
 

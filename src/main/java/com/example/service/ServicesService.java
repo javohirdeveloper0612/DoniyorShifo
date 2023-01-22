@@ -30,7 +30,6 @@ public class ServicesService {
         if (optional.isPresent()) {
             throw new AlreadyExistsServicesException(resourceBundleService.getMessage("already.exists.services", language));
         }
-        System.out.println(dto.getNameRu());
         ServicesEntity entity = new ServicesEntity();
         entity.setNameUz(dto.getNameUz());
         entity.setNameRu(dto.getNameRu());
