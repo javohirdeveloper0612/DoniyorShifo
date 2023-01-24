@@ -31,7 +31,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/")
-                        .allowedOrigins("192.168.0.104");
+                        .allowedOrigins("127.0.0.1");
             }
         };
     }
