@@ -1,4 +1,5 @@
 package com.example.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,7 +29,9 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/").allowedOrigins("192.168.0.104");
+                registry
+                        .addMapping("/")
+                        .allowedOrigins("192.168.0.104");
             }
         };
     }
