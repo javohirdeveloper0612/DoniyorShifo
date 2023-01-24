@@ -26,7 +26,7 @@ public class ServicesService {
     }
 
     public ServicesResponseDTO create(ServicesCreateDTO dto, Language language) {
-        Optional<ServicesEntity> optional = repository.findByNameUzAndNameRu(dto.getNameUz(),dto.getNameRu());
+        Optional<ServicesEntity> optional = repository.findByNameUzAndNameRu(dto.getNameUz(), dto.getNameRu());
         if (optional.isPresent()) {
             throw new AlreadyExistsServicesException(resourceBundleService.getMessage("already.exists.services", language));
         }
@@ -52,7 +52,6 @@ public class ServicesService {
         if (optional.isEmpty()) {
             throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
-
         ServicesEntity entity = optional.get();
         return getDTO(entity);
     }
@@ -94,8 +93,6 @@ public class ServicesService {
 
         return getDTO(entity);
     }
-
-
 
 
 }
