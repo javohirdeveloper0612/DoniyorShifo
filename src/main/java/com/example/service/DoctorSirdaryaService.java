@@ -107,9 +107,6 @@ public class DoctorSirdaryaService {
         doctorDTO.setExperience(doctorEntity.getExperience());
         doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
         doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
-
-
-        doctorDTO.setId(doctorEntity.getId());
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
@@ -213,11 +210,9 @@ public class DoctorSirdaryaService {
             doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
             doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
             doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-
             doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
             doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
             doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-
             doctorDTO.setPhone(doctorEntity.getPhone());
             doctorDTO.setExperience(doctorEntity.getExperience());
             doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
@@ -241,7 +236,6 @@ public class DoctorSirdaryaService {
     public DoctorResponseDTO toResponseDTO(DoctorEntity doctorEntity) {
 
         DoctorResponseDTO doctorResponseDTO = new DoctorResponseDTO();
-
         doctorResponseDTO.setId(doctorEntity.getId());
         doctorResponseDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
         doctorResponseDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
@@ -279,11 +273,9 @@ public class DoctorSirdaryaService {
         doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
         doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
         doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
         doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());

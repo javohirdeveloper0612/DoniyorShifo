@@ -5,7 +5,7 @@ import com.example.dto.news.ResponseNewsDto;
 import com.example.entity.AttachEntity;
 import com.example.entity.NewsEntity;
 import com.example.enums.Language;
-import com.example.exp.NewsDataNotFoundException;
+import com.example.exp.news.NewsDataNotFoundException;
 import com.example.exp.attach.FileNotFoundException;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.NewsRepository;

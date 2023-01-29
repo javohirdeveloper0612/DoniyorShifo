@@ -97,17 +97,13 @@ public class DoctorTashkentService {
         DoctorEntity doctorEntity = optional.get();
 
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
-
-
         doctorDTO.setId(doctorEntity.getId());
         doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
         doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
         doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
         doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
@@ -272,7 +268,6 @@ public class DoctorTashkentService {
         doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
         doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
         doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
         doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
