@@ -63,7 +63,7 @@ public class NewsService {
         newsEntity.setTitle_ru(newsDto.getTitle_ru());
         newsEntity.setDescription_uz(newsDto.getDescription_uz());
         newsEntity.setDescription_ru(newsDto.getDescription_ru());
-        newsEntity.setPhotoId(attachEntity);
+        newsEntity.setAttachId(attachEntity.getId());
 
         NewsEntity savedNews = newsRepository.save(newsEntity);
 

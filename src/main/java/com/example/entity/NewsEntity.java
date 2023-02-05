@@ -29,7 +29,10 @@ public class NewsEntity {
     @Column(columnDefinition = "text",nullable = false)
     private String description_ru;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @Column(name = "attach_id")
+    private Integer attachId;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity photoId;
 
     @CreationTimestamp
