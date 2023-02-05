@@ -1,25 +1,21 @@
 package com.example.service;
 
-import com.example.dto.AttachDTO;
+import com.example.dto.attach.AttachDTO;
 import com.example.entity.AttachContentEntity;
 import com.example.entity.AttachEntity;
 import com.example.enums.Language;
-import com.example.exp.attach.FileNameNotFoundException;
 import com.example.exp.attach.FileNotFoundException;
 import com.example.repository.AttachmentContentRepository;
 import com.example.repository.AttachmentRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Optional;
 
 @Service

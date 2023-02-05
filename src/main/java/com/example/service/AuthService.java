@@ -4,7 +4,7 @@ import com.example.dto.auth.LoginDTO;
 import com.example.dto.auth.LoginResponseDTO;
 import com.example.entity.AdminEntity;
 import com.example.enums.Language;
-import com.example.exp.AdminNotFoundException;
+import com.example.exp.admin.AdminNotFoundException;
 import com.example.repository.AdminRepository;
 import com.example.util.JwtUtil;
 import com.example.util.MD5;

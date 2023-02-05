@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.exp.AdminNotFoundException;
-import com.example.exp.NewsDataNotFoundException;
+import com.example.exp.admin.AdminNotFoundException;
+import com.example.exp.news.NewsDataNotFoundException;
 import com.example.exp.attach.AttachNotFoundException;
 import com.example.exp.attach.FileNameNotFoundException;
 import com.example.exp.attach.FileNotFoundException;
