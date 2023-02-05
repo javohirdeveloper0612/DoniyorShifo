@@ -44,7 +44,7 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Create Doctor Sirdarya ADMIN", description = "this method is used by ADMIN to create doctor Sirdarya")
     public ResponseEntity<?> create(
             @RequestBody DoctorCreationDTO dto) {
-
+        log.info("created S Doctors phone {} , Photo{}", dto.getPhone() , dto.getPhotoId());
         DoctorResponseDTO result = doctorSirdaryaService.create(dto, Language.UZ);
         return ResponseEntity.ok().body(result);
 
@@ -63,7 +63,7 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Get Doctor Sirdarya By id", description = "this method is used by ADMIN get Doctor Sirdarya By id number")
     public ResponseEntity<?> getDoctorById(
             @PathVariable("id") Integer id) {
-
+        log.info("get  S Doctor by id id{} " , id);
         DoctorResponseDTO result = doctorSirdaryaService.getDoctorById(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 
@@ -84,7 +84,7 @@ public class DoctorSirdaryaController {
     public ResponseEntity<?> update(
             @PathVariable Integer id,
             @RequestBody DoctorUpdateDTO doctorDTO) {
-
+        log.info(" update s Doctor id{} , doctorPhone{} , doctorUsername{}" , id, doctorDTO.getPhone() ,doctorDTO.getFirstName_ru() );
         DoctorResponseDTO result = doctorSirdaryaService.update(id, doctorDTO, Language.UZ);
         return ResponseEntity.ok().body(result);
 
@@ -104,7 +104,7 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Delete Doctor Sirdarya By id", description = "this method is used by ADMIN to delete Sirdarya doctor by id number")
     public ResponseEntity<?> delete(
             @PathVariable Integer id) {
-
+        log.info(" delete s Doctor by id :  id{} " , id );
         String result = doctorSirdaryaService.delete(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 

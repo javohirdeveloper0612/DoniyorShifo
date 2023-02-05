@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/api/resume")
 @Tag(name = "Resume Controller", description = "This controller gets resume data")
 public class ResumeController {
@@ -36,6 +38,7 @@ public class ResumeController {
     @PostMapping("/public/save_resume")
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
     public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto) {
+        log.info("save resume ownerResume phone{} , Name{} , file id{} ", resumeDto.getPhone() , resumeDto.getFullName() , resumeDto.getFileId());
         return resumeService.saveResume(resumeDto, Language.UZ);
     }
 
@@ -51,6 +54,7 @@ public class ResumeController {
     @GetMapping("/view_resume/{id}")
     @Operation(summary = "getting resume data method", description = "This method is used for getting resume data by id")
     public ResponseEntity<?> getResumeById(@PathVariable Integer id) {
+        log.info("get resume By id{}" , id);
         return resumeService.getResumeById(id, Language.UZ);
     }
 

@@ -7,6 +7,7 @@ import com.example.service.DoctorTashkentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/doctortashkent")
 @Tag(name = "Doctor Tashkent Controller API", description = "Api list for Doctor Tashkent")
 public class DoctorTashkentController {
@@ -41,7 +43,7 @@ public class DoctorTashkentController {
     @Operation(summary = "Create Doctor Tashkent ADMIN", description = "this method is used by ADMIN to create doctor Tashkent")
     public ResponseEntity<?> create(
             @RequestBody DoctorCreationDTO dto) {
-
+        log.info("created T Doctors phone {} , Photo{}", dto.getPhone() , dto.getPhotoId());
         DoctorResponseDTO result = doctorTashkentService.create(dto, Language.UZ);
         return ResponseEntity.ok().body(result);
 
@@ -60,7 +62,7 @@ public class DoctorTashkentController {
     @Operation(summary = "Get Doctor Tashkent By id", description = "this method is used by ADMIN get Doctor Tashkent By id")
     public ResponseEntity<?> getDoctorById(
             @PathVariable Integer id) {
-
+        log.info("get  T Doctor by id id{} " , id);
         DoctorResponseDTO result = doctorTashkentService.getDoctorById(id, Language.UZ);
         return ResponseEntity.ok(result);
 
@@ -81,7 +83,7 @@ public class DoctorTashkentController {
     public ResponseEntity<?> update(
             @PathVariable Integer id,
             @RequestBody DoctorUpdateDTO doctorDTO) {
-
+        log.info(" update T Doctor id{} , doctorPhone{} , doctorUsername{}" , id, doctorDTO.getPhone() ,doctorDTO.getFirstName_ru() );
         DoctorResponseDTO result = doctorTashkentService.update(id, doctorDTO, Language.UZ);
         return ResponseEntity.ok().body(result);
 
@@ -101,7 +103,7 @@ public class DoctorTashkentController {
     @Operation(summary = "Delete Doctor Tashkent By id", description = "this method is used by ADMIN to delete Tashkent doctor by id number")
     public ResponseEntity<?> delete(
             @PathVariable Integer id) {
-
+        log.info(" delete T Doctor by id :  id{} " , id );
         String result = doctorTashkentService.delete(id, Language.UZ);
         return ResponseEntity.ok().body(result);
 
