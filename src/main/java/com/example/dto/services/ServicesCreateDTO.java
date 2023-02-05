@@ -1,5 +1,7 @@
 package com.example.dto.services;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +9,8 @@ import lombok.Setter;
 @Setter
 
 public class ServicesCreateDTO {
+    @NotBlank
     private String nameUz;
-
+    @NotBlank
     private String nameRu;
 }

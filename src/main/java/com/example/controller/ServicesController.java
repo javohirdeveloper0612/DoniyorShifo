@@ -35,7 +35,7 @@ public class ServicesController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicesCreateDTO dto) {
         ServicesResponseDTO result = service.create(dto, Language.UZ);
-
+        log.info("create services: name_uz {} ,name_ru {}  \n\n", dto.getNameRu(),dto.getNameUz());
         return ResponseEntity.ok().body(result);
     }
 
@@ -53,6 +53,7 @@ public class ServicesController {
     @GetMapping("/public/get/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
         ServicesResponseDTO result = service.getById(id, Language.UZ);
+        log.info("");
 
         return ResponseEntity.ok(result);
     }
