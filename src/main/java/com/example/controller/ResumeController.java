@@ -37,9 +37,11 @@ public class ResumeController {
      */
     @PostMapping("/public/save_resume")
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
-    public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto) {
-        log.info("save resume ownerResume phone{} , Name{} , file id{} ", resumeDto.getPhone() , resumeDto.getFullName() , resumeDto.getFileId());
-        return resumeService.saveResume(resumeDto, Language.UZ);
+    public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto,
+                                        @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info("save resume ownerResume phone{} , Name{} , file id{} ", resumeDto.getPhone(),
+                resumeDto.getFullName(), resumeDto.getFileId());
+        return resumeService.saveResume(resumeDto, language);
     }
 
 
@@ -53,9 +55,10 @@ public class ResumeController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/view_resume/{id}")
     @Operation(summary = "getting resume data method", description = "This method is used for getting resume data by id")
-    public ResponseEntity<?> getResumeById(@PathVariable Integer id) {
-        log.info("get resume By id{}" , id);
-        return resumeService.getResumeById(id, Language.UZ);
+    public ResponseEntity<?> getResumeById(@PathVariable Integer id,
+                                           @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info("get resume By id{}", id);
+        return resumeService.getResumeById(id, language);
     }
 
 

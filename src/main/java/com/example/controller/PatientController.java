@@ -35,9 +35,10 @@ public class PatientController {
 
     @PostMapping("/public/create_patient")
     @Operation(summary = "Creating Patient method", description = "This method is used for save Patient data IN DataBase")
-    public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto) {
-        log.info("creating Patient patient name{} ,  phone{} , doctor id{} ", patientDto.getFirstName() , patientDto.getPhone() , patientDto.getDoctorId());
-        return patientService.createPatient(patientDto, Language.UZ);
+    public ResponseEntity<?> creationPatient(@Valid @RequestBody CreatePatientDto patientDto,
+                                             @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info("creating Patient patient name{} ,  phone{} , doctor id{} ", patientDto.getFirstName(), patientDto.getPhone(), patientDto.getDoctorId());
+        return patientService.createPatient(patientDto, language);
     }
 
 
@@ -53,9 +54,10 @@ public class PatientController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("view_patient/{id}")
     @Operation(summary = "Getting patient By id method", description = "This method is used for getting patient data by id")
-    public ResponseEntity<?> getPatientById(@PathVariable Integer id) {
+    public ResponseEntity<?> getPatientById(@PathVariable Integer id,
+                                            @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
         log.info("get patient by id {}", id);
-        return patientService.getPatientById(id, Language.UZ);
+        return patientService.getPatientById(id, language);
 
     }
 

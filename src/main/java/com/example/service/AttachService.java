@@ -25,6 +25,7 @@ public class AttachService {
     private final AttachmentContentRepository contentRepository;
 
 
+
     @Autowired
     public AttachService(ResourceBundleService resourceBundleService,
                          AttachmentRepository attachmentRepository,
@@ -46,22 +47,13 @@ public class AttachService {
 
     public ResponseEntity<?> uploadFile(MultipartFile file) {
 
-        /*Iterator<String> fileNames = request.getFi();
-        MultipartFile file = request.getFile(fileNames.next());
 
-        if (file == null) {
-            throw new FileNameNotFoundException(
-                    resourceBundleService.getMessage("fileName.not.found", language.name()));
-        }*/
 
         String originalFilename = file.getOriginalFilename();
         long size = file.getSize();
         String contentType = file.getContentType();
 
-        //we set originalFilename, size, contentType to AttachDto to response Frontend
 
-
-        //we saved AttachEntity object in DB
         AttachEntity attachment = new AttachEntity();
         attachment.setOriginalName(originalFilename);
         attachment.setSize(size);
@@ -72,7 +64,6 @@ public class AttachService {
 
 
         try {
-            // we saved AttachContentEntity object in DB
             AttachContentEntity attachmentContent = new AttachContentEntity();
             attachmentContent.setBytes(file.getBytes());
             attachmentContent.setAttach(savedAttach);
