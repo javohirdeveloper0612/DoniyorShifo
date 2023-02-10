@@ -38,9 +38,10 @@ public class NewsController {
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     @Operation(summary = "Create News data method", description = "This method is used for creating news data")
-    public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto) {
-        log.info("create news: title_uz {} ,title_ru {}, photo_id {}   \n\n", newsDto.getTitle_uz(),newsDto.getDescription_uz(), newsDto.getPhotoId()  );
-        return newsService.createNews(newsDto, Language.UZ);
+    public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto,
+                                        @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info("create news: title_uz {} ,title_ru {}, photo_id {}   \n\n", newsDto.getTitle_uz(), newsDto.getDescription_uz(), newsDto.getPhotoId());
+        return newsService.createNews(newsDto, language);
 
     }
 
@@ -53,9 +54,10 @@ public class NewsController {
 
     @GetMapping("/public/view_news/{id}")
     @Operation(summary = "Getting News data By id method", description = "This method is used for getting News Data By Id")
-    public ResponseEntity<?> getNewsById(@PathVariable Integer id) {
-        log.info(" get news by id : newsId {} " , id);
-        return newsService.getNewsById(id, Language.UZ);
+    public ResponseEntity<?> getNewsById(@PathVariable Integer id,
+                                         @RequestHeader(name = "Accept-Language") Language language) {
+        log.info(" get news by id : newsId {} ", id);
+        return newsService.getNewsById(id, language);
     }
 
     /**
@@ -84,15 +86,15 @@ public class NewsController {
     @PutMapping("/edite/{id}")
     @Operation(summary = "Edite News data", description = "This method is used for editing news Data If News Data not found throw NewsDataNotFoundException")
     public ResponseEntity<?> editeNews(@PathVariable Integer id, @Valid
-                                       @RequestBody CreatedNewsDto newsDto) {
-        log.info(" editing news : newsId {} , title_uz {} ,title_ru {}, photo_id {}", id,  newsDto.getTitle_uz(),newsDto.getDescription_uz(), newsDto.getPhotoId());
-        return newsService.editeNews(id, newsDto, Language.UZ);
+    @RequestBody CreatedNewsDto newsDto, @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info(" editing news : newsId {} , title_uz {} ,title_ru {}, photo_id {}", id, newsDto.getTitle_uz(), newsDto.getDescription_uz(), newsDto.getPhotoId());
+        return newsService.editeNews(id, newsDto, language);
     }
 
     /**
      * This method is used for deleting News data by id If News Data not found throw NewsDataNotFoundException
      *
-     * @param id       Integer
+     * @param id Integer
      * @return String
      */
 
@@ -101,9 +103,9 @@ public class NewsController {
     @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete news data method", description = "This method is used for deleting news data")
-    public ResponseEntity<?> deleteNews(@PathVariable Integer id) {
-        log.info(" get news by id : newsId {} " , id);
-        return newsService.deleteNewsById(id, Language.UZ);
+    public ResponseEntity<?> deleteNews(@PathVariable Integer id, @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language language) {
+        log.info(" get news by id : newsId {} ", id);
+        return newsService.deleteNewsById(id, language);
 
     }
 
