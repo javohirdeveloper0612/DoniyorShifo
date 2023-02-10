@@ -87,11 +87,14 @@ public class NewsService {
         NewsEntity newsEntity = optional.get();
         ResponseNewsDto response = new ResponseNewsDto();
         response.setId(newsEntity.getId());
-        response.setTitle_ru(newsEntity.getTitle_ru());
-        response.setDescription_ru(newsEntity.getDescription_ru());
-        response.setTitle_uz(newsEntity.getTitle_uz());
-        response.setDescription_uz(newsEntity.getDescription_uz());
-
+        if (language==Language.RU){
+            response.setTitle_ru(newsEntity.getTitle_ru());
+            response.setDescription_ru(newsEntity.getDescription_ru());
+        }
+        if (language==Language.UZ){
+            response.setTitle_uz(newsEntity.getTitle_uz());
+            response.setDescription_uz(newsEntity.getDescription_uz());
+        }
         response.setPhotoId(newsEntity.getPhotoId().getId());
         return ResponseEntity.ok(response);
     }
@@ -103,7 +106,7 @@ public class NewsService {
      * @param size int
      * @return Page
      */
-    public ResponseEntity<?> getAllNews(int page, int size) {
+    public ResponseEntity<?> getAllNews(int page, int size , Language language) {
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -114,12 +117,15 @@ public class NewsService {
         for (NewsEntity newsEntity : entityPage) {
             ResponseNewsDto responseNewsDto = new ResponseNewsDto();
 
-            responseNewsDto.setTitle_uz(newsEntity.getTitle_uz());
-            responseNewsDto.setDescription_uz(newsEntity.getDescription_uz());
             responseNewsDto.setPhotoId(newsEntity.getPhotoId().getId());
-            responseNewsDto.setTitle_ru(newsEntity.getTitle_ru());
-            responseNewsDto.setDescription_ru(newsEntity.getDescription_ru());
-
+            if (language==Language.UZ){
+                responseNewsDto.setTitle_uz(newsEntity.getTitle_uz());
+                responseNewsDto.setDescription_uz(newsEntity.getDescription_uz());
+            }
+            if (language==Language.RU){
+                responseNewsDto.setTitle_ru(newsEntity.getTitle_ru());
+                responseNewsDto.setDescription_ru(newsEntity.getDescription_ru());
+            }
             responseNewsDtoList.add(responseNewsDto);
         }
 

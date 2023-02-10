@@ -38,9 +38,9 @@ public class NewsController {
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     @Operation(summary = "Create News data method", description = "This method is used for creating news data")
-    public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto) {
+    public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto, @RequestParam(name = "Accept-Language",defaultValue = "UZ")Language language) {
         log.info("create news: title_uz {} ,title_ru {}, photo_id {}   \n\n", newsDto.getTitle_uz(),newsDto.getDescription_uz(), newsDto.getPhotoId()  );
-        return newsService.createNews(newsDto, Language.UZ);
+        return newsService.createNews(newsDto, language);
 
     }
 
@@ -53,9 +53,9 @@ public class NewsController {
 
     @GetMapping("/public/view_news/{id}")
     @Operation(summary = "Getting News data By id method", description = "This method is used for getting News Data By Id")
-    public ResponseEntity<?> getNewsById(@PathVariable Integer id) {
+    public ResponseEntity<?> getNewsById(@PathVariable Integer id , @RequestParam(name = "Accept-Language",defaultValue = "UZ")Language language) {
         log.info(" get news by id : newsId {} " , id);
-        return newsService.getNewsById(id, Language.UZ);
+        return newsService.getNewsById(id, language);
     }
 
     /**
@@ -67,9 +67,8 @@ public class NewsController {
      */
     @GetMapping("/public/view_all_news")
     @Operation(summary = "Getting All the news data method", description = "This method is used for viewing all the news data by paging ")
-    public ResponseEntity<?> getAllNews(@RequestParam int page, @RequestParam int size) {
-
-        return newsService.getAllNews(page, size);
+    public ResponseEntity<?> getAllNews(@RequestParam int page, @RequestParam int size , @RequestParam(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        return newsService.getAllNews(page, size , language);
     }
 
     /**
@@ -101,7 +100,7 @@ public class NewsController {
     @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete news data method", description = "This method is used for deleting news data")
-    public ResponseEntity<?> deleteNews(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteNews(@PathVariable Integer id , @RequestParam(name = "Accept-Language",defaultValue = "UZ")Language language) {
         log.info(" get news by id : newsId {} " , id);
         return newsService.deleteNewsById(id, Language.UZ);
 
