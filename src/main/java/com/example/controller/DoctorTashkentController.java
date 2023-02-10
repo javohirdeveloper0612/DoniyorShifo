@@ -1,4 +1,5 @@
 package com.example.controller;
+
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -7,6 +8,7 @@ import com.example.service.DoctorTashkentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +35,7 @@ public class DoctorTashkentController {
      * this method is used to create doctors coming to clinic from Toshken by ADMIN
      * if docto is created returns DoctorDTO
      *
-     * @param dto      DoctorDTO
+     * @param dto DoctorDTO
      * @return doctorTashkentService.create(photoId, dto, language)
      */
 
@@ -42,9 +44,12 @@ public class DoctorTashkentController {
     @PostMapping("/create")
     @Operation(summary = "Create Doctor Tashkent ADMIN", description = "this method is used by ADMIN to create doctor Tashkent")
     public ResponseEntity<?> create(
-            @RequestBody DoctorCreationDTO dto) {
-        log.info("created T Doctors phone {} , Photo{}", dto.getPhone() , dto.getPhotoId());
-        DoctorResponseDTO result = doctorTashkentService.create(dto, Language.UZ);
+            @Valid
+            @RequestBody DoctorCreationDTO dto,
+            @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
+
+        log.info("created T Doctors phone {} , Photo{}", dto.getPhone(), dto.getPhotoId());
+        DoctorResponseDTO result = doctorTashkentService.create(dto, language);
         return ResponseEntity.ok().body(result);
 
     }
@@ -54,16 +59,18 @@ public class DoctorTashkentController {
      * doctor by giving the id number of the doctor, if a doctor
      * with the given id number is found DoctorDTO is returned...
      *
-     * @param id       Integer
+     * @param id Integer
      * @return doctorTashkentService.getDoctorById(id, language)
      */
 
     @GetMapping("/public/get/{id}")
     @Operation(summary = "Get Doctor Tashkent By id", description = "this method is used by ADMIN get Doctor Tashkent By id")
     public ResponseEntity<?> getDoctorById(
-            @PathVariable Integer id) {
-        log.info("get  T Doctor by id id{} " , id);
-        DoctorResponseDTO result = doctorTashkentService.getDoctorById(id, Language.UZ);
+            @PathVariable Integer id,
+            @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+
+        log.info("get  T Doctor by id id{} ", id);
+        DoctorResponseDTO result = doctorTashkentService.getDoctorById(id, language);
         return ResponseEntity.ok(result);
 
     }
@@ -72,7 +79,7 @@ public class DoctorTashkentController {
      * this method is used by ADMIN to update Tashkent Doctor
      * by id number returns true if the data is updated
      *
-     * @param id       Integer
+     * @param id Integer
      * @return doctorTashkentService.update(id, doctorDTO, language)
      */
 
@@ -81,10 +88,13 @@ public class DoctorTashkentController {
     @PutMapping("/update/{id}")
     @Operation(summary = "Update Doctor Tashkent By id", description = "this method is used by ADMIN to update Tashkent doctor by id number")
     public ResponseEntity<?> update(
+            @Valid
             @PathVariable Integer id,
-            @RequestBody DoctorUpdateDTO doctorDTO) {
-        log.info(" update T Doctor id{} , doctorPhone{} , doctorUsername{}" , id, doctorDTO.getPhone() ,doctorDTO.getFirstName_ru() );
-        DoctorResponseDTO result = doctorTashkentService.update(id, doctorDTO, Language.UZ);
+            @RequestBody DoctorUpdateDTO doctorDTO,
+            @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
+
+        log.info(" update T Doctor id{} , doctorPhone{} , doctorUsername{}", id, doctorDTO.getPhone(), doctorDTO.getFirstName_ru());
+        DoctorResponseDTO result = doctorTashkentService.update(id, doctorDTO, language);
         return ResponseEntity.ok().body(result);
 
     }
@@ -93,7 +103,7 @@ public class DoctorTashkentController {
      * this method is used by ADMIN to delete Tashkent doctor
      * by id number return true if doctor is deleted
      *
-     * @param id       Integer
+     * @param id Integer
      * @return result
      */
 
@@ -102,9 +112,11 @@ public class DoctorTashkentController {
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete Doctor Tashkent By id", description = "this method is used by ADMIN to delete Tashkent doctor by id number")
     public ResponseEntity<?> delete(
-            @PathVariable Integer id) {
-        log.info(" delete T Doctor by id :  id{} " , id );
-        String result = doctorTashkentService.delete(id, Language.UZ);
+            @PathVariable Integer id,
+            @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
+
+        log.info(" delete T Doctor by id :  id{} ", id);
+        String result = doctorTashkentService.delete(id, language);
         return ResponseEntity.ok().body(result);
 
     }
@@ -113,8 +125,8 @@ public class DoctorTashkentController {
      * this method is used to get the list of Sirdarya
      * doctors using pagination
      *
-     * @param page     int
-     * @param size     int
+     * @param page int
+     * @param size int
      * @return ResponseEntity.ok(allNews)
      */
 
@@ -123,7 +135,8 @@ public class DoctorTashkentController {
     @GetMapping("/public/getdoctorlistpagination")
     public ResponseEntity<?> getNewsPages(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "1") int size) {
+            @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
 
 
         Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, Language.UZ);
