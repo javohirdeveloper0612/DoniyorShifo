@@ -69,9 +69,9 @@ public class NewsController {
      */
     @GetMapping("/public/view_all_news")
     @Operation(summary = "Getting All the news data method", description = "This method is used for viewing all the news data by paging ")
-    public ResponseEntity<?> getAllNews(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<?> getAllNews(@RequestParam int page, @RequestParam int size, @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
 
-        return newsService.getAllNews(page, size);
+        return newsService.getAllNews(page, size, language);
     }
 
     /**
