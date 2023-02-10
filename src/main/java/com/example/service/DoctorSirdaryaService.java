@@ -1,5 +1,4 @@
 package com.example.service;
-
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -7,7 +6,6 @@ import com.example.entity.AttachEntity;
 import com.example.entity.DoctorEntity;
 import com.example.enums.DoctorRole;
 import com.example.enums.Language;
-
 import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
@@ -98,25 +96,28 @@ public class DoctorSirdaryaService {
         DoctorEntity doctorEntity = optional.get();
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
-
         doctorDTO.setId(doctorEntity.getId());
-        doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-        doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-        doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+
+        if (language.equals(Language.UZ)) {
+
+            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+
+        } else if (language.equals(Language.RU)) {
+
+            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+
+        }
+
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
-        doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
-        doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
-        doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
-        doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
-        doctorDTO.setPhone(doctorEntity.getPhone());
-        doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
         doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
 
-
-        doctorDTO.setId(doctorEntity.getId());
         return doctorDTO;
     }
 
@@ -202,26 +203,35 @@ public class DoctorSirdaryaService {
             throw new DoctorNotFoundListException(resourceBundleService.getMessage("doctor.not.found.list", language));
         }
 
-
         for (DoctorEntity doctorEntity : entityPage.getContent()) {
 
             DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
+
             doctorDTO.setId(doctorEntity.getId());
-            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
-            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
-            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+
+            if (language.equals(Language.UZ)) {
+
+                doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+                doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+                doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+                doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+
+            } else if (language.equals(Language.RU)) {
+
+                doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+                doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+                doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+                doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+
+            }
+
             doctorDTO.setPhone(doctorEntity.getPhone());
             doctorDTO.setExperience(doctorEntity.getExperience());
-            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
-            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
             doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
+
             dtoList.add(doctorDTO);
 
         }
-
 
         return new PageImpl<>(dtoList, pageable, entityPage.getTotalElements());
     }
@@ -253,6 +263,7 @@ public class DoctorSirdaryaService {
     }
 
     public List<DoctorResponseDTO> getAllList(Language language) {
+
         List<DoctorEntity> list = doctorRepository.findAllByRole(DoctorRole.ROLE_DOCTOR_SIRDARYE);
 
         if (list.isEmpty()) {
@@ -266,8 +277,8 @@ public class DoctorSirdaryaService {
     }
 
     public DoctorResponseDTO getDto(DoctorEntity doctorEntity) {
-        DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
+        DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
         doctorDTO.setId(doctorEntity.getId());
         doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
