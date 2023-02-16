@@ -3,7 +3,9 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
@@ -29,15 +31,11 @@ public class ServicesButtonEntity {
 
     @Column(name = "services_id")
     private Integer servicesId;
-    @OneToOne(fetch = FetchType.LAZY,optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "services_id", insertable = false, updatable = false)
     private ServicesEntity services;
 
-    @OneToOne(mappedBy = "button",cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     private ServicesDataEntity dataEntity;
-
-    @Column(updatable = false)
-    private LocalDateTime createdDate;
-
 
 }

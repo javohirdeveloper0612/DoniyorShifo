@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,15 @@ public class AttachEntity {
     @Column
     private String type;
 
-    @OneToOne(mappedBy = "attach",cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     private AttachContentEntity attachContent;
+
+
+    @OneToOne(mappedBy = "attach", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private ServicesDataEntity servicesDataEntity;
+    @OneToOne(mappedBy = "photoId")
+    @JsonIgnore
+    private NewsEntity news;
 
 }

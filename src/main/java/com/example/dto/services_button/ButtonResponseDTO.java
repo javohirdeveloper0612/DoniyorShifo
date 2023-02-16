@@ -12,14 +12,12 @@ import java.time.LocalDateTime;
 
 public class ButtonResponseDTO {
 
-
     private Integer id;
     private String buttonNameUz;
     private String buttonNameRu;
     private String buttonDescriptionUz;
-
     private String buttonDescriptionRu;
     private Integer servicesId;
 
-    private LocalDateTime createdDate;
+
 }

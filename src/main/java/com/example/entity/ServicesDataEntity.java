@@ -1,9 +1,12 @@
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
@@ -33,10 +36,9 @@ public class ServicesDataEntity {
     private AttachEntity attach;
     @Column(name = "button_id")
     private Integer buttonId;
-    @OneToOne(optional = false,cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "dataEntity", fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "button_id", insertable = false, updatable = false)
     private ServicesButtonEntity button;
 
-    @Column(updatable = false)
-    private LocalDateTime createdDate;
 }

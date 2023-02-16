@@ -1,4 +1,5 @@
 package com.example.dto.doctor;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -30,11 +31,11 @@ public class DoctorCreationDTO {
     @NotBlank(message = "speciality_ru cannot be null")
     private String speciality_ru;
 
-    @Size(min = 13,max =13)
+    @Size(min = 13, max = 13)
     @NotBlank(message = "phone cannot be null or empty")
     private String phone;
 
-    @NotBlank(message = "experience cannot be null")
+    @NotNull(message = "experience cannot be null")
     private Integer experience;
 
     @NotBlank(message = "description_uz cannot be null")
@@ -43,5 +44,6 @@ public class DoctorCreationDTO {
     @NotBlank(message = "description_ru cannot be null")
     private String description_ru;
 
+    @NotNull(message = "photoId cannot be null")
     private Integer photoId;
 }

@@ -1,5 +1,7 @@
 package com.example.dto.doctor;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -28,7 +30,7 @@ public class DoctorUpdateDTO {
     @NotBlank(message = "phoen cannot be null")
     private String phone;
 
-    @NotBlank(message = "experience cannot be null")
+    @NotNull(message = "experience cannot be null")
     private Integer experience;
 
     @NotBlank(message = "description_uz cannot be null")

@@ -1,8 +1,10 @@
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 
@@ -15,9 +17,10 @@ public class AttachContentEntity {
     private Integer id;
 
     @Column(nullable = false)
-    private byte [] bytes;
+    private byte[] bytes;
 
-    @OneToOne
+    @OneToOne(mappedBy = "attachContent")
+    @JsonIgnore
     private AttachEntity attach;
 
 }

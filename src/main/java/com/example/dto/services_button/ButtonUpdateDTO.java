@@ -24,7 +24,6 @@ public class ButtonUpdateDTO {
     private String buttonDescriptionUz;
     @NotBlank(message = "buttonDescriptionRu cannot be empty")
 
-
     private String buttonDescriptionRu;
 
 }

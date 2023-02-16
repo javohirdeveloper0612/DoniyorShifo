@@ -1,4 +1,5 @@
 package com.example.service;
+
 import com.example.dto.services_data.DataUpdateDTO;
 import com.example.dto.services_data.ServicesCreateDataDTO;
 import com.example.dto.services_data.ServicesDataResponseDTO;
@@ -15,7 +16,6 @@ import com.example.repository.ServicesDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -55,7 +55,6 @@ public class ServicesDataService {
         entity.setDescriptionRu(dto.getDescriptionRu());
         entity.setButtonId(dto.getButtonId());
         entity.setAttachId(dto.getAttachId());
-        entity.setCreatedDate(LocalDateTime.now());
 
         repository.save(entity);
 
@@ -71,7 +70,6 @@ public class ServicesDataService {
         dto.setDescriptionUz(entity.getDescriptionUz());
         dto.setAttachId(entity.getAttachId());
         dto.setButtonId(entity.getButtonId());
-        dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;
     }

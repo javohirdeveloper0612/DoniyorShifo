@@ -56,7 +56,7 @@ public class ServicesButtonService {
         entity.setButtonDescriptionUz(dto.getButtonDescriptionUz());
         entity.setButtonDescriptionRu(dto.getButtonDescriptionRu());
         entity.setServicesId(dto.getServicesId());
-        entity.setCreatedDate(LocalDateTime.now());
+
 
         repository.save(entity);
 
@@ -71,8 +71,6 @@ public class ServicesButtonService {
         dto.setButtonNameRu(entity.getButtonNameRu());
         dto.setButtonDescriptionUz(entity.getButtonDescriptionUz());
         dto.setButtonDescriptionRu(entity.getButtonDescriptionRu());
-        dto.setCreatedDate(entity.getCreatedDate());
-
         return dto;
     }
 
@@ -119,11 +117,9 @@ public class ServicesButtonService {
 
 
         List<ServicesButtonEntity> list = repository.findAll();
-
         if (list.isEmpty()) {
             throw new ButtonNotExistsException(resourceBundleService.getMessage("button.not.exists.found", language));
         }
-
 
         List<ButtonResponseDTO> dtoList = new ArrayList<>();
 
