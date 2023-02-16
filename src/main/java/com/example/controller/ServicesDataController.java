@@ -32,8 +32,9 @@ public class ServicesDataController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new services data")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody ServicesCreateDataDTO dto) {
-        ServicesDataResponseDTO result = service.create(dto, Language.UZ);
+    public ResponseEntity<?> create(@RequestBody ServicesCreateDataDTO dto,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language){
+        ServicesDataResponseDTO result = service.create(dto, language);
 
         return ResponseEntity.ok(result);
     }
@@ -46,8 +47,9 @@ public class ServicesDataController {
      */
     @Operation(summary = "Get Service Data", description = "this method for get Services Data By Id")
     @GetMapping("/public/get/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-        ServicesDataResponseDTO result = service.getById(id, Language.UZ);
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id,
+                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ServicesDataResponseDTO result = service.getById(id, language);
 
         return ResponseEntity.ok(result);
     }
@@ -62,8 +64,9 @@ public class ServicesDataController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete Services Data", description = "This method for delete Services Data by Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-        String result = service.deleteById(id, Language.UZ);
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        String result = service.deleteById(id, language);
         return ResponseEntity.ok(result);
     }
 
@@ -79,8 +82,9 @@ public class ServicesDataController {
     @Operation(summary = "Update Services Data", description = "This method for services Data by Id (only ADMIN) ")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @RequestBody DataUpdateDTO dto) {
-        ServicesDataResponseDTO result = service.updateById(id, dto, Language.UZ);
+                                    @RequestBody DataUpdateDTO dto,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ServicesDataResponseDTO result = service.updateById(id, dto, language);
 
         return ResponseEntity.ok(result);
     }

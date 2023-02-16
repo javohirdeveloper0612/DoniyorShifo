@@ -139,7 +139,7 @@ public class DoctorTashkentController {
             @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
 
 
-        Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, Language.UZ);
+        Page<DoctorResponseDTO> allNews = doctorTashkentService.getDoctorPage(page, size, language);
         return ResponseEntity.ok(allNews);
 
     }
@@ -148,9 +148,9 @@ public class DoctorTashkentController {
     @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/get_list")
-    public ResponseEntity<?> getAllList() {
+    public ResponseEntity<?> getAllList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
 
-        List<DoctorResponseDTO> result = doctorTashkentService.getAllList(Language.UZ);
+        List<DoctorResponseDTO> result = doctorTashkentService.getAllList(language);
 
         return ResponseEntity.ok().body(result);
     }

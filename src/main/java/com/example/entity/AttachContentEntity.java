@@ -19,8 +19,7 @@ public class AttachContentEntity {
     @Column(nullable = false)
     private byte[] bytes;
 
-    @OneToOne(mappedBy = "attachContent")
-    @JsonIgnore
+    @OneToOne(optional = false)
     private AttachEntity attach;
 
 }

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.exp.admin.AdminNotFoundException;
+import com.example.exp.doctor.DoctorPhoneAlreadyExists;
 import com.example.exp.news.NewsDataNotFoundException;
 import com.example.exp.attach.AttachNotFoundException;
 import com.example.exp.attach.FileNameNotFoundException;
@@ -121,6 +122,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ButtonNotExistsException.class})
     private ResponseEntity<?> handler(ButtonNotExistsException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler({DoctorPhoneAlreadyExists.class})
+    private ResponseEntity<?> handler(DoctorPhoneAlreadyExists e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

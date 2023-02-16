@@ -30,7 +30,7 @@ public class PatientEntity {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private DoctorEntity doctorId;
 
     @CreationTimestamp

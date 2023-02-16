@@ -37,15 +37,6 @@ public class ServicesService {
 
         return getDTO(entity);
     }
-
-    public ServicesResponseDTO getDTO(ServicesEntity entity) {
-        ServicesResponseDTO dto = new ServicesResponseDTO();
-        dto.setId(entity.getId());
-        dto.setNameUz(entity.getNameUz());
-        dto.setNameRu(entity.getNameRu());
-        return dto;
-    }
-
     public ServicesResponseDTO getById(Integer id, Language language) {
         Optional<ServicesEntity> optional = repository.findById(id);
 
@@ -53,17 +44,17 @@ public class ServicesService {
             throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
         ServicesEntity entity = optional.get();
-        return getDTO(entity);
+        return getDTOByLang(entity,language);
     }
 
-    public List<ServicesResponseDTO> getList() {
+    public List<ServicesResponseDTO> getList(Language language) {
         List<ServicesEntity> servicesList = repository.findAll();
         if (servicesList.isEmpty()) {
             throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", Language.UZ));
         }
         List<ServicesResponseDTO> dtoList = new LinkedList<>();
         for (ServicesEntity entity : servicesList) {
-            dtoList.add(getDTO(entity));
+            dtoList.add(getDTOByLang(entity,language));
         }
         return dtoList;
     }
@@ -92,6 +83,26 @@ public class ServicesService {
         repository.save(entity);
 
         return getDTO(entity);
+    }
+
+    public ServicesResponseDTO getDTO(ServicesEntity entity) {
+        ServicesResponseDTO dto = new ServicesResponseDTO();
+        dto.setId(entity.getId());
+        dto.setNameUz(entity.getNameUz());
+        dto.setNameRu(entity.getNameRu());
+        return dto;
+    }
+
+    public ServicesResponseDTO getDTOByLang(ServicesEntity entity,Language language) {
+        ServicesResponseDTO dto = new ServicesResponseDTO();
+        dto.setId(entity.getId());
+        if (language.equals(Language.UZ)){
+            dto.setNameUz(entity.getNameUz());
+        }else {
+            dto.setNameRu(entity.getNameRu());
+        }
+
+        return dto;
     }
 
 

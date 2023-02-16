@@ -24,13 +24,10 @@ public class AttachEntity {
     @Column
     private String type;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private AttachContentEntity attachContent;
-
 
     @OneToOne(mappedBy = "attach", fetch = FetchType.EAGER)
-    @JsonIgnore
     private ServicesDataEntity servicesDataEntity;
+
     @OneToOne(mappedBy = "photoId")
     @JsonIgnore
     private NewsEntity news;

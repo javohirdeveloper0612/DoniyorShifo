@@ -61,18 +61,7 @@ public class ServicesDataService {
         return getDTO(entity);
     }
 
-    private ServicesDataResponseDTO getDTO(ServicesDataEntity entity) {
-        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
-        dto.setId(entity.getId());
-        dto.setTitleRu(entity.getTitleRu());
-        dto.setTitleUz(entity.getTitleUz());
-        dto.setDescriptionRu(entity.getDescriptionRu());
-        dto.setDescriptionUz(entity.getDescriptionUz());
-        dto.setAttachId(entity.getAttachId());
-        dto.setButtonId(entity.getButtonId());
 
-        return dto;
-    }
 
     public ServicesDataResponseDTO getById(Integer id, Language language) {
         Optional<ServicesDataEntity> optional = repository.findById(id);
@@ -80,7 +69,7 @@ public class ServicesDataService {
             throw new ServicesDataNotFoundException(resourceBundleService.getMessage("services.data.not.found", language));
         }
 
-        return getDTO(optional.get());
+        return getDTOByLang(optional.get(),language);
     }
 
     public String deleteById(Integer id, Language language) {
@@ -112,5 +101,33 @@ public class ServicesDataService {
         repository.save(entity);
 
         return getDTO(entity);
+    }
+
+    private ServicesDataResponseDTO getDTO(ServicesDataEntity entity) {
+        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
+        dto.setId(entity.getId());
+        dto.setTitleRu(entity.getTitleRu());
+        dto.setTitleUz(entity.getTitleUz());
+        dto.setDescriptionRu(entity.getDescriptionRu());
+        dto.setDescriptionUz(entity.getDescriptionUz());
+        dto.setAttachId(entity.getAttachId());
+        dto.setButtonId(entity.getButtonId());
+
+        return dto;
+    }
+    private ServicesDataResponseDTO getDTOByLang(ServicesDataEntity entity,Language language) {
+        ServicesDataResponseDTO dto = new ServicesDataResponseDTO();
+        dto.setId(entity.getId());
+        if (language.equals(Language.UZ)){
+            dto.setTitleUz(entity.getTitleUz());
+            dto.setDescriptionUz(entity.getDescriptionUz());
+        }else {
+            dto.setTitleRu(entity.getTitleRu());
+            dto.setDescriptionRu(entity.getDescriptionRu());
+        }
+        dto.setAttachId(entity.getAttachId());
+        dto.setButtonId(entity.getButtonId());
+
+        return dto;
     }
 }

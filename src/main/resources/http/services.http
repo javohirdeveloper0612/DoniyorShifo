@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### get by id
-GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get/1
+GET  http://api.doniyor.doniyorshifo.uz/api/services/public/get_list
 Accept-Language: RU
 
 ### update services
@@ -30,6 +30,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM5MjY3OTMsInVzZXJuYW1lI
 
 ###
 GET https://api-doniyor-shifo.herokuapp.com/api/services/public/get_list
+
+###
+GET localhost:8080/api/services/public/get/7
+
 
 
 

@@ -64,16 +64,6 @@ public class ServicesButtonService {
         return getDTO(entity);
     }
 
-    public ButtonResponseDTO getDTO(ServicesButtonEntity entity) {
-        ButtonResponseDTO dto = new ButtonResponseDTO();
-        dto.setId(entity.getId());
-        dto.setButtonNameUz(entity.getButtonNameUz());
-        dto.setButtonNameRu(entity.getButtonNameRu());
-        dto.setButtonDescriptionUz(entity.getButtonDescriptionUz());
-        dto.setButtonDescriptionRu(entity.getButtonDescriptionRu());
-        return dto;
-    }
-
     public String deleteById(Integer id, Language language) {
 
         Optional<ServicesButtonEntity> optional = repository.findById(id);
@@ -91,7 +81,7 @@ public class ServicesButtonService {
             throw new ButtonNotFoundException(resourceBundleService.getMessage("button.not.found", language));
         }
 
-        return getDTO(optional.get());
+        return getDTOByLang(optional.get(),language);
     }
 
 
@@ -124,9 +114,35 @@ public class ServicesButtonService {
         List<ButtonResponseDTO> dtoList = new ArrayList<>();
 
         for (ServicesButtonEntity buttonEntity : list) {
-            dtoList.add(getDTO(buttonEntity));
+            dtoList.add(getDTOByLang(buttonEntity,language));
         }
 
         return dtoList;
+    }
+
+    public ButtonResponseDTO getDTO(ServicesButtonEntity entity) {
+        ButtonResponseDTO dto = new ButtonResponseDTO();
+        dto.setId(entity.getId());
+        dto.setButtonNameUz(entity.getButtonNameUz());
+        dto.setButtonNameRu(entity.getButtonNameRu());
+        dto.setButtonDescriptionUz(entity.getButtonDescriptionUz());
+        dto.setButtonDescriptionRu(entity.getButtonDescriptionRu());
+        dto.setServicesId(entity.getServicesId());
+        return dto;
+    }
+
+    public ButtonResponseDTO getDTOByLang(ServicesButtonEntity entity,Language language) {
+        ButtonResponseDTO dto = new ButtonResponseDTO();
+        dto.setId(entity.getId());
+        dto.setServicesId(entity.getServicesId());
+
+        if (language.equals(Language.UZ)){
+            dto.setButtonNameUz(entity.getButtonNameUz());
+            dto.setButtonDescriptionUz(entity.getButtonDescriptionUz());
+        }else {
+            dto.setButtonNameRu(entity.getButtonNameRu());
+            dto.setButtonDescriptionRu(entity.getButtonDescriptionRu());
+        }
+        return dto;
     }
 }

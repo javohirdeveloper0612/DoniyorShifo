@@ -8,6 +8,7 @@ import com.example.service.ServicesButtonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,9 @@ public class ServicesButtonController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new button (only ADMIN)")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody ButtonCreateDTO dto) {
-        ButtonResponseDTO result = service.create(dto, Language.UZ);
+    public ResponseEntity<?> create(@Valid @RequestBody ButtonCreateDTO dto,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ButtonResponseDTO result = service.create(dto, language);
         return ResponseEntity.ok().body(result);
     }
 
@@ -50,8 +52,9 @@ public class ServicesButtonController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete button", description = "This method for delete Services Button by Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-        String result = service.deleteById(id,Language.UZ);
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        String result = service.deleteById(id,language);
 
         return ResponseEntity.ok(result);
     }
@@ -64,9 +67,10 @@ public class ServicesButtonController {
      */
     @Operation(summary = "Get Button", description = "This method for get Button by Id ")
     @GetMapping("/public/get/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id,
+                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
 
-        ButtonResponseDTO result = service.geById(id, Language.UZ);
+        ButtonResponseDTO result = service.geById(id, language);
 
         return ResponseEntity.ok().body(result);
     }
@@ -84,8 +88,9 @@ public class ServicesButtonController {
     @Operation(summary = "Update Services Button", description = "This method for services button by Id (only ADMIN) ")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @RequestBody ButtonUpdateDTO dto) {
-        ButtonResponseDTO result = service.updateById(id, dto, Language.UZ);
+                                    @RequestBody ButtonUpdateDTO dto,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ButtonResponseDTO result = service.updateById(id, dto, language);
 
         return ResponseEntity.ok(result);
     }
@@ -97,8 +102,8 @@ public class ServicesButtonController {
      */
     @Operation(summary = "Get Button List", description = "This method for get list Button")
     @GetMapping("/public/get_list")
-    public ResponseEntity<?> getList() {
-        List<ButtonResponseDTO> result = service.getListButton(Language.UZ);
+    public ResponseEntity<?> getList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        List<ButtonResponseDTO> result = service.getListButton(language);
 
         return ResponseEntity.ok(result);
     }

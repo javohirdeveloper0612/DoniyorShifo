@@ -3,9 +3,13 @@ package com.example.dto.services;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+
+@ToString
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServicesResponseDTO {
 
@@ -14,4 +18,6 @@ public class ServicesResponseDTO {
     private String nameUz;
 
     private String nameRu;
+
+
 }

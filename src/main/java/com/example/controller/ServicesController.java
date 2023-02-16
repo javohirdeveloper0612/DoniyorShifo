@@ -33,9 +33,10 @@ public class ServicesController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create services method", description = "Method for create services (ONLY ADMIN) ")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody ServicesCreateDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody ServicesCreateDTO dto,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
         ServicesResponseDTO result = service.create(dto, Language.UZ);
-        log.info("create services: name_uz {} ,name_ru {}  \n\n", dto.getNameRu(),dto.getNameUz());
+        log.info("create services: name_uz {} ,name_ru {}  \n\n", dto.getNameRu(), dto.getNameUz());
         return ResponseEntity.ok().body(result);
     }
 
@@ -51,9 +52,10 @@ public class ServicesController {
      */
     @Operation(summary = "Get Services", description = "this method get Services by Id ")
     @GetMapping("/public/get/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-        ServicesResponseDTO result = service.getById(id, Language.UZ);
-        log.info("");
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id,
+                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ServicesResponseDTO result = service.getById(id, language);
+        log.info("getById: id {}, result {}", id, result.toString());
 
         return ResponseEntity.ok(result);
     }
@@ -65,8 +67,8 @@ public class ServicesController {
      */
     @Operation(summary = "Services List", description = "this method get Services List")
     @GetMapping("/public/get_list")
-    public ResponseEntity<?> getList() {
-        List<ServicesResponseDTO> dtoList = service.getList();
+    public ResponseEntity<?> getList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        List<ServicesResponseDTO> dtoList = service.getList(language);
 
         return ResponseEntity.ok().body(dtoList);
     }
@@ -81,16 +83,19 @@ public class ServicesController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Delete Services", description = "this method for delete services By Id (only ADMIN)")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-        String result = service.deleteById(id, Language.UZ);
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id,
+                                    @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        String result = service.deleteById(id, language);
+        log.info("Deleted: id {}, result {}", id, result);
+
         return ResponseEntity.ok(result);
     }
 
     /**
      * This method for Update Services by id
      *
-     * @param id       enter the Services id you want to change
-     * @param dto      ServicesCreateDTO
+     * @param id  enter the Services id you want to change
+     * @param dto ServicesCreateDTO
      * @return ButtonResponseDto, Throws a ServicesNotFoundException if the id is not found
      */
     @PreAuthorize("hasRole('ADMIN')")
@@ -98,8 +103,10 @@ public class ServicesController {
     @Operation(summary = "Update Services", description = "This method for update Services by Id (only ADMIN)")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateById(@PathVariable("id") Integer id,
-                                        @RequestBody ServicesCreateDTO dto) {
-        ServicesResponseDTO result = service.updateById(id, dto, Language.UZ);
+                                        @RequestBody ServicesCreateDTO dto,
+                                        @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        ServicesResponseDTO result = service.updateById(id, dto, language);
+        log.info("update: id{}, result {}", id, result.toString());
 
         return ResponseEntity.ok(result);
     }

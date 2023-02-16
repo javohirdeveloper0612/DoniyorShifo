@@ -1,4 +1,5 @@
 package com.example.service;
+
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -9,6 +10,7 @@ import com.example.enums.Language;
 import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
+import com.example.exp.doctor.DoctorPhoneAlreadyExists;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +31,13 @@ public class DoctorTashkentService {
     private final AttachmentRepository attachmentRepository;
     private final ResourceBundleService resourceBundleService;
 
+
     @Autowired
     public DoctorTashkentService(DoctorRepository doctorRepository, AttachmentRepository attachmentRepository, ResourceBundleService resourceBundleService) {
         this.doctorRepository = doctorRepository;
         this.attachmentRepository = attachmentRepository;
         this.resourceBundleService = resourceBundleService;
+
     }
 
     /**
@@ -51,6 +56,11 @@ public class DoctorTashkentService {
 
         if (optional.isEmpty()) {
             throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
+        }
+
+        boolean phoneExists = doctorRepository.existsByPhone(dto.getPhone());
+        if (phoneExists){
+            throw new DoctorPhoneAlreadyExists(resourceBundleService.getMessage("phone.already",language.name()));
         }
 
         AttachEntity attach = optional.get();
@@ -271,26 +281,30 @@ public class DoctorTashkentService {
         }
 
         List<DoctorResponseDTO> dtoList = new LinkedList<>();
-        list.forEach(doctorEntity -> dtoList.add(getDto(doctorEntity)));
+        list.forEach(doctorEntity -> dtoList.add(getDtoByLang(doctorEntity, language)));
 
         return dtoList;
     }
 
-    public DoctorResponseDTO getDto(DoctorEntity doctorEntity) {
+    public DoctorResponseDTO getDtoByLang(DoctorEntity doctorEntity, Language language) {
         DoctorResponseDTO doctorDTO = new DoctorResponseDTO();
 
 
         doctorDTO.setId(doctorEntity.getId());
-        doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
-        doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
-        doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
-        doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
-        doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
-        doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+        if (language.equals(Language.UZ)) {
+
+            doctorDTO.setFirstName_uz(doctorEntity.getFirstName_uz());
+            doctorDTO.setLastName_uz(doctorEntity.getLastName_uz());
+            doctorDTO.setSpeciality_uz(doctorEntity.getSpeciality_uz());
+            doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
+        } else {
+            doctorDTO.setFirstName_ru(doctorEntity.getFirstName_ru());
+            doctorDTO.setLastName_ru(doctorEntity.getLastName_ru());
+            doctorDTO.setSpeciality_ru(doctorEntity.getSpeciality_ru());
+            doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
+        }
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setDescription_uz(doctorEntity.getDescription_uz());
-        doctorDTO.setDescription_ru(doctorEntity.getDescription_ru());
         doctorDTO.setPhotoId(doctorEntity.getPhotoId().getId());
 
         return doctorDTO;

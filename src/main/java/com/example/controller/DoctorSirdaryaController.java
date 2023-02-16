@@ -145,9 +145,9 @@ public class DoctorSirdaryaController {
     @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/get_list")
-    public ResponseEntity<?> getAllList() {
+    public ResponseEntity<?> getAllList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
 
-        List<DoctorResponseDTO> result = doctorSirdaryaService.getAllList(Language.UZ);
+        List<DoctorResponseDTO> result = doctorSirdaryaService.getAllList(language);
 
         return ResponseEntity.ok().body(result);
     }

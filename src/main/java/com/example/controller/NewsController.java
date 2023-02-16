@@ -40,7 +40,7 @@ public class NewsController {
     @Operation(summary = "Create News data method", description = "This method is used for creating news data")
     public ResponseEntity<?> createNews(@Valid @RequestBody CreatedNewsDto newsDto,
                                         @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        log.info("create news: title_uz {} ,title_ru {}, photo_id {}   \n\n", newsDto.getTitle_uz(), newsDto.getDescription_uz(), newsDto.getPhotoId());
+        log.info("create news: title_uz {} ,title_ru {}, photo_id {}", newsDto.getTitle_uz(), newsDto.getDescription_uz(), newsDto.getPhotoId());
         return newsService.createNews(newsDto, language);
 
     }

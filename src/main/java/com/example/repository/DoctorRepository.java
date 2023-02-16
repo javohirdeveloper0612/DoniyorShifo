@@ -14,4 +14,6 @@ public interface DoctorRepository extends PagingAndSortingRepository<DoctorEntit
     Page<DoctorEntity> findAllByRole(Pageable pageable,DoctorRole role);
     List<DoctorEntity> findAllByRole(DoctorRole role);
 
+    boolean existsByPhone(String phone);
+
 }
