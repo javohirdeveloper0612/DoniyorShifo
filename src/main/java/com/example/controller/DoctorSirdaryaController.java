@@ -7,10 +7,12 @@ import com.example.service.DoctorSirdaryaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +41,14 @@ public class DoctorSirdaryaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping("/create")
+    @PostMapping(value = "/create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Create Doctor Sirdarya ADMIN", description = "this method is used by ADMIN to create doctor Sirdarya")
     public ResponseEntity<?> create(
             @Valid
-            @RequestBody DoctorCreationDTO dto,
+            @ModelAttribute DoctorCreationDTO dto,
             @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
 
-        log.info("created S Doctors phone {} , Photo{}", dto.getPhone() , dto.getPhotoId());
+        log.info("created S Doctors phone {} ", dto.getPhone());
         DoctorResponseDTO result = doctorSirdaryaService.create(dto, language);
         return ResponseEntity.ok().body(result);
 

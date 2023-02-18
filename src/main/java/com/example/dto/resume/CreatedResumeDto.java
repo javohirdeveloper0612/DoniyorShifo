@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class CreatedResumeDto {
 
     private String description;
 
-    @NotNull(message = "fileId cannot be null")
-    private Integer fileId;
+    @NotNull(message = "file cannot be null")
+    private MultipartFile file;
 
 }

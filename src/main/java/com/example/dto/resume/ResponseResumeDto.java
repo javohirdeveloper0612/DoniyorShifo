@@ -13,5 +13,5 @@ public class ResponseResumeDto {
     private String phone;
     private String email;
     private String description;
-    private Integer resumeFileId;
+    private String fileId;
 }

@@ -19,7 +19,7 @@ public class DoctorResponseDTO {
     private Integer experience;
     private String description_uz;
     private String description_ru;
-    private Integer photoId;
+    private String photoUrl;
     private String role;
 
 

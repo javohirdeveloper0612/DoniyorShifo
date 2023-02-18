@@ -30,10 +30,10 @@ public class NewsEntity {
     private String description_ru;
 
     @Column(name = "attach_id")
-    private Integer attachId;
+    private Integer photoId;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
-    private AttachEntity photoId;
+    private AttachEntity photo;
 
     @CreationTimestamp
     private Timestamp createdDate;

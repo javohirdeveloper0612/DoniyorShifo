@@ -28,8 +28,10 @@ public class ResumeEntity {
 
     @Column
     private String description;
-
+    @Column(name = "attach_id")
+    private Integer attachId;
     @OneToOne(optional = false)
+    @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
 
     @CreationTimestamp

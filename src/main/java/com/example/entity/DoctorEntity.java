@@ -1,10 +1,12 @@
 package com.example.entity;
+
 import com.example.enums.DoctorRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.sql.Timestamp;
 
 @Getter
@@ -42,14 +44,18 @@ public class DoctorEntity {
     @Column(nullable = false)
     private Integer experience;
 
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String description_uz;
 
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String description_ru;
-
+    @Column(name = "photo_id")
+    private Integer photoId;
     @OneToOne(cascade = CascadeType.REMOVE)
-    private AttachEntity photoId;
+    @JoinColumn(name = "photo_id", insertable = false, updatable = false)
+    private AttachEntity photo;
+
+
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdDate;

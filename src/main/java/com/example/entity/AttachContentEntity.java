@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -19,7 +21,8 @@ public class AttachContentEntity {
     @Column(nullable = false)
     private byte[] bytes;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private AttachEntity attach;
 
 }

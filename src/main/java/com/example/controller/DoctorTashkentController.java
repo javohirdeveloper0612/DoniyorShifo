@@ -12,9 +12,11 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,14 +43,14 @@ public class DoctorTashkentController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping("/create")
+    @PostMapping(value = "/create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Create Doctor Tashkent ADMIN", description = "this method is used by ADMIN to create doctor Tashkent")
     public ResponseEntity<?> create(
             @Valid
-            @RequestBody DoctorCreationDTO dto,
+            @ModelAttribute DoctorCreationDTO dto,
             @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
 
-        log.info("created T Doctors phone {} , Photo{}", dto.getPhone(), dto.getPhotoId());
+        log.info("created T Doctors phone {} ", dto.getPhone());
         DoctorResponseDTO result = doctorTashkentService.create(dto, language);
         return ResponseEntity.ok().body(result);
 

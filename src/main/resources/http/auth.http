@@ -1,5 +1,5 @@
 ### login
-POST localhost:8080/auth/login
+POST http://api.doniyor.doniyorshifo.uz/auth/login
 Content-Type: application/json
 Accept-Language: UZ
 
@@ -7,3 +7,6 @@ Accept-Language: UZ
   "username": "adminjon",
   "password": "1234"
 }
+
+
+eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2MDc1NTcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzIxMjM1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.Ur97ENqtzKqgfAK8uhnHL_zv58c3AeZ2xwbjIkjtXR3QZu-Ldl_PKHcb9fmSN6ptqPUUHurJiOOqigVmq63hug

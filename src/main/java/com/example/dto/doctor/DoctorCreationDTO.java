@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
@@ -44,6 +45,6 @@ public class DoctorCreationDTO {
     @NotBlank(message = "description_ru cannot be null")
     private String description_ru;
 
-    @NotNull(message = "photoId cannot be null")
-    private Integer photoId;
+    @NotNull(message = "file cannot be null")
+    private MultipartFile file;
 }

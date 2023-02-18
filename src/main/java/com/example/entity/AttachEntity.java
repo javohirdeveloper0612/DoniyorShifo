@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -28,8 +30,10 @@ public class AttachEntity {
     @OneToOne(mappedBy = "attach", fetch = FetchType.EAGER)
     private ServicesDataEntity servicesDataEntity;
 
-    @OneToOne(mappedBy = "photoId")
+    @OneToOne(mappedBy = "photo")
     @JsonIgnore
     private NewsEntity news;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private AttachContentEntity attachContentEntity;
 }

@@ -1,9 +1,12 @@
 package com.example.dto.services_data;
 
+import com.example.dto.attach.AttachDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +22,7 @@ public class ServicesDataResponseDTO {
     private String descriptionUz;
     private String descriptionRu;
 
-    private Integer attachId;
+    private String photoUrl;
 
     private Integer buttonId;
 

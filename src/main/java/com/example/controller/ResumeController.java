@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +36,12 @@ public class ResumeController {
      * @param resumeDto CreatedResumeDto
      * @return CreatedResumeDto
      */
-    @PostMapping("/public/save_resume")
+    @PostMapping(value = "/public/save_resume",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
     public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto,
                                         @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
-        log.info("save resume ownerResume phone{} , Name{} , file id{} ", resumeDto.getPhone(),
-                resumeDto.getFullName(), resumeDto.getFileId());
+        log.info("save resume ownerResume phone{} , Name{}", resumeDto.getPhone(),
+                resumeDto.getFullName());
         return resumeService.saveResume(resumeDto, language);
     }
 

@@ -1,8 +1,10 @@
 package com.example.dto.services_data;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -17,11 +19,10 @@ public class ServicesCreateDataDTO {
     private String descriptionUz;
     @NotBlank(message = "description_ru cannot be empty")
     private String descriptionRu;
-    @NotBlank(message = "AttachId cannot be empty")
-    private Integer attachId;
     @NotBlank(message = "ButtonId cannot be empty")
-
     private Integer buttonId;
+    @NotNull(message = "MultipartFile cannot be null")
+    private MultipartFile file;
 
 
 }

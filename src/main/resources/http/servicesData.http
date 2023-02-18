@@ -1,6 +1,9 @@
 ### create data
 POST localhost:8080/api/services_data/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2MDc1NTcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzIxMjM1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.Ur97ENqtzKqgfAK8uhnHL_zv58c3AeZ2xwbjIkjtXR3QZu-Ldl_PKHcb9fmSN6ptqPUUHurJiOOqigVmq63hug
+Content-Type: multipart/form-data; boundary=---------------------------13787589471453071099581927209
+Content-Disposition: form-data; name="configuration"
 Content-Type: application/json
 
 {
@@ -8,13 +11,105 @@ Content-Type: application/json
   "titleRu": "Terapevt",
   "descriptionUz": "malakali muolaja",
   "descriptionRu": "malakali muolaja",
-  "attachId": 1,
-  "buttonId": 4
+  "buttonId": 1
 }
+-----------------------------13787589471453071099581927209
+Content-Disposition: form-data; name="file"; filename="123.jpg"
+Content-Type: application/zip
+
+
+
+
+
+
 
 ### delete services data by id
 DELETE localhost:8080/api/services_data/delete/2
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NDExNDI3MCwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.64Zc4EKyRnD1ImUphLKYhE6akcxKdQXHcdng54tTZQHAnKwELo6y59DsVYX65lvC-TR8BXBeoO9dSB6KPhhiHw
+
+###
+GET http://localhost:8080/api/services_data/public/get/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2MDc1NTcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzIxMjM1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.Ur97ENqtzKqgfAK8uhnHL_zv58c3AeZ2xwbjIkjtXR3QZu-Ldl_PKHcb9fmSN6ptqPUUHurJiOOqigVmq63hug
+
+###
+
+# curl -X 'POST'
+#  'http://api.doniyor.doniyorshifo.uz/api/services_data/create'
+#  -H 'accept: */*'
+#  -H 'Accept-Language: UZ'
+#  -H 'Content-Type: multipart/form-data'
+#  -F 'titleUz=daw'
+#  -F 'titleRu=faw'
+#  -F 'descriptionUz=daw'
+#  -F 'descriptionRu=afw'
+#  -F 'buttonId=2'
+#  -F 'file=@pexels-luis-gomes-546819 (1) (1).jpg;type=image/jpeg'
+POST http://localhost:8080/api/services_data/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2MDc1NTcsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzIxMjM1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.Ur97ENqtzKqgfAK8uhnHL_zv58c3AeZ2xwbjIkjtXR3QZu-Ldl_PKHcb9fmSN6ptqPUUHurJiOOqigVmq63hug
+accept: */*
+Accept-Language: UZ
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="titleUz" daw
+Content-Disposition: form-data; name="titleRu" daw
+Content-Disposition: form-data; name="descriptionUz" dawsad
+Content-Disposition: form-data; name="descriptionRu" daw
+Content-Disposition: form-data; name="buttonId" 2
+Content-Disposition: form-data; name="file"; filename="pexels-luis-gomes-546819 (1) (1).jpg"
+
+
+
+###
+
+
+# curl -X 'POST'
+#  'http://api.doniyor.doniyorshifo.uz/api/services_data/create'
+#  -H 'accept: */*'
+#  -H 'Accept-Language: UZ'
+#  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2NDQyNTcsInVzZXJuYW1lIjoiYWRtaW5iZWsiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzI0OTA1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.d8mWTiO35MZ9RWstUDWL01bSADeDTRCMYzh_K4OJoQKGGhw97-QShZglq9PdAzyjwZPwwtLqSirgBmn_-9UyOg'
+#  -H 'Content-Type: multipart/form-data'
+#  -F 'titleUz=daw'
+#  -F 'titleRu=fwa'
+#  -F 'descriptionUz=adwa'
+#  -F 'descriptionRu=dwa'
+#  -F 'buttonId=2'
+#  -F 'file=@pexels-luis-gomes-546819 (1) (1).jpg;type=image/jpeg'
+POST http://api.doniyor.doniyorshifo.uz/api/services_data/create
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY2NDQyNTcsInVzZXJuYW1lIjoiYWRtaW5iZWsiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzI0OTA1NywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.d8mWTiO35MZ9RWstUDWL01bSADeDTRCMYzh_K4OJoQKGGhw97-QShZglq9PdAzyjwZPwwtLqSirgBmn_-9UyOg
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="titleUz"
+
+daw
+--WebAppBoundary
+Content-Disposition: form-data; name="titleRu"
+
+fwa
+--WebAppBoundary
+Content-Disposition: form-data; name="descriptionUz"
+
+adwa
+--WebAppBoundary
+Content-Disposition: form-data; name="descriptionRu"
+
+dwa
+--WebAppBoundary
+Content-Disposition: form-data; name="buttonId"
+
+2
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="123.jpg"
+
+C:\Users\Acer\Pictures\Saved Pictures\123.jpg
+--WebAppBoundary--
+
+###
+
+
+
 
 
 

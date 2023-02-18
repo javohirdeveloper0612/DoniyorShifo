@@ -16,6 +16,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,7 @@ public class AttachService {
      */
 
 
-    public ResponseEntity<?> uploadFile(MultipartFile file) {
+    public AttachDTO uploadFile(MultipartFile file) {
 
 
 
@@ -72,7 +73,7 @@ public class AttachService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(attachDTO);
+        return attachDTO;
     }
 
 
@@ -86,7 +87,7 @@ public class AttachService {
      */
 
 
-    public ResponseEntity<?> downloadFile(Integer id, HttpServletResponse response, Language language) {
+    public AttachDTO downloadFile(Integer id, HttpServletResponse response, Language language) {
 
         //we get the AttachEntity object from DB
         Optional<AttachEntity> optionalAttachment = attachmentRepository.findById(id);
@@ -121,7 +122,9 @@ public class AttachService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(attachDTO);
+        return attachDTO;
     }
+
+
 
 }

@@ -1,7 +1,7 @@
 package com.example.service;
 
+import com.example.dto.attach.AttachDTO;
 import com.example.dto.resume.CreatedResumeDto;
-import com.example.entity.AttachEntity;
 import com.example.entity.ResumeEntity;
 import com.example.enums.Language;
 import com.example.exp.attach.FileNotFoundException;
@@ -21,16 +21,16 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
 
     private final ResourceBundleService resourceBundleService;
-    private final AttachmentRepository attachmentRepository;
+    private final AttachService attachService;
     private final ToDTO toDTO;
 
 
     @Autowired
-    public ResumeService(ResumeRepository resumeRepository, ResourceBundleService resourceBundleService,
-                         AttachmentRepository attachmentRepository, ToDTO toDTO) {
+    public ResumeService(ResumeRepository resumeRepository, ResourceBundleService resourceBundleService, AttachService attachService, ToDTO toDTO) {
         this.resumeRepository = resumeRepository;
         this.resourceBundleService = resourceBundleService;
-        this.attachmentRepository = attachmentRepository;
+        this.attachService = attachService;
+
 
         this.toDTO = toDTO;
     }
@@ -45,17 +45,14 @@ public class ResumeService {
      */
     public ResponseEntity<?> saveResume(CreatedResumeDto resumeDto, Language language) {
 
-        Optional<AttachEntity> optional = attachmentRepository.findById(resumeDto.getFileId());
-        if (optional.isEmpty()) {
-            throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
-        }
-        AttachEntity attach = optional.get();
+        AttachDTO attach = attachService.uploadFile(resumeDto.getFile());
+
         ResumeEntity resume = new ResumeEntity();
         resume.setFullName(resumeDto.getFullName());
         resume.setPhone(resumeDto.getPhone());
         resume.setEmail(resumeDto.getEmail());
         resume.setDescription(resumeDto.getDescription());
-        resume.setAttach(attach);
+        resume.setAttachId(attach.getId());
         ResumeEntity savedResume = resumeRepository.save(resume);
         return ResponseEntity.status(HttpStatus.CREATED).body(toDTO.toResponseResumeDto(savedResume));
     }

@@ -1,18 +1,14 @@
 package com.example.dto.news;
 
-import com.example.entity.AttachEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+@Getter
+@Setter
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class CreatedNewsDto {
-
+public class NewsUpdateDTO {
     @NotBlank(message = "title_uz cannot be null or empty")
     private String title_uz;
 
@@ -27,5 +23,4 @@ public class CreatedNewsDto {
 
     @NotNull(message = "file cannot be null")
     private MultipartFile file;
-
 }

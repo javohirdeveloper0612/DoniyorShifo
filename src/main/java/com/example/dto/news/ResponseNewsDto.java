@@ -24,7 +24,7 @@ public class ResponseNewsDto {
 
     private String description_ru;
 
-    private Integer photoId;
+    private String photoUrl;
 
 
 }

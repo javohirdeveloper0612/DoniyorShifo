@@ -1,6 +1,8 @@
 package com.example.service;
 
+import com.example.dto.attach.AttachDTO;
 import com.example.dto.news.CreatedNewsDto;
+import com.example.dto.news.NewsUpdateDTO;
 import com.example.dto.news.ResponseNewsDto;
 import com.example.entity.AttachEntity;
 import com.example.entity.NewsEntity;
@@ -31,13 +33,16 @@ public class NewsService {
     private final AttachmentRepository attachmentRepository;
     private final ResourceBundleService resourceBundleService;
     private final NewsRepository newsRepository;
+
+    private final AttachService attachService;
     private final ToDTO toDTO;
 
     @Autowired
-    public NewsService(AttachmentRepository attachmentRepository, ResourceBundleService resourceBundleService, NewsRepository newsRepository, ToDTO toDTO) {
+    public NewsService(AttachmentRepository attachmentRepository, ResourceBundleService resourceBundleService, NewsRepository newsRepository, AttachService attachService, ToDTO toDTO) {
         this.attachmentRepository = attachmentRepository;
         this.resourceBundleService = resourceBundleService;
         this.newsRepository = newsRepository;
+        this.attachService = attachService;
         this.toDTO = toDTO;
     }
 
@@ -51,19 +56,15 @@ public class NewsService {
 
     public ResponseEntity<?> createNews(CreatedNewsDto newsDto, Language language) {
 
-        Optional<AttachEntity> optional = attachmentRepository.findById(newsDto.getPhotoId());
-        if (optional.isEmpty()) {
-            throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
-        }
 
-        AttachEntity attachEntity = optional.get();
+        AttachDTO attachDTO = attachService.uploadFile(newsDto.getFile());
 
         NewsEntity newsEntity = new NewsEntity();
         newsEntity.setTitle_uz(newsDto.getTitle_uz());
         newsEntity.setTitle_ru(newsDto.getTitle_ru());
         newsEntity.setDescription_uz(newsDto.getDescription_uz());
         newsEntity.setDescription_ru(newsDto.getDescription_ru());
-        newsEntity.setAttachId(attachEntity.getId());
+        newsEntity.setPhotoId(attachDTO.getId());
 
         NewsEntity savedNews = newsRepository.save(newsEntity);
 
@@ -84,18 +85,18 @@ public class NewsService {
         if (optional.isEmpty()) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
-        NewsEntity newsEntity = optional.get();
+        NewsEntity entity = optional.get();
         ResponseNewsDto response = new ResponseNewsDto();
-        response.setId(newsEntity.getId());
+        response.setId(entity.getId());
         if (language==Language.RU){
-            response.setTitle_ru(newsEntity.getTitle_ru());
-            response.setDescription_ru(newsEntity.getDescription_ru());
+            response.setTitle_ru(entity.getTitle_ru());
+            response.setDescription_ru(entity.getDescription_ru());
         }
         if (language==Language.UZ){
-            response.setTitle_uz(newsEntity.getTitle_uz());
-            response.setDescription_uz(newsEntity.getDescription_uz());
+            response.setTitle_uz(entity.getTitle_uz());
+            response.setDescription_uz(entity.getDescription_uz());
         }
-        response.setPhotoId(newsEntity.getPhotoId().getId());
+        response.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+entity.getPhotoId());
         return ResponseEntity.ok(response);
     }
 
@@ -117,7 +118,8 @@ public class NewsService {
         for (NewsEntity newsEntity : entityPage) {
             ResponseNewsDto responseNewsDto = new ResponseNewsDto();
 
-            responseNewsDto.setPhotoId(newsEntity.getPhotoId().getId());
+            responseNewsDto.setId(newsEntity.getId());
+            responseNewsDto.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+newsEntity.getPhotoId());
             if (language==Language.UZ){
                 responseNewsDto.setTitle_uz(newsEntity.getTitle_uz());
                 responseNewsDto.setDescription_uz(newsEntity.getDescription_uz());
@@ -141,17 +143,15 @@ public class NewsService {
      * @param language Language
      * @return ResponseNewsDto
      */
-    public ResponseEntity<?> editeNews(Integer id, @Valid CreatedNewsDto dto, Language language) {
+    public ResponseEntity<?> editeNews(Integer id, @Valid NewsUpdateDTO dto, Language language) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         if (optional.isEmpty()) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
 
+        attachmentRepository.delete(optional.get().getPhoto());
 
-        Optional<AttachEntity> attach = attachmentRepository.findById(dto.getPhotoId());
-        if (attach.isEmpty()) {
-            throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
-        }
+        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
 
 
         NewsEntity newsEntity = optional.get();
@@ -159,7 +159,7 @@ public class NewsService {
         newsEntity.setDescription_uz(dto.getDescription_uz());
         newsEntity.setTitle_ru(dto.getTitle_ru());
         newsEntity.setDescription_ru(dto.getDescription_ru());
-        newsEntity.setPhotoId(attach.get());
+        newsEntity.setPhotoId(attachDTO.getId());
 
         NewsEntity edited = newsRepository.save(newsEntity);
         return ResponseEntity.ok(toDTO.responseNewsDto(edited));
@@ -179,13 +179,8 @@ public class NewsService {
         if (optional.isEmpty()) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
-
-        NewsEntity newsEntity = optional.get();
-        AttachEntity attach = newsEntity.getPhotoId();
-
         try {
             newsRepository.deleteById(id);
-            attachmentRepository.delete(attach);
         } catch (Exception e) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
