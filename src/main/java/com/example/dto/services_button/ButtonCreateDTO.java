@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +18,19 @@ public class ButtonCreateDTO {
     private String buttonNameUz;
     @NotBlank(message = "buttonNameRu cannot be empty")
     private String buttonNameRu;
-    @NotBlank(message = "buttonDescriptionUz cannot be empty")
-    private String buttonDescriptionUz;
-    @NotBlank(message = "buttonDescriptionRu cannot be empty")
+    @NotBlank(message = "title_uz cannot be empty")
+    private String titleUz;
+    @NotBlank(message = "title_ru cannot be empty")
+    private String titleRu;
 
-    private String buttonDescriptionRu;
+    @NotBlank(message = "buttonDescriptionUz cannot be empty")
+    private String descriptionUz;
+    @NotBlank(message = "buttonDescriptionRu cannot be empty")
+    private String descriptionRu;
+
+    @NotNull(message = "MultipartFile cannot be null")
+    private MultipartFile file;
+
     @NotNull(message = "servicesId cannot be empty")
     private Integer servicesId;
 

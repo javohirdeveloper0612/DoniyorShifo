@@ -11,6 +11,7 @@ import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.exp.doctor.DoctorPhoneAlreadyExists;
 import com.example.repository.DoctorRepository;
+import com.example.util.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -205,7 +206,7 @@ public class DoctorSirdaryaService {
         doctorResponseDTO.setExperience(doctorEntity.getExperience());
         doctorResponseDTO.setDescription_uz(doctorEntity.getDescription_uz());
         doctorResponseDTO.setDescription_ru(doctorEntity.getDescription_ru());
-        doctorResponseDTO.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/" + doctorEntity.getPhotoId());
+        doctorResponseDTO.setPhotoUrl(UrlUtil.url + doctorEntity.getPhotoId());
 
         return doctorResponseDTO;
     }
@@ -244,7 +245,7 @@ public class DoctorSirdaryaService {
         }
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/" + doctorEntity.getPhotoId());
+        doctorDTO.setPhotoUrl(UrlUtil.url + doctorEntity.getPhotoId());
 
         return doctorDTO;
     }

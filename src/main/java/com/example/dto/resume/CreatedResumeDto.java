@@ -14,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class CreatedResumeDto {
 
-    private Integer id;
-
     @NotBlank(message = "fullName cannot be empty")
     String fullName;
 

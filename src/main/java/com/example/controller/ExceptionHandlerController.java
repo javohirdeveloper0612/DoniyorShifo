@@ -1,21 +1,20 @@
 package com.example.controller;
 
 import com.example.exp.admin.AdminNotFoundException;
-import com.example.exp.doctor.DoctorPhoneAlreadyExists;
-import com.example.exp.news.NewsDataNotFoundException;
 import com.example.exp.attach.AttachNotFoundException;
 import com.example.exp.attach.FileNameNotFoundException;
 import com.example.exp.attach.FileNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundException;
-import com.example.exp.patient.PatientNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
+import com.example.exp.doctor.DoctorPhoneAlreadyExists;
+import com.example.exp.news.NewsDataNotFoundException;
+import com.example.exp.patient.PatientNotFoundException;
 import com.example.exp.services.AlreadyExistsServicesException;
 import com.example.exp.services.ServicesNotFoundException;
 import com.example.exp.servicesButton.AllReadyExistsButtonException;
 import com.example.exp.servicesButton.ButtonNotExistsException;
 import com.example.exp.servicesButton.ButtonNotFoundException;
 import com.example.exp.servicesButton.DataInCompleException;
-import com.example.exp.services_data.ServicesDataNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -85,10 +84,6 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    @ExceptionHandler({ServicesDataNotFoundException.class})
-    private ResponseEntity<?> handler(ServicesDataNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
 
     @ExceptionHandler({DoctorNotFoundException.class})
     private ResponseEntity<?> handler(DoctorNotFoundException e) {

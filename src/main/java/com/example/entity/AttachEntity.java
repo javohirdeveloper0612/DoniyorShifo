@@ -28,7 +28,7 @@ public class AttachEntity {
 
 
     @OneToOne(mappedBy = "attach", fetch = FetchType.EAGER)
-    private ServicesDataEntity servicesDataEntity;
+    private ServicesButtonEntity servicesButtonEntity;
 
     @OneToOne(mappedBy = "photo")
     @JsonIgnore

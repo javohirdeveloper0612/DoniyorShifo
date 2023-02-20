@@ -146,10 +146,9 @@ public class DoctorTashkentController {
 
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @Operation(summary = "Doctor list", description = "This method for Doctor list (only ADMIN)")
-    @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping("/get_list")
+    @GetMapping("/public/get_list")
     public ResponseEntity<?> getAllList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
 
         List<DoctorResponseDTO> result = doctorTashkentService.getAllList(language);

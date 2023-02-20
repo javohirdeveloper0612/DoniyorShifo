@@ -12,6 +12,7 @@ import com.example.exp.attach.FileNotFoundException;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.NewsRepository;
 import com.example.util.ToDTO;
+import com.example.util.UrlUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,7 +97,7 @@ public class NewsService {
             response.setTitle_uz(entity.getTitle_uz());
             response.setDescription_uz(entity.getDescription_uz());
         }
-        response.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+entity.getPhotoId());
+        response.setPhotoUrl(UrlUtil.url+entity.getPhotoId());
         return ResponseEntity.ok(response);
     }
 
@@ -119,7 +120,7 @@ public class NewsService {
             ResponseNewsDto responseNewsDto = new ResponseNewsDto();
 
             responseNewsDto.setId(newsEntity.getId());
-            responseNewsDto.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+newsEntity.getPhotoId());
+            responseNewsDto.setPhotoUrl(UrlUtil.url+newsEntity.getPhotoId());
             if (language==Language.UZ){
                 responseNewsDto.setTitle_uz(newsEntity.getTitle_uz());
                 responseNewsDto.setDescription_uz(newsEntity.getDescription_uz());

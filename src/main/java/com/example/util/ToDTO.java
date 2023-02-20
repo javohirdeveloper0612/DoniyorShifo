@@ -21,7 +21,7 @@ public class ToDTO {
         resumeDto.setPhone(resumeEntity.getPhone());
         resumeDto.setEmail(resumeEntity.getEmail());
         resumeDto.setDescription(resumeEntity.getDescription());
-        resumeDto.setFileId("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+resumeEntity.getAttachId());
+        resumeDto.setFileId(UrlUtil.url+resumeEntity.getAttachId());
         return resumeDto;
     }
 
@@ -44,7 +44,7 @@ public class ToDTO {
         newsDto.setTitle_ru(newsEntity.getTitle_ru());
         newsDto.setDescription_ru(newsEntity.getDescription_ru());
         newsDto.setDescription_uz(newsEntity.getDescription_uz());
-        newsDto.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/"+newsEntity.getPhotoId());
+        newsDto.setPhotoUrl(UrlUtil.url+newsEntity.getPhotoId());
 
         return newsDto;
     }

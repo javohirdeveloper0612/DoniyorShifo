@@ -11,6 +11,7 @@ import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.exp.doctor.DoctorPhoneAlreadyExists;
 import com.example.repository.DoctorRepository;
+import com.example.util.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -217,7 +218,7 @@ public class DoctorTashkentService {
         doctorResponseDTO.setExperience(doctorEntity.getExperience());
         doctorResponseDTO.setDescription_uz(doctorEntity.getDescription_uz());
         doctorResponseDTO.setDescription_ru(doctorEntity.getDescription_ru());
-        doctorResponseDTO.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/" + doctorEntity.getPhotoId());
+        doctorResponseDTO.setPhotoUrl(UrlUtil.url+ doctorEntity.getPhotoId());
 
         return doctorResponseDTO;
     }
@@ -225,7 +226,7 @@ public class DoctorTashkentService {
     public List<DoctorResponseDTO> getAllList(Language language) {
         List<DoctorEntity> list = doctorRepository.findAllByRole(DoctorRole.ROLE_DOCTOR_TASHKENT);
 
-        System.out.println("error");
+
         if (list.isEmpty()) {
 
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
@@ -256,7 +257,7 @@ public class DoctorTashkentService {
         }
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setPhotoUrl("http://api.doniyor.doniyorshifo.uz/api/attach/public/download/" + doctorEntity.getPhotoId());
+        doctorDTO.setPhotoUrl(UrlUtil.url+ doctorEntity.getPhotoId());
 
         return doctorDTO;
     }

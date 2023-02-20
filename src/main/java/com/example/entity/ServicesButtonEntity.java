@@ -23,11 +23,21 @@ public class ServicesButtonEntity {
 
     @Column(name = "button_name_uz", nullable = false)
     private String buttonNameUz;
+    @Column(nullable = false)
+    private String titleUz;
+    @Column(nullable = false)
+    private String titleRu;
 
     @Column(nullable = false)
     private String buttonDescriptionUz;
     @Column(nullable = false)
     private String buttonDescriptionRu;
+
+    @Column(name = "attach_id")
+    private Integer attachId;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "attach_id", insertable = false, updatable = false)
+    private AttachEntity attach;
 
     @Column(name = "services_id")
     private Integer servicesId;
@@ -35,7 +45,5 @@ public class ServicesButtonEntity {
     @JoinColumn(name = "services_id", insertable = false, updatable = false)
     private ServicesEntity services;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private ServicesDataEntity dataEntity;
 
 }

@@ -38,7 +38,7 @@ public class ResumeController {
      */
     @PostMapping(value = "/public/save_resume",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Saving resume method", description = "This method is used for saving resume data")
-    public ResponseEntity<?> saveResume(@Valid @RequestBody CreatedResumeDto resumeDto,
+    public ResponseEntity<?> saveResume(@Valid @ModelAttribute CreatedResumeDto resumeDto,
                                         @RequestHeader(name = "Accept-Language", defaultValue = "UZ") Language language) {
         log.info("save resume ownerResume phone{} , Name{}", resumeDto.getPhone(),
                 resumeDto.getFullName());

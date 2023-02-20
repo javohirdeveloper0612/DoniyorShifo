@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,8 @@ public class ServicesButtonController {
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create", description = "this method for create new button (only ADMIN)")
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody ButtonCreateDTO dto,
+    @PostMapping(value = "/create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> create(@Valid @ModelAttribute ButtonCreateDTO dto,
                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
         ButtonResponseDTO result = service.create(dto, language);
         return ResponseEntity.ok().body(result);
@@ -86,9 +87,9 @@ public class ServicesButtonController {
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Update Services Button", description = "This method for services button by Id (only ADMIN) ")
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @RequestBody ButtonUpdateDTO dto,
+                                    @ModelAttribute ButtonUpdateDTO dto,
                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
         ButtonResponseDTO result = service.updateById(id, dto, language);
 
