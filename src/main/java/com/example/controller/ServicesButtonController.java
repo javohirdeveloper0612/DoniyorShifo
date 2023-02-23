@@ -102,9 +102,10 @@ public class ServicesButtonController {
      * @return buttonList ,Returns ButtonNotFoundException if the button does not exist
      */
     @Operation(summary = "Get Button List", description = "This method for get list Button")
-    @GetMapping("/public/get_list")
-    public ResponseEntity<?> getList(@RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
-        List<ButtonResponseDTO> result = service.getListButton(language);
+    @GetMapping("/public/get_list/{services_id}")
+    public ResponseEntity<?> getList(@PathVariable("services_id") Integer services_id,
+            @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
+        List<ButtonResponseDTO> result = service.getListButton(services_id,language);
 
         return ResponseEntity.ok(result);
     }

@@ -1,6 +1,6 @@
 ### Create services
-POST localhost:8080/api/services/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzU1ODk1NjMsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NjE5NDM2MywiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.XtJQm_hgHb4-teld8aj9swUOGhyCBOevyEkEDDbFjiCMu_FpUxxVMFGz51AuuC4yzHuzof8e4eS666fdgOnKbg
+POST api.doniyor.doniyorshifo.uz/api/services/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzY4NzQ3NDIsInVzZXJuYW1lIjoiYWRtaW5qb24iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cCI6MTY3NzQ3OTU0MiwiaXNzIjoiRG9uaXlvclNoaWZvIGtsaW5pa2EifQ.o8LK26OSWX5pwWLesxN-AisVipUA2xAEe8elJA9UQmB7Mag3baZ7hNSKZ1yYNRj65UFX_ioS7W0Hr5v-MSQCyw
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ### get by id
 GET  http://api.doniyor.doniyorshifo.uz/api/services/public/get_list
-Accept-Language: RU
+Accept-Language: UZ
 
 ### update services
 PUT localhost:8080/api/services/update/1

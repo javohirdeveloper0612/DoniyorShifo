@@ -104,15 +104,11 @@ public class NewsService {
     /**
      * This method is used for getting all the news data by paging and sorting
      *
-     * @param page int
-     * @param size int
      * @return Page
      */
-    public ResponseEntity<?> getAllNews(int page, int size , Language language) {
+    public ResponseEntity<?> getAllNews(Language language) {
 
-        Pageable pageable = PageRequest.of(page, size);
-
-        Page<NewsEntity> entityPage = newsRepository.findAll(pageable);
+        List<NewsEntity> entityPage = newsRepository.findAll();
 
         List<ResponseNewsDto> responseNewsDtoList = new ArrayList<>();
 
@@ -133,7 +129,7 @@ public class NewsService {
         }
 
 
-        return ResponseEntity.ok(new PageImpl<>(responseNewsDtoList, pageable, entityPage.getTotalElements()));
+        return ResponseEntity.ok(responseNewsDtoList);
     }
 
     /**
