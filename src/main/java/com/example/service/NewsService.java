@@ -1,24 +1,18 @@
 package com.example.service;
 
-import com.example.dto.attach.AttachDTO;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.dto.news.CreatedNewsDto;
 import com.example.dto.news.NewsUpdateDTO;
 import com.example.dto.news.ResponseNewsDto;
-import com.example.entity.AttachEntity;
 import com.example.entity.NewsEntity;
 import com.example.enums.Language;
 import com.example.exp.news.NewsDataNotFoundException;
-import com.example.exp.attach.FileNotFoundException;
 import com.example.repository.AttachmentRepository;
 import com.example.repository.NewsRepository;
 import com.example.util.ToDTO;
 import com.example.util.UrlUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,7 +52,7 @@ public class NewsService {
     public ResponseEntity<?> createNews(CreatedNewsDto newsDto, Language language) {
 
 
-        AttachDTO attachDTO = attachService.uploadFile(newsDto.getFile());
+        AttachResponseDTO attachDTO = attachService.uploadFile(newsDto.getFile());
 
         NewsEntity newsEntity = new NewsEntity();
         newsEntity.setTitle_uz(newsDto.getTitle_uz());
@@ -136,7 +130,7 @@ public class NewsService {
      * This method is used for editing news Data If News Data not found throw NewsDataNotFoundException
      *
      * @param id       Integer
-     * @param dto
+     * @param dto NewsUpdateDto
      * @param language Language
      * @return ResponseNewsDto
      */
@@ -146,9 +140,8 @@ public class NewsService {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
 
-        attachmentRepository.delete(optional.get().getPhoto());
-
-        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
+        String attachId = optional.get().getPhotoId();
+        AttachResponseDTO attachDTO = attachService.uploadFile(dto.getFile());
 
 
         NewsEntity newsEntity = optional.get();
@@ -159,6 +152,9 @@ public class NewsService {
         newsEntity.setPhotoId(attachDTO.getId());
 
         NewsEntity edited = newsRepository.save(newsEntity);
+
+        attachService.deleteById(attachId);
+
         return ResponseEntity.ok(toDTO.responseNewsDto(edited));
     }
 
@@ -177,6 +173,7 @@ public class NewsService {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));
         }
         try {
+            attachService.deleteById(optional.get().getPhotoId());
             newsRepository.deleteById(id);
         } catch (Exception e) {
             throw new NewsDataNotFoundException(resourceBundleService.getMessage("news.not.found", language.name()));

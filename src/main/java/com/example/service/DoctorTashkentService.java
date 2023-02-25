@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.attach.AttachDTO;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -32,7 +32,7 @@ public class DoctorTashkentService {
 
 
     @Autowired
-    public DoctorTashkentService(DoctorRepository doctorRepository , ResourceBundleService resourceBundleService, AttachService attachService) {
+    public DoctorTashkentService(DoctorRepository doctorRepository, ResourceBundleService resourceBundleService, AttachService attachService) {
         this.doctorRepository = doctorRepository;
 
         this.resourceBundleService = resourceBundleService;
@@ -54,10 +54,10 @@ public class DoctorTashkentService {
 
 
         boolean phoneExists = doctorRepository.existsByPhone(dto.getPhone());
-        if (phoneExists){
-            throw new DoctorPhoneAlreadyExists(resourceBundleService.getMessage("phone.already",language.name()));
+        if (phoneExists) {
+            throw new DoctorPhoneAlreadyExists(resourceBundleService.getMessage("phone.already", language.name()));
         }
-        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
+        AttachResponseDTO attachDTO = attachService.uploadFile(dto.getFile());
 
         DoctorEntity doctorEntity = new DoctorEntity();
         doctorEntity.setFirstName_uz(dto.getFirstName_uz());
@@ -104,8 +104,7 @@ public class DoctorTashkentService {
         doctorDTO.setId(doctorEntity.getId());
 
 
-
-        return getDtoByLang(doctorEntity,language);
+        return getDtoByLang(doctorEntity, language);
     }
 
     /**
@@ -161,8 +160,13 @@ public class DoctorTashkentService {
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
         }
+        try {
+            attachService.deleteById(optional.get().getPhotoId());
+            doctorRepository.deleteById(optional.get().getId());
+        } catch (RuntimeException e) {
+            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+        }
 
-        doctorRepository.deleteById(optional.get().getId());
 
         return "The doctor is deleted";
     }
@@ -190,7 +194,7 @@ public class DoctorTashkentService {
             throw new DoctorNotFoundListException(resourceBundleService.getMessage("doctor.not.found.list", language));
         }
 
-        entityPage.forEach(doctorEntity -> dtoList.add(getDtoByLang(doctorEntity,language)));
+        entityPage.forEach(doctorEntity -> dtoList.add(getDtoByLang(doctorEntity, language)));
 
 
         return new PageImpl<>(dtoList, pageable, entityPage.getTotalElements());
@@ -218,7 +222,7 @@ public class DoctorTashkentService {
         doctorResponseDTO.setExperience(doctorEntity.getExperience());
         doctorResponseDTO.setDescription_uz(doctorEntity.getDescription_uz());
         doctorResponseDTO.setDescription_ru(doctorEntity.getDescription_ru());
-        doctorResponseDTO.setPhotoUrl(UrlUtil.url+ doctorEntity.getPhotoId());
+        doctorResponseDTO.setPhotoUrl(UrlUtil.url + doctorEntity.getPhotoId());
 
         return doctorResponseDTO;
     }
@@ -257,7 +261,7 @@ public class DoctorTashkentService {
         }
         doctorDTO.setPhone(doctorEntity.getPhone());
         doctorDTO.setExperience(doctorEntity.getExperience());
-        doctorDTO.setPhotoUrl(UrlUtil.url+ doctorEntity.getPhotoId());
+        doctorDTO.setPhotoUrl(UrlUtil.url + doctorEntity.getPhotoId());
 
         return doctorDTO;
     }

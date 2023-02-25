@@ -50,7 +50,7 @@ public class DoctorEntity {
     @Column(columnDefinition = "text", nullable = false)
     private String description_ru;
     @Column(name = "photo_id")
-    private Integer photoId;
+    private String photoId;
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private AttachEntity photo;

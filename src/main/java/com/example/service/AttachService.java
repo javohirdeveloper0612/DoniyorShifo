@@ -1,39 +1,47 @@
 package com.example.service;
 
 import com.example.dto.attach.AttachDTO;
-import com.example.entity.AttachContentEntity;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.entity.AttachEntity;
 import com.example.enums.Language;
 import com.example.exp.attach.FileNotFoundException;
-import com.example.repository.AttachmentContentRepository;
+import com.example.exp.attach.FileUploadException;
+import com.example.exp.attach.OriginalFileNameNullException;
 import com.example.repository.AttachmentRepository;
-import jakarta.servlet.http.HttpServletResponse;
+import com.example.util.UrlUtil;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.Inet4Address;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AttachService {
     private final ResourceBundleService resourceBundleService;
-    private final AttachmentRepository attachmentRepository;
-    private final AttachmentContentRepository contentRepository;
+    private final AttachmentRepository repository;
 
+
+    @Value("${attach.upload.folder}")
+    private String attachUploadFolder;
 
 
     @Autowired
     public AttachService(ResourceBundleService resourceBundleService,
-                         AttachmentRepository attachmentRepository,
-                         AttachmentContentRepository contentRepository) {
+                         AttachmentRepository attachmentRepository) {
         this.resourceBundleService = resourceBundleService;
-        this.attachmentRepository = attachmentRepository;
-        this.contentRepository = contentRepository;
+        this.repository = attachmentRepository;
+
     }
 
 
@@ -41,39 +49,50 @@ public class AttachService {
      * This method is used for file uploading in DataBase
      * If File Name is Empty  ,throw FileNameNotFoundException()
      *
-     * @param file  MultipartHttpServletRequest
+     * @param file MultipartHttpServletRequest
      * @return AttachDTO
      */
 
 
-    public AttachDTO uploadFile(MultipartFile file) {
-
-
-
-        String originalFilename = file.getOriginalFilename();
-        long size = file.getSize();
-        String contentType = file.getContentType();
-
-
-        AttachEntity attachment = new AttachEntity();
-        attachment.setOriginalName(originalFilename);
-        attachment.setSize(size);
-        attachment.setType(contentType);
-
-        AttachEntity savedAttach = attachmentRepository.save(attachment);
-        AttachDTO attachDTO = new AttachDTO(savedAttach.getId(), originalFilename, size, contentType);
-
+    public AttachResponseDTO uploadFile(MultipartFile file) {
 
         try {
-            AttachContentEntity attachmentContent = new AttachContentEntity();
-            attachmentContent.setBytes(file.getBytes());
-            attachmentContent.setAttach(savedAttach);
-            contentRepository.save(attachmentContent);
 
+            String pathFolder = getYmDString(); // 2022/04/23
+            File folder = new File(attachUploadFolder + pathFolder); // attaches/2022/04/23
+
+            if (!folder.exists()) folder.mkdirs();
+
+
+            String fileName = UUID.randomUUID().toString(); // dasdasd-dasdasda-asdasda-asdasd
+            String extension = getExtension(file.getOriginalFilename(), Language.UZ); //zari.jpg
+
+            // attaches/2022/04/23/dasdasd-dasdasda-asdasda-asdasd.jpg
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(attachUploadFolder + pathFolder + "/" + fileName + "." + extension);
+            Files.write(path, bytes);
+
+            AttachEntity entity = new AttachEntity();
+            entity.setId(fileName);
+            entity.setOriginalName(file.getOriginalFilename());
+            entity.setType(extension);
+            entity.setPath(pathFolder);
+            entity.setSize(file.getSize());
+            repository.save(entity);
+
+
+            AttachResponseDTO dto = new AttachResponseDTO();
+            dto.setId(entity.getId());
+            dto.setSize(entity.getSize());
+            dto.setType(entity.getType());
+            dto.setPath(entity.getPath());
+            dto.setOriginalName(entity.getOriginalName());
+            dto.setUrl(UrlUtil.url + fileName + "." + extension);
+            return dto;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileUploadException(resourceBundleService.getMessage("file.upload", Language.UZ));
         }
-        return attachDTO;
+
     }
 
 
@@ -81,50 +100,78 @@ public class AttachService {
      * This method is used for downloading file
      * If file is not exist DB, throw FileNotFoundException
      *
-     * @param id       Integer
-     * @param response HttpServletResponse
+     * @param id Integer
      * @return Message
      */
 
 
-    public AttachDTO downloadFile(Integer id, HttpServletResponse response, Language language) {
+    public Resource downloadFile(String id) {
 
         //we get the AttachEntity object from DB
-        Optional<AttachEntity> optionalAttachment = attachmentRepository.findById(id);
-        if (optionalAttachment.isEmpty()) {
-            throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
-        }
-
-        AttachEntity attachment = optionalAttachment.get();
-
-        //we get the AttachEntity object from DB
-        Optional<AttachContentEntity> optional = contentRepository.findByAttachId(id);
-        if (optional.isEmpty()) {
-            throw new FileNotFoundException(resourceBundleService.getMessage("file.not.found", language.name()));
-        }
-
-
-        AttachContentEntity attachContentEntity = optional.get();
-        byte[] content = attachContentEntity.getBytes();
-
-        response.setHeader("Content-Disposition", "attachment; fileName=" +
-                attachment.getOriginalName());
-
-        response.setContentType(attachment.getType());
-        AttachDTO attachDTO = new AttachDTO();
-        attachDTO.setFileOriginalName(attachment.getOriginalName());
-        attachDTO.setType(attachment.getType());
-        attachDTO.setSize(attachment.getSize());
-        attachDTO.setId(attachment.getId());
-
         try {
-            FileCopyUtils.copy(content, response.getOutputStream());
+            AttachEntity entity = getAttach(id);
+
+            Path file = Paths.get(attachUploadFolder + entity.getPath() + "/" + entity.getId() + "." + entity.getType());
+
+            return new UrlResource(file.toUri());
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return attachDTO;
     }
 
+    @Transactional
+    public String deleteById(String fileName) {
+
+        Optional<AttachEntity> optional = repository.findById(fileName);
+        if (optional.isEmpty()) {
+            throw new RuntimeException("Error");
+        }
+
+        try {
+            AttachEntity entity = getAttach(fileName);
+            Path file = Paths.get(attachUploadFolder + entity.getPath() + "/" + fileName + "." + entity.getType());
+
+            repository.deleteById(entity.getId());
+            Files.delete(file);
+
+            return "deleted";
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    private AttachEntity getAttach(String fileName) {
+        String id = fileName.split("\\.")[0];
+        Optional<AttachEntity> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            throw new FileNotFoundException("File Not Found");
+        }
+        return optional.get();
+    }
+
+
+    public String getYmDString() {
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int day = Calendar.getInstance().get(Calendar.DATE);
+
+        return year + "/" + month + "/" + day; // 2022/04/23
+    }
+
+
+    public String getExtension(String fileName, Language language) {
+        // mp3/jpg/npg/mp4.....
+        if (fileName == null) {
+            throw new OriginalFileNameNullException(resourceBundleService.getMessage("file.name.null", language));
+        }
+        int lastIndex = fileName.lastIndexOf(".");
+        return fileName.substring(lastIndex + 1);
+    }
 
 
 }

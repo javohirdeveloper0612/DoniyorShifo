@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
@@ -14,10 +13,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "attach")
 public class AttachEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GenericGenerator(name = "attach_uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
-    @Column(nullable = false)
+    @Column
     private String originalName;
 
     @Column
@@ -26,6 +25,8 @@ public class AttachEntity {
     @Column
     private String type;
 
+    @Column
+    private String path;
 
     @OneToOne(mappedBy = "attach", fetch = FetchType.EAGER)
     private ServicesButtonEntity servicesButtonEntity;
@@ -34,6 +35,5 @@ public class AttachEntity {
     @JsonIgnore
     private NewsEntity news;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private AttachContentEntity attachContentEntity;
+
 }

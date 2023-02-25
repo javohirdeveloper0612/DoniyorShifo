@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.attach.AttachDTO;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.dto.services_button.ButtonCreateDTO;
 import com.example.dto.services_button.ButtonResponseDTO;
 import com.example.dto.services_button.ButtonUpdateDTO;
@@ -16,6 +16,7 @@ import com.example.repository.ServicesButtonRepository;
 import com.example.repository.ServicesRepository;
 import com.example.util.UrlUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +31,13 @@ public class ServicesButtonService {
 
     private final ResourceBundleService resourceBundleService;
     private final AttachService attachService;
-    private final AttachmentRepository attachmentRepository;
 
-    public ServicesButtonService(ServicesButtonRepository repository, ServicesRepository servicesRepository, ResourceBundleService resourceBundleService, AttachService attachService, AttachmentRepository attachmentRepository) {
+
+    public ServicesButtonService(ServicesButtonRepository repository, ServicesRepository servicesRepository, ResourceBundleService resourceBundleService, AttachService attachService) {
         this.repository = repository;
         this.servicesRepository = servicesRepository;
         this.resourceBundleService = resourceBundleService;
         this.attachService = attachService;
-        this.attachmentRepository = attachmentRepository;
     }
 
     public ButtonResponseDTO create(ButtonCreateDTO dto, Language language) {
@@ -52,7 +52,7 @@ public class ServicesButtonService {
             throw new ServicesNotFoundException(resourceBundleService.getMessage("services.not.found", language));
         }
 
-        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
+        AttachResponseDTO attachDTO = attachService.uploadFile(dto.getFile());
 
         ServicesButtonEntity entity = new ServicesButtonEntity();
         entity.setButtonNameUz(dto.getButtonNameUz());
@@ -77,7 +77,8 @@ public class ServicesButtonService {
         if (optional.isEmpty()) {
             throw new ButtonNotFoundException(resourceBundleService.getMessage("button.not.found", language));
         }
-        repository.deleteById(id);
+        attachService.deleteById(optional.get().getAttachId());
+        repository.delete(optional.get());
         return "Deleted successfully";
     }
 
@@ -88,7 +89,7 @@ public class ServicesButtonService {
             throw new ButtonNotFoundException(resourceBundleService.getMessage("button.not.found", language));
         }
 
-        return getDTOByLang(optional.get(),language);
+        return getDTOByLang(optional.get(), language);
     }
 
 
@@ -100,13 +101,9 @@ public class ServicesButtonService {
         }
         ServicesButtonEntity entity = optional.get();
 
-        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
+        String attachId = entity.getAttachId();
 
-        try {
-            attachmentRepository.deleteById(entity.getAttachId());
-        }catch (RuntimeException e){
-            throw new RuntimeException(e);
-        }
+        AttachResponseDTO attachDTO = attachService.uploadFile(dto.getFile());
 
         entity.setButtonNameUz(dto.getButtonNameUz());
         entity.setButtonNameRu(dto.getButtonNameRu());
@@ -118,10 +115,13 @@ public class ServicesButtonService {
 
         repository.save(entity);
 
+        attachService.deleteById(attachId);
+
+
         return getDTO(entity);
     }
 
-    public List<ButtonResponseDTO> getListButton(Integer services_id,Language language) {
+    public List<ButtonResponseDTO> getListButton(Integer services_id, Language language) {
 
 
         List<ServicesButtonEntity> list = repository.findAllByServicesId(services_id);
@@ -132,7 +132,7 @@ public class ServicesButtonService {
         List<ButtonResponseDTO> dtoList = new ArrayList<>();
 
         for (ServicesButtonEntity buttonEntity : list) {
-            dtoList.add(getDTOByLang(buttonEntity,language));
+            dtoList.add(getDTOByLang(buttonEntity, language));
         }
 
         return dtoList;
@@ -147,22 +147,22 @@ public class ServicesButtonService {
         dto.setTitleRu(entity.getTitleRu());
         dto.setDescriptionUz(entity.getButtonDescriptionUz());
         dto.setDescriptionRu(entity.getButtonDescriptionRu());
-        dto.setPhotoUrl(UrlUtil.url+entity.getAttachId());
+        dto.setPhotoUrl(UrlUtil.url + entity.getAttachId());
         dto.setServicesId(entity.getServicesId());
         return dto;
     }
 
-    public ButtonResponseDTO getDTOByLang(ServicesButtonEntity entity,Language language) {
+    public ButtonResponseDTO getDTOByLang(ServicesButtonEntity entity, Language language) {
         ButtonResponseDTO dto = new ButtonResponseDTO();
         dto.setId(entity.getId());
         dto.setServicesId(entity.getServicesId());
-        dto.setPhotoUrl(UrlUtil.url +entity.getAttachId());
+        dto.setPhotoUrl(UrlUtil.url + entity.getAttachId());
 
-        if (language.equals(Language.UZ)){
+        if (language.equals(Language.UZ)) {
             dto.setButtonNameUz(entity.getButtonNameUz());
             dto.setDescriptionUz(entity.getButtonDescriptionUz());
             dto.setTitleUz(entity.getTitleUz());
-        }else {
+        } else {
             dto.setButtonNameRu(entity.getButtonNameRu());
             dto.setDescriptionRu(entity.getButtonDescriptionRu());
             dto.setTitleRu(entity.getTitleRu());

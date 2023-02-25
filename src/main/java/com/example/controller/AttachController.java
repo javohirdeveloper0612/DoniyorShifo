@@ -1,16 +1,17 @@
 package com.example.controller;
 
-import com.example.dto.attach.AttachDTO;
-import com.example.enums.Language;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.service.AttachService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +41,7 @@ public class AttachController {
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
     public ResponseEntity<?> uploadFile(@ModelAttribute("file") MultipartFile file) {
         log.info("upload file : multipartFile {} ", file);
-        AttachDTO result = attachService.uploadFile(file);
+        AttachResponseDTO result = attachService.uploadFile(file);
         return ResponseEntity.ok(result);
     }
 
@@ -50,20 +51,21 @@ public class AttachController {
      * If file is not exist DB, throw FileNotFoundException
      *
      * @param id       Integer
-     * @param response HttpServletResponse
      * @return Message
      */
 
 
-    @GetMapping("/public/download/{id}")
+    @GetMapping(value = "/public/download/{id}",produces = MediaType.ALL_VALUE)
     @Operation(summary = "Download method", description = "This method used for downloading file")
-    public ResponseEntity<?> downloadFile(@PathVariable Integer id, HttpServletResponse response) {
+    public ResponseEntity<?> downloadFile(@PathVariable String id) {
         log.info("downloadFile fileId{}", id);
-        AttachDTO result = attachService.downloadFile(id,response,Language.UZ);
+        Resource file = attachService.downloadFile(id);
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 
     }
+
 
 
 

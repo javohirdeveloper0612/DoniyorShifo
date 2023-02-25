@@ -27,12 +27,12 @@ public class ButtonCreateDTO {
     private String descriptionUz;
     @NotBlank(message = "buttonDescriptionRu cannot be empty")
     private String descriptionRu;
-
+    @NotNull(message = "servicesId cannot be empty")
+    private Integer servicesId;
     @NotNull(message = "MultipartFile cannot be null")
     private MultipartFile file;
 
-    @NotNull(message = "servicesId cannot be empty")
-    private Integer servicesId;
+
 
 
 }

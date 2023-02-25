@@ -65,8 +65,7 @@ public class NewsController {
     /**
      * This method is used for getting all the news data by paging and sorting
      *
-     * @param page int
-     * @param size int
+
      * @return Page
      */
     @GetMapping("/public/view_all_news")

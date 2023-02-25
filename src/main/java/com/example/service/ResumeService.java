@@ -1,11 +1,10 @@
 package com.example.service;
 
-import com.example.dto.attach.AttachDTO;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.dto.resume.CreatedResumeDto;
 import com.example.entity.ResumeEntity;
 import com.example.enums.Language;
 import com.example.exp.attach.FileNotFoundException;
-import com.example.repository.AttachmentRepository;
 import com.example.repository.ResumeRepository;
 import com.example.util.ToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,7 @@ public class ResumeService {
      */
     public ResponseEntity<?> saveResume(CreatedResumeDto resumeDto, Language language) {
 
-        AttachDTO attach = attachService.uploadFile(resumeDto.getFile());
+        AttachResponseDTO attach = attachService.uploadFile(resumeDto.getFile());
 
         ResumeEntity resume = new ResumeEntity();
         resume.setFullName(resumeDto.getFullName());

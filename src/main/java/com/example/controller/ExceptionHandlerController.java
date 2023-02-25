@@ -1,9 +1,7 @@
 package com.example.controller;
 
 import com.example.exp.admin.AdminNotFoundException;
-import com.example.exp.attach.AttachNotFoundException;
-import com.example.exp.attach.FileNameNotFoundException;
-import com.example.exp.attach.FileNotFoundException;
+import com.example.exp.attach.*;
 import com.example.exp.doctor.DoctorNotFoundException;
 import com.example.exp.doctor.DoctorNotFoundListException;
 import com.example.exp.doctor.DoctorPhoneAlreadyExists;
@@ -121,6 +119,14 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler({DoctorPhoneAlreadyExists.class})
     private ResponseEntity<?> handler(DoctorPhoneAlreadyExists e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler({FileUploadException.class})
+    private ResponseEntity<?> handler(FileUploadException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler({OriginalFileNameNullException.class})
+    private ResponseEntity<?> handler(OriginalFileNameNullException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

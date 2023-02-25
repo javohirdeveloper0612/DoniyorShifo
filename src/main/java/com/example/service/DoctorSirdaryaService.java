@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.attach.AttachDTO;
+import com.example.dto.attach.AttachResponseDTO;
 import com.example.dto.doctor.DoctorCreationDTO;
 import com.example.dto.doctor.DoctorResponseDTO;
 import com.example.dto.doctor.DoctorUpdateDTO;
@@ -43,18 +43,18 @@ public class DoctorSirdaryaService {
      * checks the doctor's image id if the image is not found it throws FileNotFoundException
      * if doctor saves it returns DoctorDTO
      *
-     * @param dto      DoctorDTO
+     * @param dto DoctorDTO
      * @return dto
      */
 
-    public DoctorResponseDTO create(DoctorCreationDTO dto,Language language) {
+    public DoctorResponseDTO create(DoctorCreationDTO dto, Language language) {
 
         boolean phoneExists = doctorRepository.existsByPhone(dto.getPhone());
-        if (phoneExists){
-            throw new DoctorPhoneAlreadyExists(resourceBundleService.getMessage("phone.already",language.name()));
+        if (phoneExists) {
+            throw new DoctorPhoneAlreadyExists(resourceBundleService.getMessage("phone.already", language.name()));
         }
 
-        AttachDTO attachDTO = attachService.uploadFile(dto.getFile());
+        AttachResponseDTO attachDTO = attachService.uploadFile(dto.getFile());
 
 
         DoctorEntity doctorEntity = new DoctorEntity();
@@ -113,9 +113,8 @@ public class DoctorSirdaryaService {
 
         Optional<DoctorEntity> optional = doctorRepository.findById(id);
 
-        if (optional.isEmpty()) {
+        if (optional.isEmpty())
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
-        }
 
         DoctorEntity doctorEntity = optional.get();
         doctorEntity.setFirstName_uz(doctorDTO.getFirstName_uz());
@@ -152,8 +151,12 @@ public class DoctorSirdaryaService {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
         }
 
-        doctorRepository.deleteById(optional.get().getId());
-
+        try {
+            attachService.deleteById(optional.get().getPhotoId());
+            doctorRepository.deleteById(optional.get().getId());
+        } catch (RuntimeException e) {
+            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+        }
         return "The doctor is deleted";
     }
 

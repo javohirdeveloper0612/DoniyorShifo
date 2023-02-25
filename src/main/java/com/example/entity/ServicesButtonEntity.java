@@ -3,10 +3,6 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,14 +30,14 @@ public class ServicesButtonEntity {
     private String buttonDescriptionRu;
 
     @Column(name = "attach_id")
-    private Integer attachId;
+    private String attachId;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
 
     @Column(name = "services_id")
     private Integer servicesId;
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "services_id", insertable = false, updatable = false)
     private ServicesEntity services;
 

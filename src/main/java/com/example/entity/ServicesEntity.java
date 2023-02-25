@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 
@@ -18,7 +20,7 @@ public class ServicesEntity {
     @Column(nullable = false,unique = true)
     private String nameRu;
 
-    @OneToOne(mappedBy = "services",cascade = CascadeType.REMOVE)
-    private ServicesButtonEntity button;
+    @OneToMany(mappedBy = "services",cascade = CascadeType.REMOVE)
+    private List<ServicesButtonEntity> button;
 
 }

@@ -35,7 +35,7 @@ public class ServicesController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicesCreateDTO dto,
                                     @RequestHeader(name = "Accept-Language",defaultValue = "UZ")Language language) {
-        ServicesResponseDTO result = service.create(dto, Language.UZ);
+        ServicesResponseDTO result = service.create(dto,language);
         log.info("create services: name_uz {} ,name_ru {}  \n\n", dto.getNameRu(), dto.getNameUz());
         return ResponseEntity.ok().body(result);
     }
