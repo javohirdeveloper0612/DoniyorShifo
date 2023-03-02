@@ -121,7 +121,7 @@ public class AttachService {
         }
     }
 
-    @Transactional
+
     public String deleteById(String fileName) {
 
         Optional<AttachEntity> optional = repository.findById(fileName);

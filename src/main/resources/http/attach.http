@@ -8,3 +8,7 @@ C:\Users\Acer\Pictures\Saved Pictures\123.jpg
 
 ###
 DELETE http://localhost:8080/api/attach/delete/3
+
+
+###
+GET 
