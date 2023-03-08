@@ -1,6 +1,5 @@
 package com.example.dto.news;
 
-import com.example.entity.AttachEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
