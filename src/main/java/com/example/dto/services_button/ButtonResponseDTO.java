@@ -1,5 +1,6 @@
 package com.example.dto.services_button;
 
+import com.example.entity.ServicesEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,4 +25,6 @@ public class ButtonResponseDTO {
     private String descriptionRu;
     private String photoUrl;
     private Integer servicesId;
+
+    private ServicesEntity services;
 }

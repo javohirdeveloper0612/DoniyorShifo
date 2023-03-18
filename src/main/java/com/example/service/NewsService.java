@@ -153,7 +153,7 @@ public class NewsService {
 
         NewsEntity edited = newsRepository.save(newsEntity);
 
-        attachService.deleteById(attachId);
+        attachService.updateById(attachId);
 
         return ResponseEntity.ok(toDTO.responseNewsDto(edited));
     }

@@ -67,8 +67,20 @@ public class ServicesButtonService {
 
         repository.save(entity);
 
+        System.out.println(entity.getServices());
 
-        return getDTO(entity);
+        ButtonResponseDTO dto1 = new ButtonResponseDTO();
+        dto1.setId(entity.getId());
+        dto1.setButtonNameUz(entity.getButtonNameUz());
+        dto1.setButtonNameRu(entity.getButtonNameRu());
+        dto1.setTitleUz(entity.getTitleUz());
+        dto1.setTitleRu(entity.getTitleRu());
+        dto1.setDescriptionUz(entity.getButtonDescriptionUz());
+        dto1.setDescriptionRu(entity.getButtonDescriptionRu());
+        dto1.setPhotoUrl(UrlUtil.url + entity.getAttachId());
+        dto1.setServices(entity.getServices());
+        return dto1;
+
     }
 
     public String deleteById(Integer id, Language language) {
@@ -115,7 +127,7 @@ public class ServicesButtonService {
 
         repository.save(entity);
 
-        attachService.deleteById(attachId);
+        attachService.updateById(attachId);
 
 
         return getDTO(entity);

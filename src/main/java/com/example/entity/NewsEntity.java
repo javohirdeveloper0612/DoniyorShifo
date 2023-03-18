@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
@@ -32,6 +34,7 @@ public class NewsEntity {
     @Column(name = "attach_id")
     private String photoId;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity photo;
 

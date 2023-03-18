@@ -3,6 +3,8 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -32,6 +34,7 @@ public class ServicesButtonEntity {
     @Column(name = "attach_id")
     private String attachId;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
 
