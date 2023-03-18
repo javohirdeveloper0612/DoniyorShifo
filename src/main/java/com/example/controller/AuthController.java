@@ -25,7 +25,7 @@ public class AuthController {
     /**
      * This method is used for login to system if it is not exist throw AdminNotFoundException
      *
-     * @param dto      LoginDto
+     * @param dto LoginDto
      * @return LoginResponseDTO
      */
     @Operation(summary = "Login Method", description = "this method for registration")
@@ -33,7 +33,7 @@ public class AuthController {
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO dto) {
 
         LoginResponseDTO response = service.login(dto, Language.UZ);
-        log.info(" login method dtoUsername {}" ,dto.getUsername());
+        log.info(" login method dtoUsername {}", dto.getUsername());
         return ResponseEntity.ok().body(response);
     }
 }
