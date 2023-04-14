@@ -24,7 +24,6 @@ public class AuthService {
     }
 
 
-
     /**
      * This method is used for login to system if it is not exist throw AdminNotFoundException
      *
@@ -36,7 +35,7 @@ public class AuthService {
 
         Optional<AdminEntity> optional = repository.findByUsernameAndPassword(dto.getUsername(), MD5.md5(dto.getPassword()));
         if (optional.isEmpty()) {
-            throw new AdminNotFoundException(resourceBundleService.getMessage("admin.not.found", language));
+            throw new AdminNotFoundException(resourceBundleService.getMessage("admin.not.found", language.name()));
         }
 
         AdminEntity entity = optional.get();

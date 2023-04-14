@@ -29,5 +29,5 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzM1MDk0NzAsInVzZXJuYW1lI
 Accept-Language: UZ
 
 ### Doctor Sirdarya List Pagination
-GET localhost:8080/api/doctortashkent/public/getpage
+GET https://api.doniyor.doniyorshifo.uz/api/news/public/view_all_news
 Accept-Language: RU

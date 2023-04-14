@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +39,6 @@ public class AttachController {
      */
     @PostMapping(value = "/public/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload method", description = "This method uploads the file in DataBase")
-
     public ResponseEntity<?> uploadFile(@ModelAttribute("file") MultipartFile file) {
         log.info("upload file : multipartFile {} ", file);
         AttachResponseDTO result = attachService.uploadFile(file);
@@ -49,20 +50,23 @@ public class AttachController {
      * This method is used for downloading file
      * If file is not exist DB, throw FileNotFoundException
      *
-     * @param id Integer
+     * @param id       Integer
      * @return Message
      */
 
 
-    @GetMapping(value = "/public/download/{id}", produces = MediaType.ALL_VALUE)
+    @GetMapping(value = "/public/download/{id}",produces = MediaType.ALL_VALUE)
     @Operation(summary = "Download method", description = "This method used for downloading file")
     public ResponseEntity<?> downloadFile(@PathVariable String id) {
-        log.info("downloadFile fileId{}", id);
+
         Resource file = attachService.downloadFile(id);
+
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 
     }
+
+
 
 
 }

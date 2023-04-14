@@ -160,12 +160,13 @@ public class DoctorTashkentService {
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
         }
-        try {
+//        try {
+            System.out.println(id);
             attachService.deleteById(optional.get().getPhotoId());
             doctorRepository.deleteById(optional.get().getId());
-        } catch (RuntimeException e) {
-            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
-        }
+//        } catch (RuntimeException e) {
+//            throw new DoctorNotFoundException(resourceBundleService.getMessage("doctor.not.found.id", language));
+//        }
 
 
         return "The doctor is deleted";

@@ -116,7 +116,7 @@ public class DoctorSirdaryaController {
             @PathVariable Integer id,
             @RequestHeader(name = "Accept-Language",defaultValue = "UZ") Language language) {
 
-        log.info(" delete s Doctor by id :  id{} " , id );
+        log.info(" delete s Doctor by id :  id{} " , id);
         String result = doctorSirdaryaService.delete(id, language);
         return ResponseEntity.ok().body(result);
 

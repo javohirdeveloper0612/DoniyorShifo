@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DoniyorShifoApplication {
     public static void main(String[] args) {
-       SpringApplication.run(DoniyorShifoApplication.class, args);
-
+        SpringApplication.run(DoniyorShifoApplication.class, args);
     }
 
 }
